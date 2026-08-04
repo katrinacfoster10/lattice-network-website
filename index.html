@@ -4,11 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>The Lattice | A National Community for Senior Women Leaders</title>
-  <meta name="description" content="A national community for senior women leaders ready to work differently. Founding peer circles launch September 2026." />
+  <meta name="description" content="A national community for senior women leaders ready to work differently. Inaugural peer circles launch September 2026." />
 
   <!-- Open Graph -->
   <meta property="og:title" content="The Lattice | A National Community for Senior Women Leaders" />
-  <meta property="og:description" content="A national community for senior women leaders ready to work differently. Founding peer circles launch September 2026." />
+  <meta property="og:description" content="A national community for senior women leaders ready to work differently. Inaugural peer circles launch September 2026." />
   <meta property="og:type" content="website" />
 
   <!-- Fonts: Newsreader (display/headlines) + Inter (UI, body, wordmark). DM Sans is not used. -->
@@ -62,15 +62,28 @@
            style="--hero-photo: url('images/hero.jpg');"></div>
       -->
 
+      <!-- Watermark: the mark's own geometry, tiled. Rotated 45 degrees to
+           match the logo, and the strands BREAK at each crossing so they
+           weave over and under exactly as the mark does. The weave
+           alternates across a 2x2 cell, which is why the tile is 160 and
+           carries four lines rather than two. -->
       <svg class="lattice-bg" viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
         <defs>
-          <pattern id="latticeGrid" width="140" height="140" patternUnits="userSpaceOnUse">
-            <path d="M140 0 V140 M0 140 H140" fill="none" stroke-width="1.5"
-                  style="stroke: var(--lattice-iris); opacity: 0.18;" />
+          <pattern id="latticeWeave" width="160" height="160" patternUnits="userSpaceOnUse"
+                   patternTransform="rotate(45)">
+            <g fill="none" stroke-width="1.5" stroke-linecap="round"
+               style="stroke: var(--lattice-iris); opacity: 0.22;">
+              <!-- verticals: x=40 passes over at the top crossing, under at the bottom -->
+              <path d="M40 0 V113  M40 127 V160" />
+              <path d="M120 0 V33  M120 47 V160" />
+              <!-- horizontals: the opposite, so every crossing alternates -->
+              <path d="M0 40 H33   M47 40 H160" />
+              <path d="M0 120 H113 M127 120 H160" />
+            </g>
           </pattern>
         </defs>
-        <rect width="1200" height="600" fill="url(#latticeGrid)" />
-        <!-- Nodes: cobalt for structure, exactly one citron as the signal -->
+        <rect width="1200" height="600" fill="url(#latticeWeave)" />
+        <!-- Nodes sit on the weave as points of connection -->
         <circle cx="420" cy="280" r="4" style="fill: var(--lattice-cobalt); opacity: 0.6;" />
         <circle cx="980" cy="420" r="4" style="fill: var(--lattice-cobalt); opacity: 0.45;" />
         <!-- fill lives in CSS, not inline, so the citron-CTA variant can retheme it -->
@@ -84,7 +97,7 @@
           <a class="btn" href="#join">Get Early Access <span aria-hidden="true">&rarr;</span></a>
         </div>
         <p class="founding-line">
-          <span>Founding peer circles launch <strong>September 2026</strong></span>
+          <span>Inaugural peer circles launch <strong>September 2026</strong></span>
           <span class="dated">Membership opens <strong>January 2027</strong></span>
         </p>
       </div>
@@ -232,14 +245,22 @@
 
     <!-- ================= FOR ORGANIZATIONS — navy section 2 of 2 ================= -->
     <section class="orgs ground-navy" id="organizations">
+      <!-- Same woven watermark as the hero, held back a little so this
+           section reads as the quieter of the two navy moments. -->
       <svg class="lattice-bg" viewBox="0 0 1200 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
         <defs>
-          <pattern id="latticeGridOrgs" width="140" height="140" patternUnits="userSpaceOnUse">
-            <path d="M140 0 V140 M0 140 H140" fill="none" stroke-width="1.5"
-                  style="stroke: var(--lattice-iris); opacity: 0.14;" />
+          <pattern id="latticeWeaveOrgs" width="160" height="160" patternUnits="userSpaceOnUse"
+                   patternTransform="rotate(45)">
+            <g fill="none" stroke-width="1.5" stroke-linecap="round"
+               style="stroke: var(--lattice-iris); opacity: 0.16;">
+              <path d="M40 0 V113  M40 127 V160" />
+              <path d="M120 0 V33  M120 47 V160" />
+              <path d="M0 40 H33   M47 40 H160" />
+              <path d="M0 120 H113 M127 120 H160" />
+            </g>
           </pattern>
         </defs>
-        <rect width="1200" height="500" fill="url(#latticeGridOrgs)" />
+        <rect width="1200" height="500" fill="url(#latticeWeaveOrgs)" />
         <circle cx="300" cy="180" r="4" style="fill: var(--lattice-cobalt); opacity: 0.5;" />
         <circle cx="1020" cy="320" r="4" style="fill: var(--lattice-cobalt); opacity: 0.35;" />
       </svg>
