@@ -69,16 +69,16 @@
            carries four lines rather than two. -->
       <svg class="lattice-bg" viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
         <defs>
-          <pattern id="latticeWeave" width="160" height="160" patternUnits="userSpaceOnUse"
+          <pattern id="latticeWeave" width="240" height="240" patternUnits="userSpaceOnUse"
                    patternTransform="rotate(45)">
             <g fill="none" stroke-width="1.5" stroke-linecap="round"
-               style="stroke: var(--lattice-iris); opacity: 0.22;">
-              <!-- verticals: x=40 passes over at the top crossing, under at the bottom -->
-              <path d="M40 0 V113  M40 127 V160" />
-              <path d="M120 0 V33  M120 47 V160" />
+               style="stroke: var(--lattice-iris); opacity: 0.11;">
+              <!-- verticals: x=60 passes over at the top crossing, under at the bottom -->
+              <path d="M60 0 V170  M60 190 V240" />
+              <path d="M180 0 V50  M180 70 V240" />
               <!-- horizontals: the opposite, so every crossing alternates -->
-              <path d="M0 40 H33   M47 40 H160" />
-              <path d="M0 120 H113 M127 120 H160" />
+              <path d="M0 60 H50   M70 60 H240" />
+              <path d="M0 180 H170 M190 180 H240" />
             </g>
           </pattern>
         </defs>
@@ -243,31 +243,36 @@
       </div>
     </section>
 
-    <!-- ================= FOR ORGANIZATIONS — navy section 2 of 2 ================= -->
+    <!-- ================= FOR ORGANIZATIONS =================
+         A secondary audience. Not a box — the page already speaks in
+         rounded cards, so another one just competes with the pillars.
+         Instead this is a SHALLOW full-bleed band: about half the height
+         of a primary section, content on a single horizontal axis,
+         heading one step down from keynote. Proportion does the work. -->
     <section class="orgs ground-navy" id="organizations">
-      <!-- Same woven watermark as the hero, held back a little so this
-           section reads as the quieter of the two navy moments. -->
-      <svg class="lattice-bg" viewBox="0 0 1200 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <svg class="lattice-bg" viewBox="0 0 1200 320" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
         <defs>
-          <pattern id="latticeWeaveOrgs" width="160" height="160" patternUnits="userSpaceOnUse"
+          <pattern id="latticeWeaveOrgs" width="240" height="240" patternUnits="userSpaceOnUse"
                    patternTransform="rotate(45)">
             <g fill="none" stroke-width="1.5" stroke-linecap="round"
-               style="stroke: var(--lattice-iris); opacity: 0.16;">
-              <path d="M40 0 V113  M40 127 V160" />
-              <path d="M120 0 V33  M120 47 V160" />
-              <path d="M0 40 H33   M47 40 H160" />
-              <path d="M0 120 H113 M127 120 H160" />
+               style="stroke: var(--lattice-iris); opacity: 0.09;">
+              <path d="M60 0 V170  M60 190 V240" />
+              <path d="M180 0 V50  M180 70 V240" />
+              <path d="M0 60 H50   M70 60 H240" />
+              <path d="M0 180 H170 M190 180 H240" />
             </g>
           </pattern>
         </defs>
-        <rect width="1200" height="500" fill="url(#latticeWeaveOrgs)" />
-        <circle cx="300" cy="180" r="4" style="fill: var(--lattice-cobalt); opacity: 0.5;" />
-        <circle cx="1020" cy="320" r="4" style="fill: var(--lattice-cobalt); opacity: 0.35;" />
+        <rect width="1200" height="320" fill="url(#latticeWeaveOrgs)" />
+        <circle cx="300" cy="120" r="4" style="fill: var(--lattice-cobalt); opacity: 0.4;" />
+        <circle cx="1020" cy="220" r="4" style="fill: var(--lattice-cobalt); opacity: 0.3;" />
       </svg>
-      <div class="wrap">
-        <span class="eyebrow">For Organizations</span>
-        <h2 class="keynote">Access experienced leadership that traditional recruiting <em>misses</em>.</h2>
-        <p class="orgs-body">A network of accomplished Canadian women—vetted, active, directly available for board, advisory, and strategic roles.</p>
+      <div class="wrap orgs-content">
+        <div class="orgs-text">
+          <span class="eyebrow">For Organizations</span>
+          <h2>Access experienced leadership that traditional recruiting <em>misses</em>.</h2>
+          <p class="orgs-body">A network of accomplished Canadian women—vetted, active, directly available for board, advisory, and strategic roles.</p>
+        </div>
         <div class="cta-row">
           <a class="btn" href="#join" data-interest="Partnering as an organization">Learn More <span aria-hidden="true">&rarr;</span></a>
         </div>
