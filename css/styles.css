@@ -185,6 +185,69 @@ h1 em, h2 em {
 .cta-link:hover { color: var(--lattice-cobalt-hover); }
 
 
+/* ============================================================
+   MOTION
+   The bible allows 150ms for colour/hover, 200ms for larger state
+   changes. Entrance reveals are a separate category and run at 500ms.
+   Everything here is switched off under prefers-reduced-motion —
+   brand-tokens.css kills transitions and animations globally, and
+   main.js never applies the reveal classes in the first place.
+   ============================================================ */
+
+/* Arrows nudge forward on hover */
+.btn > span[aria-hidden],
+.cta-link > span[aria-hidden] {
+  transition: transform var(--lattice-motion-fast);
+}
+.btn:hover > span[aria-hidden],
+.cta-link:hover > span[aria-hidden] { transform: translateX(3px); }
+
+/* Nav links: underline grows from the left */
+.nav-links a { position: relative; }
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: -5px;
+  height: 1.5px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--lattice-motion-base);
+}
+.nav-links a:hover::after,
+.nav-links a:focus-visible::after { transform: scaleX(1); }
+.nav-links a:hover { text-decoration: none; }
+
+/* The hero's citron node breathes — one slow signal, not a particle field.
+   Delete this rule to make it static. */
+@keyframes signal-pulse {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.45; }
+}
+.node-signal {
+  fill: var(--lattice-citron);
+  animation: signal-pulse 3.4s ease-in-out infinite;
+}
+
+/* Scroll reveal. `reveal-init` is added by JS, so with JS off or
+   reduced motion on, content renders visible and unanimated. */
+[data-reveal] {
+  transition: opacity 500ms ease-out, transform 500ms ease-out;
+  transition-delay: calc(var(--i, 0) * 80ms);
+}
+.reveal-init { opacity: 0; transform: translateY(14px); }
+.reveal-init.is-revealed { opacity: 1; transform: none; }
+
+/* Hard kill switch, set by main.js when IntersectionObserver does not
+   respond. It must not rely on a transition to become visible — in an
+   environment where observers are dead, transitions may be too. */
+.reveal-disabled [data-reveal] {
+  opacity: 1 !important;
+  transform: none !important;
+  transition: none !important;
+}
+
+
 /* ---------- Header ---------- */
 
 .site-header {
@@ -334,8 +397,15 @@ h1 em, h2 em {
 }
 .card:hover { border-color: var(--lattice-border-strong); }
 
-.card h3 { font-size: 1.35rem; margin-bottom: var(--lattice-space-3); }
+.card h3 {
+  font-size: 1.35rem;
+  margin-bottom: var(--lattice-space-3);
+  transition: color var(--lattice-motion-fast);
+}
 .card p  { color: var(--lattice-text-body); }
+/* No lift, no shadow bloom — the bible is explicit. The hover lives in
+   the border, the heading colour and the node marker instead. */
+.card:hover h3 { color: var(--lattice-cobalt); }
 
 
 /* ---------- What we're building ---------- */
@@ -396,7 +466,9 @@ h1 em, h2 em {
   border-radius: 50%;
   flex: none;
   background: var(--lattice-iris);
+  transition: transform var(--lattice-motion-base);
 }
+.offer:hover .node { transform: scale(1.7); }
 .offer.is-signal .node { background: var(--lattice-citron); }
 
 /* Section marker chip — iris tint, deep-iris text */
@@ -591,6 +663,51 @@ h1 em, h2 em {
 .hero :focus-visible,
 .orgs :focus-visible,
 .site-footer :focus-visible { outline-color: var(--lattice-text-on-navy); }
+
+
+/* ============================================================
+   EXPERIMENT — CITRON CTA
+   Switch on with <body data-cta="citron">. Off by default.
+
+   This BREAKS the current brand bible, which says citron is
+   "never a button, never a fill" and caps it at 1-2% of a page.
+   It is here so the rule can be evaluated before it is amended.
+
+   It is not a recolour, it is a different logic:
+     citron = action (every CTA)
+     iris   = accent (the decorative nodes citron used to hold)
+   Without that swap you get citron in two competing roles and the
+   page reads noisy.
+
+   Contrast: citron carries NAVY text, never white.
+     citron on navy  10.9:1  (passes AA and AAA)
+     citron on white  1.5:1  (fails everything — never do this)
+
+   Citron CTAs appear on DARK grounds only. On white, a citron button
+   fails WCAG 1.4.11 (3:1 for the button's own edge) — the shape floats
+   with no perceivable boundary. Chief has the same constraint and
+   solves it the same way: chartreuse on their dark olive, dark navy on
+   their light periwinkle. Light-ground CTAs here stay cobalt.
+   ============================================================ */
+
+/* Dark grounds — citron carries the action */
+[data-cta="citron"] .ground-navy .btn {
+  background: var(--lattice-citron);
+  color: var(--lattice-ink-navy);
+}
+[data-cta="citron"] .ground-navy .btn:hover {
+  background: #B4C63A; /* darkened; still 9.4:1 against navy text */
+}
+
+/* Accent duty moves to iris so citron reads as action only. */
+[data-cta="citron"] .node-signal { fill: var(--lattice-iris); animation: none; }
+[data-cta="citron"] .offer.is-signal .node { background: var(--lattice-iris); }
+[data-cta="citron"] .hero .founding-line .sep { background: var(--lattice-iris); }
+
+/* Focus rings must not sit on a similar hue */
+[data-cta="citron"] .btn:focus-visible { outline-color: var(--lattice-ink-navy); }
+[data-cta="citron"] .hero .btn:focus-visible,
+[data-cta="citron"] .orgs .btn:focus-visible { outline-color: var(--lattice-text-on-navy); }
 
 
 /* ---------- Responsive ---------- */

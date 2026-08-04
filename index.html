@@ -71,7 +71,8 @@
         <!-- Nodes: cobalt for structure, exactly one citron as the signal -->
         <circle cx="420" cy="280" r="4" style="fill: var(--lattice-cobalt); opacity: 0.6;" />
         <circle cx="980" cy="420" r="4" style="fill: var(--lattice-cobalt); opacity: 0.45;" />
-        <circle cx="840" cy="140" r="5" style="fill: var(--lattice-citron);" />
+        <!-- fill lives in CSS, not inline, so the citron-CTA variant can retheme it -->
+        <circle class="node-signal" cx="840" cy="140" r="5" />
       </svg>
 
       <div class="wrap">
@@ -91,24 +92,24 @@
     <!-- ==================== WHAT WE'RE BUILDING — mist grey ==================== -->
     <section class="building ground-mist" id="building">
       <div class="wrap">
-        <div class="section-head">
+        <div class="section-head" data-reveal>
           <span class="eyebrow">What We're Building</span>
           <h2 class="keynote">A professional home for what comes <em>next</em>.</h2>
           <p class="intro">The Lattice centres on two pillars:</p>
         </div>
         <div class="pillars">
-          <article class="card pillar">
+          <article class="card pillar" data-reveal style="--i:0">
             <h3>Peer Circles</h3>
             <p class="card-lead">Curated, candid and confidential.</p>
             <p>Facilitated by, and for, experienced women designing and developing more self-directed professional lives.</p>
           </article>
-          <article class="card pillar">
+          <article class="card pillar" data-reveal style="--i:1">
             <h3>Practical Intelligence</h3>
             <p class="card-lead">Online community and expert guests.</p>
             <p>On portfolio design, board pathways, advisory work, fractional roles, positioning, pricing, visibility, and risk.</p>
           </article>
         </div>
-        <p class="pull pull-panel closing">Community comes first. Everything else is built on top of it.</p>
+        <p class="pull pull-panel closing" data-reveal>Community comes first. Everything else is built on top of it.</p>
       </div>
     </section>
 
@@ -116,11 +117,11 @@
     <section class="why ground-iris">
       <div class="wrap">
         <div class="split">
-          <div class="split-head">
+          <div class="split-head" data-reveal>
             <span class="eyebrow">Why Now</span>
             <h2 class="keynote">Women aren't stepping back. They're stepping <em>differently</em>.</h2>
           </div>
-          <div class="split-body">
+          <div class="split-body" data-reveal style="--i:1">
             <p>Senior women are building advisory practices, expanding board work, launching companies, taking fractional roles, and assembling portfolios that reflect the full range of what they know.</p>
             <p>The Lattice connects them. <span class="connects">A vetted community of experienced women leaders</span> who learn from one another, refer and amplify each other, and maximise our collective impact through the network.</p>
           </div>
@@ -134,7 +135,7 @@
         <span class="eyebrow">What We're Starting With</span>
         <div class="offers">
           <!-- is-signal = the single citron node on this page's cards -->
-          <article class="card offer is-signal">
+          <article class="card offer is-signal" data-reveal style="--i:0">
             <div class="node-row">
               <span class="node" aria-hidden="true"></span>
               <span class="tag">Launching September 2026</span>
@@ -143,7 +144,7 @@
             <p>Facilitated, confidential conversations with experienced women navigating the same transitions you are. In a room where the thinking matches yours</p>
             <a class="cta-link" href="#join" data-interest="A founding peer circle">Apply for a Peer Circle <span aria-hidden="true">&rarr;</span></a>
           </article>
-          <article class="card offer">
+          <article class="card offer" data-reveal style="--i:1">
             <div class="node-row">
               <span class="node" aria-hidden="true"></span>
               <span class="tag">Ongoing</span>
@@ -152,7 +153,7 @@
             <p>Online peer community with monthly expert conversations. Your whole self welcomed—honest, unfiltered, real.</p>
             <a class="cta-link" href="#join" data-interest="Monthly guest speaker updates">Get on the list <span aria-hidden="true">&rarr;</span></a>
           </article>
-          <article class="card offer">
+          <article class="card offer" data-reveal style="--i:2">
             <div class="node-row">
               <span class="node" aria-hidden="true"></span>
               <span class="tag">Launching January 2027</span>
@@ -218,7 +219,7 @@
           </ul>
         </div>
 
-        <p class="pull pull-panel closing">What connects us: A deliberate choice to work on our own terms and to build whatever comes next.</p>
+        <p class="pull pull-panel closing" data-reveal>What connects us: A deliberate choice to work on our own terms and to build whatever comes next.</p>
       </div>
     </section>
 

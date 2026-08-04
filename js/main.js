@@ -7,6 +7,46 @@
 (function () {
   'use strict';
 
+  /* ---- 0. Scroll reveal ----
+     Progressive enhancement: the hiding class is only ever applied by JS,
+     so with scripts off or reduced motion on, everything renders visible. */
+  var prefersReducedMotion =
+    window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (!prefersReducedMotion && 'IntersectionObserver' in window) {
+    var reveals = [].slice.call(document.querySelectorAll('[data-reveal]'));
+
+    reveals.forEach(function (el) { el.classList.add('reveal-init'); });
+
+    var observerFired = false;
+
+    var observer = new IntersectionObserver(function (entries) {
+      observerFired = true;
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-revealed');
+        observer.unobserve(entry.target);
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+
+    reveals.forEach(function (el) { observer.observe(el); });
+
+    /* Fail open. A working IntersectionObserver always delivers an initial
+       callback for every observed target, so if nothing has arrived by now
+       the API is not functioning in this environment — and without this
+       every revealed element would stay at opacity 0 and the page would
+       render blank. Content visibility must never depend on animation.
+
+       This sets a class that forces visibility with !important rather than
+       just removing `reveal-init`, because un-hiding via a transition would
+       itself depend on the rendering pipeline that is evidently unwell. */
+    window.setTimeout(function () {
+      if (observerFired) return;
+      observer.disconnect();
+      document.documentElement.classList.add('reveal-disabled');
+    }, 1500);
+  }
+
   var select = document.getElementById('interest');
 
   /* ---- 1. Pre-select interest from a section CTA ---- */
