@@ -14,7 +14,7 @@
   <!-- Fonts: Newsreader (display/headlines) + Inter (UI, body, wordmark). DM Sans is not used. -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,500;0,600;1,500;1,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
 
   <!-- Favicon: the lattice mark, cool white on ink navy -->
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='14' fill='%230B1B3A'/%3E%3Cg stroke='%23F3F4F6' stroke-width='12' stroke-linecap='round' fill='none' transform='translate(50,50) rotate(45)'%3E%3Cline x1='-9' y1='-34' x2='-9' y2='1'/%3E%3Cline x1='-9' y1='17' x2='-9' y2='34'/%3E%3Cline x1='9' y1='-34' x2='9' y2='-17'/%3E%3Cline x1='9' y1='-1' x2='9' y2='34'/%3E%3Cline x1='-34' y1='-9' x2='-17' y2='-9'/%3E%3Cline x1='-1' y1='-9' x2='34' y2='-9'/%3E%3Cline x1='-34' y1='9' x2='1' y2='9'/%3E%3Cline x1='17' y1='9' x2='34' y2='9'/%3E%3C/g%3E%3C/svg%3E" />
@@ -50,6 +50,16 @@
 
     <!-- ====================== HERO — navy section 1 of 2 ====================== -->
     <section class="hero ground-navy">
+
+      <!-- PHOTOGRAPHY SLOT — the single biggest upgrade available to this page.
+           To use a real photograph behind the hero:
+             1. drop the image in images/ (e.g. images/hero.jpg)
+             2. uncomment the div below and point --hero-photo at it
+             3. delete or keep the <svg> underneath — the scrim handles both
+      <div class="hero-photo" aria-hidden="true"
+           style="--hero-photo: url('images/hero.jpg');"></div>
+      -->
+
       <svg class="lattice-bg" viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
         <defs>
           <pattern id="latticeGrid" width="140" height="140" patternUnits="userSpaceOnUse">
@@ -63,13 +73,18 @@
         <circle cx="980" cy="420" r="4" style="fill: var(--lattice-cobalt); opacity: 0.45;" />
         <circle cx="840" cy="140" r="5" style="fill: var(--lattice-citron);" />
       </svg>
+
       <div class="wrap">
-        <h1>Your next chapter.<br /><span class="accent">Built with intention.</span></h1>
+        <h1>Your next chapter.<br />Built with <em>intention</em>.</h1>
         <p class="sub">The Lattice is a national community for senior women leaders ready to work differently.</p>
         <div class="cta-row">
           <a class="btn" href="#join">Get Early Access <span aria-hidden="true">&rarr;</span></a>
         </div>
-        <p class="founding-line">Founding peer circles launch September 2026 · Membership opens January 2027</p>
+        <p class="founding-line">
+          <span>Founding peer circles launch <strong>September 2026</strong></span>
+          <span class="sep" aria-hidden="true"></span>
+          <span>Membership opens <strong>January 2027</strong></span>
+        </p>
       </div>
     </section>
 
@@ -78,18 +93,18 @@
       <div class="wrap">
         <div class="section-head">
           <span class="eyebrow">What We're Building</span>
-          <h2>A professional home for what comes next.</h2>
+          <h2 class="keynote">A professional home for what comes <em>next</em>.</h2>
           <p class="intro">The Lattice centres on two pillars:</p>
         </div>
         <div class="pillars">
           <article class="card pillar">
             <h3>Peer Circles</h3>
-            <p>Curated, candid and confidential.</p>
+            <p class="card-lead">Curated, candid and confidential.</p>
             <p>Facilitated by, and for, experienced women designing and developing more self-directed professional lives.</p>
           </article>
           <article class="card pillar">
             <h3>Practical Intelligence</h3>
-            <p>Online community and expert guests.</p>
+            <p class="card-lead">Online community and expert guests.</p>
             <p>On portfolio design, board pathways, advisory work, fractional roles, positioning, pricing, visibility, and risk.</p>
           </article>
         </div>
@@ -97,18 +112,18 @@
       </div>
     </section>
 
-    <div class="divider" aria-hidden="true"><span class="node"></span></div>
-
-    <!-- ============================ WHY NOW — white ============================ -->
-    <section class="why ground-white">
+    <!-- ================= WHY NOW — iris tint, asymmetric opener ================= -->
+    <section class="why ground-iris">
       <div class="wrap">
-        <div class="section-head">
-          <span class="eyebrow">Why Now</span>
-          <h2>Women aren't stepping back. They're stepping <em class="em-cobalt">differently</em>.</h2>
-        </div>
-        <div class="body">
-          <p>Senior women are building advisory practices, expanding board work, launching companies, taking fractional roles, and assembling portfolios that reflect the full range of what they know.</p>
-          <p>The Lattice connects them. <span class="connects">A vetted community of experienced women leaders</span> who learn from one another, refer and amplify each other, and maximise our collective impact through the network.</p>
+        <div class="split">
+          <div class="split-head">
+            <span class="eyebrow">Why Now</span>
+            <h2 class="keynote">Women aren't stepping back. They're stepping <em>differently</em>.</h2>
+          </div>
+          <div class="split-body">
+            <p>Senior women are building advisory practices, expanding board work, launching companies, taking fractional roles, and assembling portfolios that reflect the full range of what they know.</p>
+            <p>The Lattice connects them. <span class="connects">A vetted community of experienced women leaders</span> who learn from one another, refer and amplify each other, and maximise our collective impact through the network.</p>
+          </div>
         </div>
       </div>
     </section>
@@ -150,15 +165,13 @@
       </div>
     </section>
 
-    <div class="divider" aria-hidden="true"><span class="node"></span></div>
-
     <!-- ========================= WHO IT'S FOR — white ========================= -->
     <section class="who ground-white" id="who">
       <div class="wrap">
         <div class="grid">
           <div>
             <span class="eyebrow">Who It's For</span>
-            <h2>Participation is intentional.</h2>
+            <h2>Participation is <em>intentional</em>.</h2>
             <p class="intro">The Lattice is for senior women leaders with more than 2 decades of executive, founder, board, professional services, public sector, or institutional leadership experience who are:</p>
 
             <!-- PHOTOGRAPHY SLOT
@@ -223,11 +236,10 @@
         <circle cx="1020" cy="320" r="4" style="fill: var(--lattice-cobalt); opacity: 0.35;" />
       </svg>
       <div class="wrap">
-        <div>
-          <span class="eyebrow">For Organizations</span>
-          <h2>Access experienced leadership that traditional recruiting misses. A network of accomplished Canadian women—vetted, active, directly available for board, advisory, and strategic roles.</h2>
-        </div>
-        <div class="cta-side">
+        <span class="eyebrow">For Organizations</span>
+        <h2 class="keynote">Access experienced leadership that traditional recruiting <em>misses</em>.</h2>
+        <p class="orgs-body">A network of accomplished Canadian women—vetted, active, directly available for board, advisory, and strategic roles.</p>
+        <div class="cta-row">
           <a class="btn" href="#join" data-interest="Partnering as an organization">Learn More <span aria-hidden="true">&rarr;</span></a>
         </div>
       </div>
@@ -237,7 +249,7 @@
     <section class="join ground-white" id="join">
       <div class="wrap">
         <span class="eyebrow">Join the Founding Community</span>
-        <h2>We're just getting going. Shape this with us from the inside.</h2>
+        <h2 class="keynote">We're just getting going. Shape this with us from the <em>inside</em>.</h2>
         <p class="body">If a peer circle, monthly conversations, or Lattice membership sounds right for you, we'd like to hear from you.</p>
         <p class="pull pitch">We're not building the largest room. We're building the most useful one for your next chapter.</p>
 

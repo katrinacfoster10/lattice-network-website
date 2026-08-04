@@ -32,9 +32,16 @@ Source of truth: `~/Documents/The Lattice/Website/design_handoff_lattice_site/`
 
 - **Colour budget** — ink navy 45–55%, mist grey + white 30–40%, cobalt 8–12%,
   iris 3–5%, citron 1–2%.
-- **Citron is signal only.** Never a button, never a fill. It appears exactly twice
-  on this page: one node in the hero graphic, one node on the "Curated Peer Circles"
-  card. If you add a third, take one away.
+- **Citron is signal only.** Never a button, never a fill. It appears three times:
+  one node in the hero graphic, the separator between the two launch dates, and one
+  node on the "Curated Peer Circles" card — never more than two in a single viewport.
+  If you add a fourth, take one away.
+- **One italic accent word per headline**, and only one. Cobalt on light grounds,
+  iris on navy (cobalt on navy fails contrast). This is the page's signature —
+  breaking it is what made the first draft feel generic.
+- **The `keynote` class** sits above the bible's section-heading scale, used for the
+  three headings that carry the argument. Remove the class to return a heading to
+  standard size.
 - **Two navy sections maximum, never adjacent** — the hero and For Organizations.
   The footer is navy but is not a content section.
 - **Type** — Newsreader for headlines and pull lines, Inter for everything else.
