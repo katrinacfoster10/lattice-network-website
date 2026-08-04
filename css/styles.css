@@ -666,15 +666,18 @@ h1 em, h2 em {
 
 
 /* ============================================================
-   EXPERIMENT — CITRON CTA
-   Switch on with <body data-cta="citron">. Off by default.
+   CITRON CTA — the selected CTA system (chosen 2026-08-04)
+   Active via <body data-cta="citron">. Remove that attribute to
+   fall back to cobalt CTAs; nothing else needs to change.
 
-   This BREAKS the current brand bible, which says citron is
-   "never a button, never a fill" and caps it at 1-2% of a page.
-   It is here so the rule can be evaluated before it is amended.
+   KNOWN DIVERGENCE FROM THE BRAND BIBLE.
+   The bible currently says citron is "never a button, never a fill"
+   and caps it at 1-2% of a page. This build intentionally overrides
+   that. The bible is to be amended to match; until it is, the bible
+   and this stylesheet disagree, and this comment is the record of why.
 
    It is not a recolour, it is a different logic:
-     citron = action (every CTA)
+     citron = action (CTAs on dark grounds)
      iris   = accent (the decorative nodes citron used to hold)
    Without that swap you get citron in two competing roles and the
    page reads noisy.

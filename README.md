@@ -32,10 +32,17 @@ Source of truth: `~/Documents/The Lattice/Website/design_handoff_lattice_site/`
 
 - **Colour budget** — ink navy 45–55%, mist grey + white 30–40%, cobalt 8–12%,
   iris 3–5%, citron 1–2%.
-- **Citron is signal only.** Never a button, never a fill. It appears three times:
-  one node in the hero graphic, the separator between the two launch dates, and one
-  node on the "Curated Peer Circles" card — never more than two in a single viewport.
-  If you add a fourth, take one away.
+- **Citron is the CTA colour, on dark grounds only.** This is a deliberate
+  divergence from the brand bible, which still says citron is "never a button".
+  The bible is to be amended; until it is, this build wins and the divergence is
+  documented here and in `css/styles.css`.
+  - Citron buttons appear **only on navy sections** (hero, For Organizations).
+    On white, citron is 1.5:1 against the page and fails WCAG 1.4.11 for the
+    button's own edge — light-ground CTAs stay cobalt.
+  - Citron always carries **navy text, never white** (10.9:1 vs 1.5:1).
+  - Nothing else on the page is citron. Decorative nodes are iris, so citron
+    means "action" and only that. Do not reintroduce citron accents.
+  - To revert to cobalt CTAs, delete `data-cta="citron"` from the `<body>` tag.
 - **One italic accent word per headline**, and only one. Cobalt on light grounds,
   iris on navy (cobalt on navy fails contrast). This is the page's signature —
   breaking it is what made the first draft feel generic.
