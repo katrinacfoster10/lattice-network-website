@@ -1,0 +1,574 @@
+/* ============================================================
+   THE LATTICE — SITE STYLES
+   Built against css/brand-tokens.css. No raw hex in here:
+   every colour is a var(--lattice-*) token.
+
+   Colour budget this page holds to:
+     Ink navy 45-55%  · Mist grey + white 30-40%
+     Cobalt 8-12%     · Iris 3-5%        · Citron 1-2%
+
+   Citron appears exactly twice on the page, both as signal:
+     1. one node in the hero lattice graphic
+     2. one node marker on the "Curated Peer Circles" card
+   ============================================================ */
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--lattice-cool-white);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img, svg { display: block; max-width: 100%; }
+
+
+/* ---------- Layout primitives ---------- */
+
+.wrap {
+  max-width: var(--lattice-content-max);
+  margin-inline: auto;
+  padding-inline: var(--lattice-gutter);
+}
+
+section { padding-block: var(--lattice-section-pad); }
+
+/* Ground alternation. Never two navy sections in a row. */
+.ground-mist  { background: var(--lattice-mist-grey); }
+.ground-white { background: var(--lattice-cool-white); }
+.ground-navy  { background: var(--lattice-ink-navy); }
+
+
+/* ---------- Type ---------- */
+
+h1, h2, h3 { letter-spacing: -0.015em; text-wrap: balance; }
+h1 { letter-spacing: -0.025em; }
+
+/* Small label / eyebrow — Inter 600, uppercase, cobalt */
+.eyebrow {
+  font-family: var(--lattice-font-ui);
+  font-size: var(--lattice-size-label);
+  font-weight: 600;
+  letter-spacing: var(--lattice-track-label);
+  text-transform: uppercase;
+  color: var(--lattice-cobalt);
+  display: block;
+  margin-bottom: var(--lattice-space-5);
+}
+
+.section-head { max-width: 64ch; }
+
+.intro {
+  font-size: 1.18rem;
+  color: var(--lattice-text-body);
+  margin-top: var(--lattice-space-5);
+}
+
+/* Newsreader pull line — an editorial statement, used sparingly */
+.pull {
+  font-family: var(--lattice-font-display);
+  font-weight: 500;
+  font-size: var(--lattice-size-pull);
+  line-height: 1.35;
+  color: var(--lattice-ink-navy);
+}
+
+/* Iris-tint panel for the two pull quotes. Low opacity, navy text. */
+.pull-panel {
+  background: var(--lattice-iris-tint);
+  border-radius: var(--lattice-radius-card);
+  padding: var(--lattice-space-5) var(--lattice-space-6);
+}
+
+.em-cobalt {
+  color: var(--lattice-cobalt);
+  font-style: italic;
+}
+
+
+/* ---------- Buttons, links, focus ---------- */
+
+.btn {
+  font-family: var(--lattice-font-ui);
+  font-weight: 500;
+  font-size: var(--lattice-size-ui);
+  line-height: 1.2;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--lattice-space-2);
+  padding: 10px 18px;
+  border: 1px solid transparent;
+  border-radius: var(--lattice-radius-control);
+  cursor: pointer;
+  white-space: nowrap;
+  text-decoration: none;
+  background: var(--lattice-cobalt);
+  color: var(--lattice-text-on-navy);
+  transition: background var(--lattice-motion-fast);
+}
+.btn:hover { background: var(--lattice-cobalt-hover); text-decoration: none; }
+
+.btn-secondary {
+  background: transparent;
+  color: var(--lattice-ink-navy);
+  border-color: var(--lattice-ink-navy);
+}
+.btn-secondary:hover {
+  background: var(--lattice-ink-navy);
+  color: var(--lattice-text-on-navy);
+}
+
+/* In-card text CTA */
+.cta-link {
+  font-family: var(--lattice-font-ui);
+  font-weight: 500;
+  font-size: var(--lattice-size-ui);
+  color: var(--lattice-cobalt);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--lattice-space-2);
+  transition: color var(--lattice-motion-fast);
+}
+.cta-link:hover { color: var(--lattice-cobalt-hover); }
+
+
+/* ---------- Header ---------- */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--lattice-cool-white);
+  border-bottom: 1px solid var(--lattice-border);
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--lattice-space-6);
+  min-height: 76px;
+  padding-block: var(--lattice-space-3);
+  flex-wrap: wrap;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: var(--lattice-space-3);
+  text-decoration: none;
+}
+.brand:hover { text-decoration: none; }
+
+.brand .mark {
+  width: 30px;
+  height: 30px;
+  flex: none;
+  color: var(--lattice-ink-navy);
+}
+
+/* Wordmark: Inter Semibold, uppercase, modest 0.12em tracking */
+.brand .wordmark {
+  font-family: var(--lattice-font-ui);
+  font-weight: 600;
+  font-size: 1.0625rem;
+  letter-spacing: var(--lattice-track-wordmark);
+  text-transform: uppercase;
+  color: var(--lattice-ink-navy);
+  line-height: 1;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: var(--lattice-space-8);
+  flex-wrap: wrap;
+}
+.nav-links a {
+  font-family: var(--lattice-font-ui);
+  font-weight: 500;
+  font-size: var(--lattice-size-ui);
+  color: var(--lattice-text-body);
+  transition: color var(--lattice-motion-fast);
+}
+.nav-links a:hover,
+.nav-links a:focus-visible { color: var(--lattice-cobalt); text-decoration: none; }
+
+
+/* ---------- Hero — navy section 1 of 2 ---------- */
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  padding-block: clamp(4.5rem, 10vw, 8rem);
+}
+.hero .lattice-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.hero .wrap { position: relative; z-index: 1; }
+
+.hero h1 {
+  color: var(--lattice-text-on-navy);
+  max-width: 15ch;
+}
+/* Iris reads on navy where cobalt does not (cobalt on navy fails contrast). */
+.hero h1 .accent {
+  font-style: italic;
+  color: var(--lattice-iris);
+}
+
+.hero .sub {
+  font-size: clamp(1.1rem, 2vw, 1.3rem);
+  line-height: 1.55;
+  color: var(--lattice-text-on-navy-2);
+  max-width: 46ch;
+  margin-top: var(--lattice-space-6);
+}
+
+.hero .cta-row { margin-top: var(--lattice-space-10); }
+
+.hero .founding-line {
+  font-family: var(--lattice-font-ui);
+  font-size: 0.875rem;
+  color: var(--lattice-text-on-navy-2);
+  margin-top: var(--lattice-space-8);
+  display: flex;
+  align-items: center;
+  gap: var(--lattice-space-3);
+}
+.hero .founding-line::before {
+  content: "";
+  width: 24px;
+  height: 1px;
+  background: var(--lattice-iris);
+  display: inline-block;
+  flex: none;
+}
+
+
+/* ---------- Section divider ---------- */
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: var(--lattice-space-3);
+  max-width: var(--lattice-content-max);
+  margin-inline: auto;
+  padding-inline: var(--lattice-gutter);
+}
+.divider::before,
+.divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--lattice-border);
+}
+.divider .node {
+  width: 7px;
+  height: 7px;
+  background: var(--lattice-cobalt);
+  transform: rotate(45deg);
+  flex: none;
+}
+
+
+/* ---------- Cards (shared) ---------- */
+
+.card {
+  background: var(--lattice-cool-white);
+  border: 1px solid var(--lattice-border);
+  border-radius: var(--lattice-radius-card);
+  padding: var(--lattice-space-6);
+  transition: border-color var(--lattice-motion-fast);
+}
+.card:hover { border-color: var(--lattice-border-strong); }
+
+.card h3 { font-size: 1.35rem; margin-bottom: var(--lattice-space-3); }
+.card p  { color: var(--lattice-text-body); }
+
+
+/* ---------- What we're building ---------- */
+
+.pillars {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--lattice-space-6);
+  margin-top: var(--lattice-space-14);
+}
+.pillar p + p { margin-top: var(--lattice-space-4); }
+
+.building .closing {
+  margin-top: var(--lattice-space-14);
+  max-width: 34ch;
+}
+
+
+/* ---------- Why now ---------- */
+
+.why .section-head { max-width: 40ch; }
+.why .body { max-width: 60ch; margin-top: var(--lattice-space-8); }
+.why .body p { font-size: 1.18rem; color: var(--lattice-text-body); }
+.why .body p + p { margin-top: var(--lattice-space-6); }
+.why .connects {
+  font-family: var(--lattice-font-display);
+  font-style: italic;
+  color: var(--lattice-cobalt);
+}
+
+
+/* ---------- What we're starting with ---------- */
+
+.offers {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--lattice-space-6);
+  margin-top: var(--lattice-space-10);
+}
+.offer { display: flex; flex-direction: column; }
+
+/* Node marker: one small filled circle per card, drawn with a border-box
+   dot rather than an image. Iris on two cards, citron on one. */
+.offer .node-row {
+  display: flex;
+  align-items: center;
+  gap: var(--lattice-space-2);
+  margin-bottom: var(--lattice-space-4);
+}
+.offer .node {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex: none;
+  background: var(--lattice-iris);
+}
+.offer.is-signal .node { background: var(--lattice-citron); }
+
+/* Section marker chip — iris tint, deep-iris text */
+.offer .tag {
+  font-family: var(--lattice-font-ui);
+  font-weight: 500;
+  font-size: 0.6875rem;
+  letter-spacing: 0.04em;
+  color: var(--lattice-iris-text);
+  background: var(--lattice-iris-tint);
+  border-radius: var(--lattice-radius-pill);
+  padding: 5px 12px;
+}
+
+.offer p { font-size: 1rem; flex: 1; }
+.offer .cta-link { margin-top: var(--lattice-space-6); align-self: flex-start; }
+
+
+/* ---------- Who it's for ---------- */
+
+.who .grid {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: clamp(2rem, 6vw, 4.5rem);
+  align-items: start;
+}
+
+/* Photography: real portraiture in a mist-grey frame.
+   No duotone, no overlay tint. Swap the <img src> in index.html. */
+.who .portrait {
+  margin-top: var(--lattice-space-10);
+  max-width: 300px;
+  background: var(--lattice-mist-grey);
+  border: 1px solid var(--lattice-border);
+  border-radius: var(--lattice-radius-card);
+  overflow: hidden;
+  aspect-ratio: 4 / 5;
+}
+.who .portrait img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.who ul { list-style: none; display: grid; gap: var(--lattice-space-5); }
+.who li {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--lattice-space-4);
+  align-items: start;
+  font-size: 1.0625rem;
+  color: var(--lattice-text-body);
+  padding-bottom: var(--lattice-space-5);
+  border-bottom: 1px solid var(--lattice-border);
+}
+/* Linked-node bullet, from the graphic system */
+.who li .node-icon { width: 22px; height: 22px; margin-top: 0.3em; flex: none; }
+
+.who .closing { margin-top: var(--lattice-space-14); max-width: 62ch; }
+
+
+/* ---------- For organizations — navy section 2 of 2 ---------- */
+
+.orgs { position: relative; overflow: hidden; }
+.orgs .lattice-bg { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.orgs .wrap {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: clamp(2rem, 6vw, 4rem);
+  align-items: center;
+}
+.orgs .eyebrow { color: var(--lattice-text-on-navy-2); }
+.orgs h2 { color: var(--lattice-text-on-navy); }
+.orgs .cta-side { display: flex; justify-content: flex-start; }
+
+
+/* ---------- Join the founding community ---------- */
+
+.join { border-top: 1px solid var(--lattice-ink-navy); }
+.join .wrap { max-width: 720px; text-align: center; }
+.join .body {
+  font-size: 1.18rem;
+  color: var(--lattice-text-body);
+  margin-top: var(--lattice-space-5);
+}
+.join .pitch {
+  margin-top: var(--lattice-space-8);
+  font-size: clamp(1.3rem, 2.6vw, 1.6rem);
+  font-style: italic;
+}
+
+.signup {
+  margin-top: var(--lattice-space-10);
+  display: grid;
+  gap: var(--lattice-space-4);
+  max-width: 460px;
+  margin-inline: auto;
+  text-align: left;
+}
+
+.field { display: grid; gap: var(--lattice-space-1); }
+
+.signup input,
+.signup select {
+  font-family: var(--lattice-font-ui);
+  font-size: 1rem;
+  color: var(--lattice-ink-navy);
+  padding: 12px 14px;
+  border: 1px solid var(--lattice-border-strong);
+  border-radius: var(--lattice-radius-control);
+  background: var(--lattice-cool-white);
+  width: 100%;
+  transition: border-color var(--lattice-motion-fast);
+}
+.signup input:hover,
+.signup select:hover { border-color: var(--lattice-ink-navy); }
+
+.signup [aria-invalid="true"] { border-color: var(--lattice-error); }
+
+.error-text {
+  font-family: var(--lattice-font-ui);
+  font-weight: 400;
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  color: var(--lattice-error);
+  min-height: 0;
+}
+.error-text:empty { display: none; }
+
+.signup .btn { justify-content: center; width: 100%; }
+
+.signup .fineprint {
+  font-family: var(--lattice-font-ui);
+  font-size: 0.8125rem;
+  color: var(--lattice-text-muted);
+  text-align: center;
+}
+
+/* Honeypot — off-screen, never focusable by sighted or keyboard users */
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+
+/* ---------- Footer ---------- */
+
+.site-footer {
+  background: var(--lattice-ink-navy);
+  padding-block: var(--lattice-space-18);
+}
+.site-footer .wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--lattice-space-6) var(--lattice-space-14);
+  align-items: flex-start;
+  justify-content: space-between;
+}
+.site-footer .f-brand { display: flex; align-items: center; gap: var(--lattice-space-3); }
+.site-footer .mark { width: 26px; height: 26px; color: var(--lattice-text-on-navy); }
+.site-footer .wordmark {
+  font-family: var(--lattice-font-ui);
+  font-weight: 600;
+  font-size: 0.9375rem;
+  letter-spacing: var(--lattice-track-wordmark);
+  text-transform: uppercase;
+  color: var(--lattice-text-on-navy);
+  line-height: 1;
+}
+.site-footer .f-dates {
+  font-family: var(--lattice-font-ui);
+  font-size: 0.875rem;
+  color: var(--lattice-text-on-navy-2);
+  margin-top: var(--lattice-space-3);
+}
+.site-footer nav { display: flex; gap: var(--lattice-space-6); flex-wrap: wrap; align-items: center; }
+.site-footer nav a {
+  font-family: var(--lattice-font-ui);
+  font-size: var(--lattice-size-ui);
+  color: var(--lattice-text-on-navy-2);
+  transition: color var(--lattice-motion-fast);
+}
+.site-footer nav a:hover { color: var(--lattice-text-on-navy); }
+.site-footer .copyright {
+  width: 100%;
+  border-top: 1px solid var(--lattice-border-on-navy);
+  padding-top: var(--lattice-space-6);
+  font-family: var(--lattice-font-ui);
+  font-size: 0.8125rem;
+  color: var(--lattice-text-on-navy-2);
+}
+
+/* Focus rings must stay visible against navy */
+.hero :focus-visible,
+.orgs :focus-visible,
+.site-footer :focus-visible { outline-color: var(--lattice-text-on-navy); }
+
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 900px) {
+  .offers { grid-template-columns: 1fr 1fr; }
+  .orgs .wrap { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 820px) {
+  .who .grid { grid-template-columns: 1fr; }
+  .who .portrait { max-width: 340px; }
+}
+
+@media (max-width: 720px) {
+  /* The nav wraps to three lines on a phone. Sticky would eat a third of
+     the viewport, so let the header scroll away instead. */
+  .site-header { position: static; }
+  .nav {
+    justify-content: center;
+    text-align: center;
+    min-height: 0;
+    gap: var(--lattice-space-3);
+  }
+  .nav-links { gap: var(--lattice-space-3) var(--lattice-space-5); justify-content: center; }
+  .nav-links a { font-size: 0.875rem; }
+  .pillars { grid-template-columns: 1fr; }
+  .offers { grid-template-columns: 1fr; }
+  .hero h1 { max-width: none; }
+}
