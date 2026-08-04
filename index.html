@@ -85,8 +85,7 @@
         </div>
         <p class="founding-line">
           <span>Founding peer circles launch <strong>September 2026</strong></span>
-          <span class="sep" aria-hidden="true"></span>
-          <span>Membership opens <strong>January 2027</strong></span>
+          <span class="dated">Membership opens <strong>January 2027</strong></span>
         </p>
       </div>
     </section>
@@ -312,13 +311,34 @@
         <p class="f-dates">Launching September 2026 · Membership opens January 2027</p>
       </div>
       <nav aria-label="Footer">
-        <a href="mailto:hello@thelattice.ca">Contact</a>
+        <a href="mailto:hello@latticenetwork.ca">Contact</a>
         <a href="#join">Express Interest</a>
+        <a href="#" id="consent-reopen">Cookie settings</a>
       </nav>
       <p class="copyright">© 2026 The Lattice</p>
     </div>
   </footer>
 
+  <!-- ======================= COOKIE CONSENT =======================
+       Hidden until analytics.js decides whether a choice is still needed.
+       No analytics script loads before Accept is clicked. -->
+  <div class="consent ground-navy" id="consent" role="region" aria-label="Cookie consent" hidden>
+    <div class="consent-inner">
+      <div>
+        <p class="consent-title">Cookies</p>
+        <p class="consent-text">
+          We'd like to use analytics cookies to understand how this site is used.
+          They're optional — nothing is set unless you accept.
+        </p>
+      </div>
+      <div class="consent-actions">
+        <button class="btn" type="button" id="consent-accept">Accept</button>
+        <button class="btn btn-ghost" type="button" id="consent-decline">Decline</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/analytics.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>

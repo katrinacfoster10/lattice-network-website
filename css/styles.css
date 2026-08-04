@@ -5,14 +5,17 @@
 
    Colour budget this page holds to:
      Ink navy 45-55%  · Mist grey + white 30-40%
-     Cobalt 8-12%     · Iris 3-5%        · Citron 1-2%
+     Cobalt 8-12%     · Iris 3-5%
 
-   Citron appears three times, always as signal, never as a fill:
-     1. one node in the hero lattice graphic
-     2. the separator between the two launch dates (hidden on mobile,
-        where it would orphan onto its own line)
-     3. one node marker on the "Curated Peer Circles" card
-   That is two per viewport at most, which is the bible's ceiling.
+   CITRON IS THE ACTION COLOUR and does nothing else. With
+   data-cta="citron" active on <body> (the chosen system), the only
+   citron on the page is the two CTA buttons on navy grounds. Every
+   decorative node — hero graphic, launch-date separator, offer card
+   marker — is iris. Do not reintroduce citron as an accent: the whole
+   point is that citron always means "act here".
+
+   See the CITRON CTA block near the end of this file for the contrast
+   rules and the known divergence from the brand bible.
    ============================================================ */
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -168,6 +171,19 @@ h1 em, h2 em {
 }
 .btn-secondary:hover {
   background: var(--lattice-ink-navy);
+  color: var(--lattice-text-on-navy);
+}
+
+/* Outlined button for use on navy. The navy-bordered .btn-secondary is
+   invisible there. Used by the consent banner's Decline, which must be
+   as easy to find as Accept. */
+.btn-ghost {
+  background: transparent;
+  color: var(--lattice-text-on-navy);
+  border-color: var(--lattice-border-on-navy);
+}
+.btn-ghost:hover {
+  background: rgba(255, 255, 255, 0.12);
   color: var(--lattice-text-on-navy);
 }
 
@@ -377,12 +393,18 @@ h1 em, h2 em {
   font-weight: 600;
   color: var(--lattice-text-on-navy);
 }
-.hero .founding-line .sep {
+/* The separator is a ::before on the SECOND date rather than a standalone
+   element, so when the line wraps the dot travels with the text it
+   belongs to instead of dangling at the end of the first line. */
+.hero .founding-line .dated::before {
+  content: "";
+  display: inline-block;
   width: 5px;
   height: 5px;
   border-radius: 50%;
   background: var(--lattice-citron);
-  flex: none;
+  vertical-align: middle;
+  margin-right: var(--lattice-space-4);
 }
 
 
@@ -693,24 +715,83 @@ h1 em, h2 em {
    their light periwinkle. Light-ground CTAs here stay cobalt.
    ============================================================ */
 
-/* Dark grounds — citron carries the action */
-[data-cta="citron"] .ground-navy .btn {
+/* Dark grounds — citron carries the action.
+   :not(.btn-ghost) matters. Without it this rule out-specifies
+   .btn-ghost and paints outlined buttons citron too, which made the
+   consent banner's Accept and Decline visually identical. */
+[data-cta="citron"] .ground-navy .btn:not(.btn-ghost) {
   background: var(--lattice-citron);
   color: var(--lattice-ink-navy);
 }
-[data-cta="citron"] .ground-navy .btn:hover {
+[data-cta="citron"] .ground-navy .btn:not(.btn-ghost):hover {
   background: #B4C63A; /* darkened; still 9.4:1 against navy text */
 }
 
 /* Accent duty moves to iris so citron reads as action only. */
 [data-cta="citron"] .node-signal { fill: var(--lattice-iris); animation: none; }
 [data-cta="citron"] .offer.is-signal .node { background: var(--lattice-iris); }
-[data-cta="citron"] .hero .founding-line .sep { background: var(--lattice-iris); }
+[data-cta="citron"] .hero .founding-line .dated::before { background: var(--lattice-iris); }
 
 /* Focus rings must not sit on a similar hue */
 [data-cta="citron"] .btn:focus-visible { outline-color: var(--lattice-ink-navy); }
 [data-cta="citron"] .hero .btn:focus-visible,
 [data-cta="citron"] .orgs .btn:focus-visible { outline-color: var(--lattice-text-on-navy); }
+
+
+/* ---------- Cookie consent banner ---------- */
+
+.consent {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 200;
+  border-top: 1px solid var(--lattice-border-on-navy);
+  padding-block: var(--lattice-space-5);
+}
+/* The hidden attribute must win over the fixed positioning above. */
+.consent[hidden] { display: none; }
+
+.consent-inner {
+  max-width: var(--lattice-content-max);
+  margin-inline: auto;
+  padding-inline: var(--lattice-gutter);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--lattice-space-5) var(--lattice-space-8);
+  flex-wrap: wrap;
+}
+
+.consent-title {
+  font-family: var(--lattice-font-ui);
+  font-size: var(--lattice-size-label);
+  font-weight: 600;
+  letter-spacing: var(--lattice-track-label);
+  text-transform: uppercase;
+  color: var(--lattice-text-on-navy);
+  margin-bottom: var(--lattice-space-2);
+}
+
+.consent-text {
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: var(--lattice-text-on-navy-2);
+  max-width: 64ch;
+}
+
+.consent-actions {
+  display: flex;
+  gap: var(--lattice-space-3);
+  flex: none;
+}
+
+.consent :focus-visible { outline-color: var(--lattice-text-on-navy); }
+
+@media (max-width: 600px) {
+  .consent-actions { width: 100%; }
+  .consent-actions .btn { flex: 1; justify-content: center; }
+}
 
 
 /* ---------- Responsive ---------- */
@@ -745,5 +826,5 @@ h1 em, h2 em {
   /* The two dates stack on a phone; the citron separator would orphan
      onto the second line, so drop it and let the rows read as a list. */
   .hero .founding-line { flex-direction: column; align-items: flex-start; }
-  .hero .founding-line .sep { display: none; }
+  .hero .founding-line .dated::before { display: none; }
 }
