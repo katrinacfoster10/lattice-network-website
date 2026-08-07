@@ -1,55 +1,25 @@
 /* ============================================================
    THE LATTICE — site behaviour
+
    1. Section CTAs pre-select the matching interest in the form
-   2. Inline form validation on blur (per the brand handoff)
+   2. Inline validation (required name, valid email, required interest)
+   3. Submit over fetch, so success replaces the form inside the same
+      panel rather than navigating away
+
+   There is no scroll animation in this direction, by design. If any
+   is ever added, gate it behind prefers-reduced-motion.
    ============================================================ */
 
 (function () {
   'use strict';
 
-  /* ---- 0. Scroll reveal ----
-     Progressive enhancement: the hiding class is only ever applied by JS,
-     so with scripts off or reduced motion on, everything renders visible. */
-  var prefersReducedMotion =
-    window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  if (!prefersReducedMotion && 'IntersectionObserver' in window) {
-    var reveals = [].slice.call(document.querySelectorAll('[data-reveal]'));
-
-    reveals.forEach(function (el) { el.classList.add('reveal-init'); });
-
-    var observerFired = false;
-
-    var observer = new IntersectionObserver(function (entries) {
-      observerFired = true;
-      entries.forEach(function (entry) {
-        if (!entry.isIntersecting) return;
-        entry.target.classList.add('is-revealed');
-        observer.unobserve(entry.target);
-      });
-    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
-
-    reveals.forEach(function (el) { observer.observe(el); });
-
-    /* Fail open. A working IntersectionObserver always delivers an initial
-       callback for every observed target, so if nothing has arrived by now
-       the API is not functioning in this environment — and without this
-       every revealed element would stay at opacity 0 and the page would
-       render blank. Content visibility must never depend on animation.
-
-       This sets a class that forces visibility with !important rather than
-       just removing `reveal-init`, because un-hiding via a transition would
-       itself depend on the rendering pipeline that is evidently unwell. */
-    window.setTimeout(function () {
-      if (observerFired) return;
-      observer.disconnect();
-      document.documentElement.classList.add('reveal-disabled');
-    }, 1500);
-  }
-
   var select = document.getElementById('interest');
+  var form = document.querySelector('form.signup');
+  var panel = document.getElementById('form-panel');
 
-  /* ---- 1. Pre-select interest from a section CTA ---- */
+  /* ---- 1. Pre-select interest from a section CTA ----
+     The three "What We're Starting With" links and the Organizations
+     CTA each scroll to the form AND set the select's value. */
   if (select) {
     document.querySelectorAll('[data-interest]').forEach(function (el) {
       el.addEventListener('click', function () {
@@ -65,9 +35,9 @@
     });
   }
 
-  /* ---- 2. Inline validation ---- */
-  var form = document.querySelector('form.signup');
   if (!form) return;
+
+  /* ---- 2. Inline validation ---- */
 
   var MESSAGES = {
     name: 'Please enter your name.',
@@ -123,6 +93,36 @@
     });
   });
 
+  /* ---- 3. Submit ----
+     Netlify captures the submission from the POST body; the form-name
+     hidden field is what routes it to the "early-access" form. Posting
+     over fetch keeps the visitor on the page. If the fetch fails (the
+     page opened from disk, or the network dropped) the form falls back
+     to a normal browser submit rather than swallowing the entry. */
+
+  function showSuccess() {
+    if (!panel) return;
+    var done = document.createElement('div');
+    done.className = 'form-done';
+    done.setAttribute('role', 'status');
+    done.setAttribute('tabindex', '-1');
+
+    var heading = document.createElement('h3');
+    heading.textContent = 'Thank you — you\'re on the list.';
+
+    var body = document.createElement('p');
+    body.textContent =
+      'We\'ll be in touch as the founding cohort takes shape. ' +
+      'Nothing else is needed from you right now.';
+
+    done.appendChild(heading);
+    done.appendChild(body);
+    panel.replaceChildren(done);
+    done.focus();
+  }
+
+  var submitting = false;
+
   form.addEventListener('submit', function (event) {
     var firstInvalid = null;
 
@@ -133,6 +133,33 @@
     if (firstInvalid) {
       event.preventDefault();
       firstInvalid.focus();
+      return;
     }
+
+    if (submitting) return;      // second pass: let the native submit run
+
+    event.preventDefault();
+    submitting = true;
+
+    var button = form.querySelector('button[type="submit"]');
+    if (button) {
+      button.disabled = true;
+      button.textContent = 'Sending…';
+    }
+
+    window.fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams(new FormData(form)).toString()
+    })
+      .then(function (response) {
+        if (!response.ok) throw new Error('Netlify returned ' + response.status);
+        showSuccess();
+      })
+      .catch(function () {
+        // Hand the submission back to the browser rather than lose it.
+        submitting = true;
+        form.submit();
+      });
   });
 })();

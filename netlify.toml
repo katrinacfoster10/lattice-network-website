@@ -1,0 +1,26 @@
+# Netlify config for The Lattice.
+#
+# Static HTML/CSS/JS with no build step: Netlify publishes the repo root
+# as-is. There is no [build] block and no SPA redirect — this is a single
+# index.html with anchor navigation, so a catch-all rewrite would only
+# mask real 404s.
+
+[build]
+  publish = "."
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+[[headers]]
+  for = "/css/*"
+  [headers.values]
+    Cache-Control = "public, max-age=3600"
+
+[[headers]]
+  for = "/js/*"
+  [headers.values]
+    Cache-Control = "public, max-age=3600"

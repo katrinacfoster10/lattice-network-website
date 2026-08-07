@@ -1,29 +1,45 @@
 /* ============================================================
-   THE LATTICE — SITE STYLES
-   Built against css/brand-tokens.css. No raw hex in here:
-   every colour is a var(--lattice-*) token.
+   THE LATTICE — SITE STYLES (v3)
+
+   Built against css/brand-tokens.css. No raw hex in here except
+   inside the two inline SVG graphics, which carry their own
+   stroke/fill: every other colour is a var(--lattice-*) token.
 
    Colour budget this page holds to:
      Ink navy 45-55%  · Mist grey + white 30-40%
-     Cobalt 8-12%     · Iris 3-5%
+     Cobalt 8-12%     · Iris 3-5%     · Citron 2-4%
 
-   CITRON IS THE ACTION COLOUR and does nothing else. With
-   data-cta="citron" active on <body> (the chosen system), the only
-   citron on the page is the two CTA buttons on navy grounds. Every
-   decorative node — hero graphic, launch-date separator, offer card
-   marker — is iris. Do not reintroduce citron as an accent: the whole
-   point is that citron always means "act here".
+   THE CITRON RULE. Citron means "act here". It carries primary
+   CTAs on ink navy grounds ONLY, always with navy text, and does
+   no decorative work — no dots, no underlines, no markers. On a
+   light ground it is 1.5:1 against white and fails WCAG 1.4.11
+   for the button's own edge, so light-ground CTAs are cobalt.
 
-   See the CITRON CTA block near the end of this file for the contrast
-   rules and the known divergence from the brand bible.
+   Citron appears exactly three times: the header Express Interest
+   button, the hero Get Early Access button, and the form submit.
+   (The consent banner's Accept is the fourth, and it sits on its
+   own navy bar — it is chrome, not page content.) Adding another
+   is a brand decision, not a build decision.
+
+   STRUCTURE. Panels and section blocks are square — no radius.
+   Cards were removed from this direction deliberately. Section
+   headings sit above a 2px navy rule; columns are divided by 1px
+   hairlines, never by borders around a box.
    ============================================================ */
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
 
 body {
   background: var(--lattice-cool-white);
+  color: var(--lattice-text-body);
+  font-family: var(--lattice-font-ui);
+  font-size: var(--lattice-size-body);
+  line-height: var(--lattice-lh-body);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
@@ -31,7 +47,7 @@ body {
 img, svg { display: block; max-width: 100%; }
 
 
-/* ---------- Layout primitives ---------- */
+/* ---------------- Layout primitives ---------------- */
 
 .wrap {
   max-width: var(--lattice-content-max);
@@ -41,820 +57,745 @@ img, svg { display: block; max-width: 100%; }
 
 section { padding-block: var(--lattice-section-pad); }
 
-/* Ground alternation. Never two navy sections in a row.
-   Running order: navy · mist · iris · mist · white · navy · white · navy footer.
-   The iris ground breaks up what was four near-white sections in a row. */
-.ground-mist  { background: var(--lattice-mist-grey); }
-.ground-white { background: var(--lattice-cool-white); }
-.ground-navy  { background: var(--lattice-ink-navy); }
-/* Iris as a ground must stay low-opacity with navy text on top (never a
-   solid iris panel). 0.12 sits inside the bible's 0.10-0.16 range. */
-.ground-iris  { background: rgba(122, 108, 255, 0.12); }
+/* The sticky header would otherwise sit on top of an anchored heading. */
+[id] { scroll-margin-top: var(--lattice-header-offset); }
 
-/* Asymmetric opener: display heading left, body copy right.
-   Stops the page reading as one left-aligned column repeated seven times. */
-.split {
+/* Grounds alternate deliberately: navy · white · grey · white · navy ·
+   white · grey · navy · white. No two adjacent sections share a ground,
+   and the page does not read as a strict navy/white stripe. */
+.ground-white { background: var(--lattice-cool-white); }
+.ground-mist  { background: var(--lattice-mist-grey); }
+.ground-navy  { background: var(--lattice-ink-navy); }
+
+/* Two balanced columns. auto-fit collapses to one column below the
+   minmax floor without needing the 900px breakpoint. */
+.two-col {
   display: grid;
-  grid-template-columns: 1.05fr 0.95fr;
-  gap: clamp(2rem, 6vw, 5rem);
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: clamp(2rem, 5vw, 4rem);
   align-items: start;
 }
-.split-head h2 { max-width: 16ch; }
-.split-body p { font-size: 1.18rem; color: var(--lattice-text-body); }
-.split-body p + p { margin-top: var(--lattice-space-6); }
 
 
-/* ---------- Type ---------- */
+/* ---------------- Type ---------------- */
 
-h1, h2, h3 { letter-spacing: -0.015em; text-wrap: balance; }
-h1 { letter-spacing: -0.025em; }
+h1, h2, h3 {
+  font-family: var(--lattice-font-display);
+  color: var(--lattice-ink-navy);
+  text-wrap: pretty;
+}
 
-/* Small label / eyebrow — Inter 600, uppercase, cobalt, with a lead rule.
-   The rule is the editorial device that stops labels reading as filler. */
+h1 {
+  font-weight: 500;
+  font-size: var(--lattice-size-hero);
+  line-height: var(--lattice-lh-hero);
+  letter-spacing: var(--lattice-track-hero);
+}
+
+/* Section headline. */
+h2 {
+  font-weight: 600;
+  font-size: var(--lattice-size-section);
+  line-height: var(--lattice-lh-section);
+  letter-spacing: var(--lattice-track-section);
+}
+
+/* Large statement, used in the navy sections and Why Now. */
+.statement {
+  font-weight: 500;
+  font-size: var(--lattice-size-statement);
+  line-height: var(--lattice-lh-statement);
+  letter-spacing: var(--lattice-track-statement);
+}
+.statement-light { color: var(--lattice-text-on-navy); }
+.statement-join {
+  font-size: clamp(1.9rem, 3.5vw, 2.75rem);
+  line-height: var(--lattice-lh-section);
+}
+.statement-sm {
+  font-family: var(--lattice-font-display);
+  font-weight: 500;
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  line-height: 1.25;
+  letter-spacing: var(--lattice-track-section);
+  color: var(--lattice-ink-navy);
+  text-wrap: pretty;
+}
+
+/* Why Now sets its heading in Newsreader 600 at the statement scale. */
+.why .statement { font-weight: 600; }
+
+h3 {
+  font-weight: 600;
+  font-size: var(--lattice-size-column);
+  line-height: 1.2;
+}
+
+/* Italic carries emphasis in this system — never colour. */
+em { font-style: italic; }
+
+p + p { margin-top: 1.1rem; }
+
+/* Small label above a heading. Inter 600, uppercase, cobalt on light
+   grounds and iris on navy. No lead rule, no tint chip. */
 .eyebrow {
+  display: block;
   font-family: var(--lattice-font-ui);
   font-size: var(--lattice-size-label);
   font-weight: 600;
   letter-spacing: var(--lattice-track-label);
   text-transform: uppercase;
   color: var(--lattice-cobalt);
-  display: inline-flex;
-  align-items: center;
-  gap: var(--lattice-space-3);
-  margin-bottom: var(--lattice-space-5);
+  margin-bottom: 1.1rem;
 }
-.eyebrow::before {
-  content: "";
-  width: 28px;
-  height: 1px;
-  background: currentColor;
-  flex: none;
-}
+.eyebrow-iris { color: var(--lattice-iris); }
 
-/* Keynote — the two or three moments per page that carry the argument.
-   Sits above the bible's section-heading scale on purpose; drop the
-   `keynote` class from a heading to return it to standard section size. */
-.keynote {
-  font-size: clamp(2.1rem, 4.2vw, 3.35rem);
-  line-height: 1.1;
-}
-
-/* The signature: one italic accent word per headline.
-   Cobalt on light grounds, iris on navy (cobalt fails contrast there). */
-h1 em, h2 em {
-  font-style: italic;
-  font-weight: inherit;
+/* 01 / 02 / 03 markers. */
+.numeral {
+  font-family: var(--lattice-font-ui);
+  font-size: var(--lattice-size-label);
+  font-weight: 600;
+  letter-spacing: var(--lattice-track-numeral);
   color: var(--lattice-cobalt);
 }
-.ground-navy h1 em,
-.ground-navy h2 em { color: var(--lattice-iris); }
 
-/* Headings get a tight measure so they break into strong stacked lines;
-   body copy keeps a comfortable reading measure. */
-.section-head h2 { max-width: 20ch; }
-.section-head .intro { max-width: 58ch; }
-
-.intro {
-  font-size: 1.18rem;
-  color: var(--lattice-text-body);
-  margin-top: var(--lattice-space-5);
-}
-
-/* Newsreader pull line — an editorial statement, used sparingly */
-.pull {
-  font-family: var(--lattice-font-display);
-  font-weight: 500;
-  font-size: var(--lattice-size-pull);
-  line-height: 1.35;
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 200;
+  background: var(--lattice-citron);
   color: var(--lattice-ink-navy);
+  font-weight: 600;
+  padding: 0.75rem 1.25rem;
 }
-
-/* Iris-tint panel for the two pull quotes. Low opacity, navy text. */
-.pull-panel {
-  background: var(--lattice-iris-tint);
-  border-radius: var(--lattice-radius-card);
-  padding: var(--lattice-space-5) var(--lattice-space-6);
-}
-
-.em-cobalt {
-  color: var(--lattice-cobalt);
-  font-style: italic;
-}
+.skip-link:focus { left: 0; }
 
 
-/* ---------- Buttons, links, focus ---------- */
+/* ---------------- Controls ---------------- */
+
+a { color: var(--lattice-cobalt); text-decoration: none; }
+a:hover { color: var(--lattice-ink-navy); }
 
 .btn {
   font-family: var(--lattice-font-ui);
-  font-weight: 500;
-  font-size: var(--lattice-size-ui);
-  line-height: 1.2;
   display: inline-flex;
   align-items: center;
-  gap: var(--lattice-space-2);
-  padding: 10px 18px;
-  border: 1px solid transparent;
+  justify-content: center;
+  gap: 0.55rem;
+  border: 0;
   border-radius: var(--lattice-radius-control);
   cursor: pointer;
-  white-space: nowrap;
-  text-decoration: none;
-  background: var(--lattice-cobalt);
-  color: var(--lattice-text-on-navy);
-  transition: background var(--lattice-motion-fast);
+  transition: background var(--lattice-motion-base),
+              transform var(--lattice-motion-fast),
+              color var(--lattice-motion-base);
 }
-.btn:hover { background: var(--lattice-cobalt-hover); text-decoration: none; }
+.btn:hover { color: inherit; }
 
-.btn-secondary {
-  background: transparent;
+/* Primary action on NAVY grounds only. Navy text, never white. */
+.btn-citron {
+  background: var(--lattice-citron);
   color: var(--lattice-ink-navy);
-  border-color: var(--lattice-ink-navy);
+  font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+  padding: 0.9rem 1.6rem;
 }
-.btn-secondary:hover {
-  background: var(--lattice-ink-navy);
-  color: var(--lattice-text-on-navy);
+.btn-citron:hover {
+  background: var(--lattice-citron-hover);
+  color: var(--lattice-ink-navy);
+  transform: translateY(-1px);
 }
 
-/* Outlined button for use on navy. The navy-bordered .btn-secondary is
-   invisible there. Used by the consent banner's Decline, which must be
-   as easy to find as Accept. */
+/* Primary action on LIGHT grounds. */
+.btn-cobalt {
+  background: var(--lattice-cobalt);
+  color: var(--lattice-cool-white);
+  font-weight: 500;
+  font-size: 0.9rem;
+  padding: 0.75rem 1.3rem;
+}
+.btn-cobalt:hover {
+  background: var(--lattice-cobalt-hover);
+  color: var(--lattice-cool-white);
+}
+
 .btn-ghost {
   background: transparent;
   color: var(--lattice-text-on-navy);
-  border-color: var(--lattice-border-on-navy);
+  font-weight: 500;
+  border: 1px solid var(--lattice-border-on-navy);
 }
 .btn-ghost:hover {
-  background: rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.08);
   color: var(--lattice-text-on-navy);
 }
 
-/* In-card text CTA */
-.cta-link {
-  font-family: var(--lattice-font-ui);
-  font-weight: 500;
-  font-size: var(--lattice-size-ui);
-  color: var(--lattice-cobalt);
+.btn-sm { font-size: 0.82rem; padding: 0.68rem 1.15rem; }
+.btn-block { width: 100%; padding-block: 0.95rem; }
+
+/* Cobalt text link with a travelling arrow. */
+.text-link {
   display: inline-flex;
   align-items: center;
-  gap: var(--lattice-space-2);
-  transition: color var(--lattice-motion-fast);
+  gap: 0.45rem;
+  font-weight: 500;
+  font-size: 0.95rem;
+  color: var(--lattice-cobalt);
+  transition: gap var(--lattice-motion-base), color var(--lattice-motion-base);
 }
-.cta-link:hover { color: var(--lattice-cobalt-hover); }
+.text-link:hover { gap: 0.7rem; color: var(--lattice-ink-navy); }
 
+.text-link-sm { font-weight: 500; font-size: 0.88rem; }
 
-/* ============================================================
-   MOTION
-   The bible allows 150ms for colour/hover, 200ms for larger state
-   changes. Entrance reveals are a separate category and run at 500ms.
-   Everything here is switched off under prefers-reduced-motion —
-   brand-tokens.css kills transitions and animations globally, and
-   main.js never applies the reveal classes in the first place.
-   ============================================================ */
-
-/* Arrows nudge forward on hover */
-.btn > span[aria-hidden],
-.cta-link > span[aria-hidden] {
-  transition: transform var(--lattice-motion-fast);
+/* Focus: citron on navy, cobalt on light. */
+:focus-visible {
+  outline: 2px solid var(--lattice-cobalt);
+  outline-offset: 2px;
 }
-.btn:hover > span[aria-hidden],
-.cta-link:hover > span[aria-hidden] { transform: translateX(3px); }
-
-/* Nav links: underline grows from the left */
-.nav-links a { position: relative; }
-.nav-links a::after {
-  content: "";
-  position: absolute;
-  left: 0; right: 0; bottom: -5px;
-  height: 1.5px;
-  background: currentColor;
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform var(--lattice-motion-base);
-}
-.nav-links a:hover::after,
-.nav-links a:focus-visible::after { transform: scaleX(1); }
-.nav-links a:hover { text-decoration: none; }
-
-/* The hero's citron node breathes — one slow signal, not a particle field.
-   Delete this rule to make it static. */
-@keyframes signal-pulse {
-  0%, 100% { opacity: 1; }
-  50%      { opacity: 0.45; }
-}
-.node-signal {
-  fill: var(--lattice-citron);
-  animation: signal-pulse 3.4s ease-in-out infinite;
-}
-
-/* Scroll reveal. `reveal-init` is added by JS, so with JS off or
-   reduced motion on, content renders visible and unanimated. */
-[data-reveal] {
-  transition: opacity 500ms ease-out, transform 500ms ease-out;
-  transition-delay: calc(var(--i, 0) * 80ms);
-}
-.reveal-init { opacity: 0; transform: translateY(14px); }
-.reveal-init.is-revealed { opacity: 1; transform: none; }
-
-/* Hard kill switch, set by main.js when IntersectionObserver does not
-   respond. It must not rely on a transition to become visible — in an
-   environment where observers are dead, transitions may be too. */
-.reveal-disabled [data-reveal] {
-  opacity: 1 !important;
-  transform: none !important;
-  transition: none !important;
+.ground-navy :focus-visible,
+.site-header :focus-visible,
+.consent :focus-visible {
+  outline-color: var(--lattice-citron);
 }
 
 
-/* ---------- Header ---------- */
+/* ---------------- Header ---------------- */
 
 .site-header {
   position: sticky;
   top: 0;
   z-index: 100;
-  background: var(--lattice-cool-white);
-  border-bottom: 1px solid var(--lattice-border);
+  background: var(--lattice-ink-navy);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
 }
-
-.nav {
+.header-inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: var(--lattice-space-6);
-  min-height: 76px;
-  padding-block: var(--lattice-space-3);
+  gap: 1.5rem;
   flex-wrap: wrap;
+  min-height: 80px;
 }
 
 .brand {
   display: flex;
   align-items: center;
-  gap: var(--lattice-space-3);
-  text-decoration: none;
+  gap: 0.7rem;
+  padding-block: 0.75rem;
+  color: var(--lattice-text-on-navy);
 }
-.brand:hover { text-decoration: none; }
+.brand:hover { color: var(--lattice-text-on-navy); }
+.brand .mark { color: var(--lattice-text-on-navy); flex: none; }
 
-.brand .mark {
-  width: 30px;
-  height: 30px;
-  flex: none;
-  color: var(--lattice-ink-navy);
-}
-
-/* Wordmark: Inter Semibold, uppercase, modest 0.12em tracking */
-.brand .wordmark {
+.wordmark {
   font-family: var(--lattice-font-ui);
   font-weight: 600;
-  font-size: 1.0625rem;
+  font-size: 0.94rem;
   letter-spacing: var(--lattice-track-wordmark);
   text-transform: uppercase;
-  color: var(--lattice-ink-navy);
-  line-height: 1;
 }
 
 .nav-links {
   display: flex;
   align-items: center;
-  gap: var(--lattice-space-8);
+  gap: clamp(1rem, 2.4vw, 1.9rem);
   flex-wrap: wrap;
+  padding-bottom: 0.5rem;
 }
 .nav-links a {
-  font-family: var(--lattice-font-ui);
-  font-weight: 500;
   font-size: var(--lattice-size-ui);
-  color: var(--lattice-text-body);
-  transition: color var(--lattice-motion-fast);
+  font-weight: 500;
+  color: var(--lattice-text-on-navy-2);
+  transition: color var(--lattice-motion-base);
 }
-.nav-links a:hover,
-.nav-links a:focus-visible { color: var(--lattice-cobalt); text-decoration: none; }
+.nav-links a:hover { color: var(--lattice-text-on-navy); }
+/* The nav link colour must not reach the button sitting inside the nav. */
+.nav-links a.btn-citron,
+.nav-links a.btn-citron:hover { color: var(--lattice-ink-navy); }
 
 
-/* ---------- Hero — navy section 1 of 2 ---------- */
+/* ---------------- Hero ---------------- */
 
 .hero {
-  position: relative;
+  padding-block: 0;
   overflow: hidden;
-  padding-block: clamp(4.5rem, 10vw, 8rem);
 }
-.hero .lattice-bg,
-.hero .hero-photo {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.42fr 0.58fr;
+  align-items: stretch;
 }
-
-/* Photography behind the hero. The scrim is the bible's maximum navy tint,
-   so white headline type stays legible over any image. */
-.hero .hero-photo {
-  background-image: var(--hero-photo);
-  background-size: cover;
-  background-position: center;
+.hero-copy {
+  padding: clamp(3.5rem, 7vw, 6rem) clamp(1.5rem, 4vw, 3.5rem) clamp(3.5rem, 6vw, 5.5rem) 0;
 }
-.hero .hero-photo::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(11, 27, 58, 0.55);
-}
-
-.hero .wrap { position: relative; z-index: 1; }
-
-.hero h1 {
+.hero-copy h1 {
   color: var(--lattice-text-on-navy);
-  max-width: 15ch;
+  margin-top: 1.6rem;
 }
-
-.hero .sub {
-  font-size: clamp(1.15rem, 2vw, 1.4rem);
-  line-height: 1.5;
+.hero-deck {
+  font-size: clamp(1.05rem, 1.6vw, 1.25rem);
   color: var(--lattice-text-on-navy-2);
+  line-height: 1.55;
   max-width: 42ch;
-  margin-top: var(--lattice-space-6);
+  margin-top: 1.7rem;
 }
-
-.hero .cta-row { margin-top: var(--lattice-space-10); }
-
-/* The two launch dates are the most concrete thing on the page.
-   Given a rule, real spacing and emphasis rather than tucked away as meta. */
-.hero .founding-line {
-  font-family: var(--lattice-font-ui);
-  font-size: 0.9375rem;
-  color: var(--lattice-text-on-navy-2);
-  margin-top: var(--lattice-space-14);
-  padding-top: var(--lattice-space-5);
-  border-top: 1px solid var(--lattice-border-on-navy);
-  /* fit-content keeps the rule above the dates the same width as the
-     dates themselves. Both dates sit on one line; on a phone they wrap,
-     and the dot travels down with "Membership opens". */
-  width: fit-content;
-  max-width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--lattice-space-2) var(--lattice-space-4);
-}
-.hero .founding-line strong {
-  font-weight: 600;
+.hero-cta { margin-top: 2.5rem; }
+.hero-dates {
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: 0.005em;
   color: var(--lattice-text-on-navy);
-}
-/* The separator is a ::before on the SECOND date rather than a standalone
-   element, so when the line wraps the dot travels with the text it
-   belongs to instead of dangling at the end of the first line. */
-.hero .founding-line .dated::before {
-  content: "";
-  display: inline-block;
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: var(--lattice-citron);
-  vertical-align: middle;
-  margin-right: var(--lattice-space-4);
+  margin-top: 2.5rem;
 }
 
-
-/* ---------- Cards (shared) ---------- */
-
-.card {
-  background: var(--lattice-cool-white);
-  border: 1px solid var(--lattice-border);
-  border-radius: var(--lattice-radius-card);
-  padding: var(--lattice-space-6);
-  transition: border-color var(--lattice-motion-fast);
+/* The 1px rule between the columns. It disappears when they stack. */
+.hero-figure {
+  border-left: 1px solid rgba(255, 255, 255, 0.16);
+  padding: clamp(3rem, 6vw, 6rem) 0 clamp(3rem, 6vw, 5.5rem) clamp(1.5rem, 4vw, 3rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
 }
-.card:hover { border-color: var(--lattice-border-strong); }
+.hero-diagram { width: 100%; max-width: 320px; height: auto; }
+.diagram-links { stroke: var(--lattice-cobalt); }
+.node-iris   { fill: var(--lattice-iris); }
+.node-cobalt { fill: var(--lattice-cobalt); }
 
-.card h3 {
-  font-size: 1.35rem;
-  margin-bottom: var(--lattice-space-3);
-  transition: color var(--lattice-motion-fast);
+
+/* ---------------- Section heading rows ---------------- */
+
+/* Heading left, a short note right, above a 2px navy rule. */
+.section-head {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: clamp(1.5rem, 4vw, 4rem);
+  align-items: end;
+  padding-bottom: 2rem;
+  border-bottom: 2px solid var(--lattice-ink-navy);
 }
-.card p  { color: var(--lattice-text-body); }
-/* No lift, no shadow bloom — the bible is explicit. The hover lives in
-   the border, the heading colour and the node marker instead. */
-.card:hover h3 { color: var(--lattice-cobalt); }
+.section-head-note {
+  font-size: var(--lattice-size-body-lg);
+  color: var(--lattice-text-body);
+}
+
+/* The label-only variant: eyebrow left, muted note right, on one line. */
+.section-head-inline {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  padding-bottom: 1.4rem;
+}
+.section-head-inline .eyebrow { margin-bottom: 0; }
+.section-head-inline .section-head-note {
+  font-size: 0.85rem;
+  color: var(--lattice-text-muted);
+}
 
 
-/* ---------- What we're building ---------- */
+/* ---------------- What We're Building ---------------- */
+
+/* The section pads its top only; the navy pull band closes it. */
+.building { padding-bottom: 0; }
 
 .pillars {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: var(--lattice-space-6);
-  margin-top: var(--lattice-space-14);
 }
-.pillar p + p { margin-top: var(--lattice-space-4); }
+.pillars > :first-child {
+  padding: 2.5rem clamp(1.5rem, 3vw, 3rem) 3rem 0;
+  border-right: 1px solid var(--lattice-border);
+}
+.pillars > :last-child {
+  padding: 2.5rem 0 3rem clamp(1.5rem, 3vw, 3rem);
+}
 
-/* The first line of each pillar is the claim; give it weight. */
-.card-lead {
+/* Numeral and heading share a baseline. */
+.block-head {
+  display: flex;
+  align-items: baseline;
+  gap: 0.9rem;
+}
+.pillar h3 { font-size: clamp(1.4rem, 2.4vw, 1.75rem); }
+.pillar p { margin-top: 1.1rem; line-height: var(--lattice-lh-body-loose); }
+.lead-line { font-weight: 600; color: var(--lattice-ink-navy); }
+
+/* Full-bleed navy band carrying the pull quote. */
+.pull-band { padding: clamp(3rem, 6vw, 4.5rem) var(--lattice-gutter); }
+.pull {
   font-family: var(--lattice-font-display);
-  font-weight: 500;
-  font-size: 1.15rem;
-  line-height: 1.4;
+  font-style: italic;
+  font-weight: 400;
+  font-size: var(--lattice-size-pull);
+  line-height: 1.25;
+  color: var(--lattice-text-on-navy);
+  text-align: center;
+  text-wrap: pretty;
+  max-width: 26ch;
+  margin-inline: auto;
+}
+
+
+/* ---------------- Why Now ---------------- */
+
+.ruled-body {
+  border-left: 2px solid var(--lattice-ink-navy);
+  padding-left: clamp(1.5rem, 3vw, 2.5rem);
+}
+.ruled-body p {
+  font-size: var(--lattice-size-body-lg);
+  line-height: var(--lattice-lh-body-loose);
+}
+.ruled-body p + p { margin-top: 1.35rem; }
+
+/* A phrase lifted into the display face, inline, to mark it. */
+.inline-display {
+  font-family: var(--lattice-font-display);
+  font-style: italic;
   color: var(--lattice-ink-navy);
 }
 
-.building .closing {
-  margin-top: var(--lattice-space-14);
-  max-width: 34ch;
-}
 
-
-/* ---------- Why now ---------- */
-
-.why .connects {
-  font-family: var(--lattice-font-display);
-  font-style: italic;
-  color: var(--lattice-cobalt);
-}
-
-
-/* ---------- What we're starting with ---------- */
+/* ---------------- What We're Starting With ---------------- */
 
 .offers {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--lattice-space-6);
-  margin-top: var(--lattice-space-10);
+  grid-template-columns: 1fr 1fr 1fr;
 }
-.offer { display: flex; flex-direction: column; }
-
-/* Node marker: one small filled circle per card, drawn with a border-box
-   dot rather than an image. Iris on two cards, citron on one. */
-.offer .node-row {
+.offer {
   display: flex;
-  align-items: center;
-  gap: var(--lattice-space-2);
-  margin-bottom: var(--lattice-space-4);
+  flex-direction: column;
+  padding-top: 2rem;
 }
-.offer .node {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  flex: none;
-  background: var(--lattice-iris);
-  transition: transform var(--lattice-motion-base);
-}
-.offer:hover .node { transform: scale(1.7); }
-.offer.is-signal .node { background: var(--lattice-citron); }
+.offers > :not(:last-child) { border-right: 1px solid var(--lattice-border); }
+.offers > :first-child  { padding-right: clamp(1.25rem, 2.4vw, 2rem); }
+.offers > :nth-child(2) { padding-inline: clamp(1.25rem, 2.4vw, 2rem); }
+.offers > :last-child   { padding-left: clamp(1.25rem, 2.4vw, 2rem); }
 
-/* Section marker chip — iris tint, deep-iris text */
-.offer .tag {
+.timing {
+  font-weight: 600;
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--lattice-text-muted);
+  margin-top: 0.9rem;
+}
+.offer-body {
+  font-size: 0.98rem;
+  margin-top: 0.9rem;
+  flex: 1;
+}
+.offer .text-link { margin-top: 1.5rem; align-self: flex-start; }
+
+
+/* ---------------- Who It's For ---------------- */
+
+.who-intro {
+  font-size: 1.12rem;
+  color: var(--lattice-text-on-navy);
+  margin-top: 1.5rem;
+}
+
+/* Numerals are generated, so the markup stays a plain ordered list. */
+.who-list {
+  list-style: none;
+  counter-reset: who;
+  border-top: 1px solid var(--lattice-border-on-navy);
+}
+.who-list li {
+  counter-increment: who;
+  display: grid;
+  grid-template-columns: 46px 1fr;
+  gap: 0.75rem;
+  align-items: start;
+  padding-block: 1.35rem;
+  border-bottom: 1px solid var(--lattice-border-on-navy);
+  font-size: 1.08rem;
+  color: var(--lattice-text-on-navy);
+  line-height: 1.55;
+}
+.who-list li::before {
+  content: counter(who, decimal-leading-zero);
   font-family: var(--lattice-font-ui);
-  font-weight: 500;
-  font-size: 0.6875rem;
-  letter-spacing: 0.04em;
-  color: var(--lattice-iris-text);
-  background: var(--lattice-iris-tint);
-  border-radius: var(--lattice-radius-pill);
-  padding: 5px 12px;
+  font-size: var(--lattice-size-label);
+  font-weight: 600;
+  letter-spacing: var(--lattice-track-numeral);
+  color: var(--lattice-iris);
+  padding-top: 0.35rem;
 }
 
-.offer p { font-size: 1rem; flex: 1; }
-.offer .cta-link { margin-top: var(--lattice-space-6); align-self: flex-start; }
+.who-close {
+  font-family: var(--lattice-font-display);
+  font-style: italic;
+  font-size: clamp(1.25rem, 2.2vw, 1.5rem);
+  line-height: 1.45;
+  color: var(--lattice-text-on-navy);
+  text-align: center;
+  text-wrap: pretty;
+  max-width: 58ch;
+  margin: clamp(2.5rem, 5vw, 3.5rem) auto 0;
+}
 
 
-/* ---------- Who it's for ---------- */
+/* ---------------- For Organizations ---------------- */
 
-.who .grid {
+/* Deliberately smaller in footprint than the sections around it. */
+.orgs { padding-block: clamp(2.5rem, 5vw, 3.75rem); }
+.org-panel {
   display: grid;
-  grid-template-columns: 0.9fr 1.1fr;
-  gap: clamp(2rem, 6vw, 4.5rem);
-  align-items: start;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: clamp(1.25rem, 3vw, 2.5rem);
+  align-items: center;
+  background: var(--lattice-cool-white);
+  border: 1px solid var(--lattice-border-strong);
+  border-top: 2px solid var(--lattice-ink-navy);
+  padding: clamp(1.5rem, 2.6vw, 2rem);
+}
+.orgs .eyebrow { margin-bottom: 0.8rem; }
+.org-heading {
+  font-size: clamp(1.15rem, 1.9vw, 1.4rem);
+  line-height: 1.25;
+  letter-spacing: -0.012em;
+}
+.org-body {
+  font-size: 0.98rem;
+  margin-top: 0.65rem;
+  max-width: 52ch;
+}
+.org-cta { margin-top: 0; }
+
+
+/* ---------------- Who We Are ---------------- */
+
+.whoweare-intro { margin-top: clamp(2rem, 4vw, 2.75rem); }
+.whoweare-intro p { font-size: 1.05rem; line-height: var(--lattice-lh-body-loose); }
+/* Must out-specify the rule above, or the display line picks up body leading. */
+.whoweare-intro p.statement-sm {
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  line-height: 1.25;
 }
 
-/* Photography: real portraiture in a mist-grey frame.
-   No duotone, no overlay tint. Swap the <img src> in index.html. */
-.who .portrait {
-  margin-top: var(--lattice-space-10);
-  max-width: 300px;
-  background: var(--lattice-mist-grey);
-  border: 1px solid var(--lattice-border);
-  border-radius: var(--lattice-radius-card);
-  overflow: hidden;
-  aspect-ratio: 4 / 5;
-}
-.who .portrait img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.who ul { list-style: none; display: grid; gap: var(--lattice-space-5); }
-.who li {
+.founders {
   display: grid;
-  grid-template-columns: auto 1fr;
-  gap: var(--lattice-space-4);
-  align-items: start;
-  font-size: 1.0625rem;
-  color: var(--lattice-text-body);
-  padding-bottom: var(--lattice-space-5);
-  border-bottom: 1px solid var(--lattice-border);
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.25rem 2rem;
+  margin-top: clamp(2.5rem, 5vw, 3.25rem);
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--lattice-border);
 }
-/* Linked-node bullet, from the graphic system */
-.who li .node-icon { width: 22px; height: 22px; margin-top: 0.3em; flex: none; }
+.founder { display: flex; flex-direction: column; gap: 0.3rem; align-items: start; }
+.founder-name {
+  font-family: var(--lattice-font-display);
+  font-weight: 600;
+  font-size: clamp(1.2rem, 2vw, 1.4rem);
+  color: var(--lattice-ink-navy);
+}
 
-.who .closing { margin-top: var(--lattice-space-14); max-width: 62ch; }
 
+/* ---------------- Join ---------------- */
 
-/* ---------- For organizations — navy section 2 of 2 ---------- */
-
-/* A shallow band, not a section. Roughly half the vertical padding of a
-   primary section — that compression is what marks it as secondary. */
-.orgs {
+.join {
   position: relative;
   overflow: hidden;
-  padding-block: clamp(2.75rem, 5vw, 4rem);
+  padding-block: clamp(3.5rem, 7vw, 6rem);
 }
-.orgs .lattice-bg {
+.join-texture {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   pointer-events: none;
 }
-/* Text left, CTA right and vertically centred, on a single axis. */
-.orgs-content {
+.join-grid {
   position: relative;
   z-index: 1;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: clamp(1.75rem, 4vw, 3.5rem);
-  align-items: center;
+  grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+  gap: clamp(2rem, 5vw, 4.5rem);
 }
-
-.orgs .eyebrow { color: var(--lattice-text-on-navy-2); }
-/* No .keynote here on purpose — standard section size, one step below the
-   headings aimed at the primary audience. */
-.orgs h2 { color: var(--lattice-text-on-navy); max-width: 26ch; }
-.orgs .orgs-body {
-  font-size: 1.0625rem;
+.join-body {
+  font-size: 1.05rem;
   color: var(--lattice-text-on-navy-2);
-  max-width: 56ch;
-  margin-top: var(--lattice-space-5);
+  margin-top: 1.5rem;
 }
-.orgs .cta-row { margin: 0; }
-
-@media (max-width: 820px) {
-  .orgs-content { grid-template-columns: 1fr; align-items: start; }
-  .orgs .cta-row { margin-top: var(--lattice-space-6); }
-}
-
-
-/* ---------- Join the founding community ---------- */
-
-.join { border-top: 1px solid var(--lattice-ink-navy); }
-.join .wrap { max-width: 720px; text-align: center; }
-.join .body {
-  font-size: 1.18rem;
-  color: var(--lattice-text-body);
-  margin-top: var(--lattice-space-5);
-}
-.join .pitch {
-  margin-top: var(--lattice-space-8);
-  font-size: clamp(1.3rem, 2.6vw, 1.6rem);
+.join-pitch {
+  font-family: var(--lattice-font-display);
   font-style: italic;
+  font-size: clamp(1.25rem, 2.4vw, 1.6rem);
+  line-height: 1.35;
+  color: var(--lattice-text-on-navy);
+  text-wrap: pretty;
+  margin-top: 2rem;
+  padding-top: 1.75rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-.signup {
-  margin-top: var(--lattice-space-10);
-  display: grid;
-  gap: var(--lattice-space-4);
-  max-width: 460px;
-  margin-inline: auto;
-  text-align: left;
+
+/* ---------------- The form ---------------- */
+
+/* Square panel, faint white fill. */
+.form-panel {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--lattice-border-on-navy);
+  padding: clamp(1.5rem, 3vw, 2rem);
 }
+.signup { display: flex; flex-direction: column; gap: 0.75rem; }
 
-.field { display: grid; gap: var(--lattice-space-1); }
+.hp { position: absolute; left: -9999px; }
 
+.field { display: block; }
+.field + .field { margin-top: 0; }
+
+/* Fields on navy. The explicit ::placeholder and option colours matter:
+   without them placeholders render at ~3.3:1 and the open dropdown
+   paints white-on-white. */
 .signup input,
 .signup select {
+  width: 100%;
   font-family: var(--lattice-font-ui);
   font-size: 1rem;
-  color: var(--lattice-ink-navy);
-  padding: 12px 14px;
-  border: 1px solid var(--lattice-border-strong);
-  border-radius: var(--lattice-radius-control);
-  background: var(--lattice-cool-white);
-  width: 100%;
-  transition: border-color var(--lattice-motion-fast);
-}
-.signup input:hover,
-.signup select:hover { border-color: var(--lattice-ink-navy); }
-
-.signup [aria-invalid="true"] { border-color: var(--lattice-error); }
-
-.error-text {
-  font-family: var(--lattice-font-ui);
-  font-weight: 400;
-  font-size: 0.8125rem;
   line-height: 1.4;
-  color: var(--lattice-error);
-  min-height: 0;
+  color: var(--lattice-text-on-navy);
+  background: rgba(11, 27, 58, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: var(--lattice-radius-control);
+  padding: 0.9rem 1rem;
+}
+.signup input::placeholder { color: var(--lattice-text-on-navy-2); opacity: 1; }
+.signup select option { background: var(--lattice-ink-navy); color: var(--lattice-text-on-navy); }
+.signup input:focus,
+.signup select:focus {
+  outline: 2px solid var(--lattice-citron);
+  outline-offset: 1px;
+}
+.signup [aria-invalid="true"] { border-color: var(--lattice-error-on-navy); }
+
+/* #B3261E is unreadable on navy; this is the on-navy equivalent. */
+.error-text {
+  font-size: 0.82rem;
+  color: var(--lattice-error-on-navy);
+  margin-top: 0.4rem;
 }
 .error-text:empty { display: none; }
 
-.signup .btn { justify-content: center; width: 100%; }
-
-.signup .fineprint {
-  font-family: var(--lattice-font-ui);
-  font-size: 0.8125rem;
-  color: var(--lattice-text-muted);
+.fineprint {
+  font-size: 0.82rem;
+  color: var(--lattice-text-on-navy-2);
   text-align: center;
+  margin-top: 0.35rem;
 }
 
-/* Honeypot — off-screen, never focusable by sighted or keyboard users */
-.hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+/* Success replaces the form inside the same panel — no navigation. */
+.form-done {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  min-height: 12rem;
+  justify-content: center;
+}
+.form-done h3 {
+  font-family: var(--lattice-font-display);
+  font-weight: 500;
+  font-size: 1.5rem;
+  color: var(--lattice-text-on-navy);
+}
+.form-done p { color: var(--lattice-text-on-navy-2); margin-top: 0; }
 
 
-/* ---------- Footer ---------- */
+/* ---------------- Footer ---------------- */
 
 .site-footer {
-  background: var(--lattice-ink-navy);
-  padding-block: var(--lattice-space-18);
+  background: var(--lattice-cool-white);
+  border-top: 2px solid var(--lattice-ink-navy);
+  padding-block: 3rem;
 }
-.site-footer .wrap {
+.footer-inner {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--lattice-space-6) var(--lattice-space-14);
+  gap: 1.5rem 3rem;
   align-items: flex-start;
   justify-content: space-between;
 }
-.site-footer .f-brand { display: flex; align-items: center; gap: var(--lattice-space-3); }
-.site-footer .mark { width: 26px; height: 26px; color: var(--lattice-text-on-navy); }
-.site-footer .wordmark {
-  font-family: var(--lattice-font-ui);
-  font-weight: 600;
-  font-size: 0.9375rem;
-  letter-spacing: var(--lattice-track-wordmark);
-  text-transform: uppercase;
-  color: var(--lattice-text-on-navy);
-  line-height: 1;
-}
-.site-footer .f-dates {
-  font-family: var(--lattice-font-ui);
-  font-size: 0.875rem;
-  color: var(--lattice-text-on-navy-2);
-  margin-top: var(--lattice-space-3);
-}
-.site-footer nav { display: flex; gap: var(--lattice-space-6); flex-wrap: wrap; align-items: center; }
-.site-footer nav a {
-  font-family: var(--lattice-font-ui);
-  font-size: var(--lattice-size-ui);
-  color: var(--lattice-text-on-navy-2);
-  transition: color var(--lattice-motion-fast);
-}
-.site-footer nav a:hover { color: var(--lattice-text-on-navy); }
-.site-footer .copyright {
+.f-brand { display: flex; align-items: center; gap: 0.7rem; color: var(--lattice-ink-navy); }
+.f-brand .mark { color: var(--lattice-ink-navy); flex: none; }
+.f-brand .wordmark { font-size: 0.88rem; color: var(--lattice-ink-navy); }
+.f-dates { font-size: 0.9rem; color: var(--lattice-text-muted); margin-top: 0.7rem; }
+.f-links { display: flex; gap: 1.5rem; flex-wrap: wrap; align-items: center; }
+.f-links a { font-size: 0.92rem; }
+.copyright {
   width: 100%;
-  border-top: 1px solid var(--lattice-border-on-navy);
-  padding-top: var(--lattice-space-6);
-  font-family: var(--lattice-font-ui);
-  font-size: 0.8125rem;
-  color: var(--lattice-text-on-navy-2);
+  border-top: 1px solid var(--lattice-border);
+  padding-top: 1.5rem;
+  font-size: 0.85rem;
+  color: var(--lattice-text-muted);
+  margin-top: 0;
 }
 
-/* Focus rings must stay visible against navy */
-.hero :focus-visible,
-.orgs :focus-visible,
-.site-footer :focus-visible { outline-color: var(--lattice-text-on-navy); }
 
-
-/* ============================================================
-   CITRON CTA — the selected CTA system (chosen 2026-08-04)
-   Active via <body data-cta="citron">. Remove that attribute to
-   fall back to cobalt CTAs; nothing else needs to change.
-
-   KNOWN DIVERGENCE FROM THE BRAND BIBLE.
-   The bible currently says citron is "never a button, never a fill"
-   and caps it at 1-2% of a page. This build intentionally overrides
-   that. The bible is to be amended to match; until it is, the bible
-   and this stylesheet disagree, and this comment is the record of why.
-
-   It is not a recolour, it is a different logic:
-     citron = action (CTAs on dark grounds)
-     iris   = accent (the decorative nodes citron used to hold)
-   Without that swap you get citron in two competing roles and the
-   page reads noisy.
-
-   Contrast: citron carries NAVY text, never white.
-     citron on navy  10.9:1  (passes AA and AAA)
-     citron on white  1.5:1  (fails everything — never do this)
-
-   Citron CTAs appear on DARK grounds only. On white, a citron button
-   fails WCAG 1.4.11 (3:1 for the button's own edge) — the shape floats
-   with no perceivable boundary. Chief has the same constraint and
-   solves it the same way: chartreuse on their dark olive, dark navy on
-   their light periwinkle. Light-ground CTAs here stay cobalt.
-   ============================================================ */
-
-/* Dark grounds — citron carries the action.
-   :not(.btn-ghost) matters. Without it this rule out-specifies
-   .btn-ghost and paints outlined buttons citron too, which made the
-   consent banner's Accept and Decline visually identical. */
-[data-cta="citron"] .ground-navy .btn:not(.btn-ghost) {
-  background: var(--lattice-citron);
-  color: var(--lattice-ink-navy);
-}
-[data-cta="citron"] .ground-navy .btn:not(.btn-ghost):hover {
-  background: #B4C63A; /* darkened; still 9.4:1 against navy text */
-}
-
-/* Accent duty moves to iris so citron reads as action only. */
-[data-cta="citron"] .node-signal { fill: var(--lattice-iris); animation: none; }
-[data-cta="citron"] .offer.is-signal .node { background: var(--lattice-iris); }
-[data-cta="citron"] .hero .founding-line .dated::before { background: var(--lattice-iris); }
-
-/* Focus rings must not sit on a similar hue */
-[data-cta="citron"] .btn:focus-visible { outline-color: var(--lattice-ink-navy); }
-[data-cta="citron"] .hero .btn:focus-visible,
-[data-cta="citron"] .orgs .btn:focus-visible { outline-color: var(--lattice-text-on-navy); }
-
-
-/* ---------- Cookie consent banner ---------- */
+/* ---------------- Cookie consent ---------------- */
 
 .consent {
   position: fixed;
-  left: 0;
-  right: 0;
+  inset-inline: 0;
   bottom: 0;
-  z-index: 200;
+  z-index: 150;
+  background: var(--lattice-ink-navy);
   border-top: 1px solid var(--lattice-border-on-navy);
-  padding-block: var(--lattice-space-5);
+  padding-block: 1.1rem;
 }
-/* The hidden attribute must win over the fixed positioning above. */
-.consent[hidden] { display: none; }
-
 .consent-inner {
-  max-width: var(--lattice-content-max);
-  margin-inline: auto;
-  padding-inline: var(--lattice-gutter);
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: var(--lattice-space-5) var(--lattice-space-8);
-  flex-wrap: wrap;
+  gap: 1rem 2rem;
 }
-
 .consent-title {
-  font-family: var(--lattice-font-ui);
-  font-size: var(--lattice-size-label);
   font-weight: 600;
+  font-size: 0.82rem;
   letter-spacing: var(--lattice-track-label);
   text-transform: uppercase;
   color: var(--lattice-text-on-navy);
-  margin-bottom: var(--lattice-space-2);
 }
-
 .consent-text {
-  font-size: 0.9375rem;
-  line-height: 1.5;
+  font-size: 0.9rem;
   color: var(--lattice-text-on-navy-2);
-  max-width: 64ch;
+  max-width: 60ch;
+  margin-top: 0.35rem;
 }
+.consent-actions { display: flex; gap: 0.6rem; flex-wrap: wrap; }
 
-.consent-actions {
-  display: flex;
-  gap: var(--lattice-space-3);
-  flex: none;
+
+/* ---------------- Responsive ---------------- */
+
+/* One breakpoint. The three grids with hairline dividers — the hero, the
+   two pillars and the three offer columns — carry [data-stack].
+   This rule matters: without it the vertical dividers survive the stack
+   and draw rules that point at nothing. */
+@media (max-width: 900px) {
+  [data-stack] {
+    grid-template-columns: 1fr;
+    row-gap: 2.75rem;
+  }
+  /* !important on purpose: the per-section divider rules below are more
+     specific than this one, and a vertical rule that survives the stack
+     draws a line pointing at nothing. This must win, always. */
+  [data-stack] > * {
+    border-inline: 0 !important;
+    padding-inline: 0 !important;
+  }
+
+  .hero-copy { padding-bottom: 0; }
+  .hero-figure { padding-top: 0; padding-bottom: clamp(3rem, 8vw, 4rem); }
+  .hero-diagram { max-width: 260px; }
+
+  .offers > * { padding-top: 0; }
+  .pillars > * { padding-block: 0; }
 }
-
-.consent :focus-visible { outline-color: var(--lattice-text-on-navy); }
 
 @media (max-width: 600px) {
-  .consent-actions { width: 100%; }
-  .consent-actions .btn { flex: 1; justify-content: center; }
-}
-
-
-/* ---------- Responsive ---------- */
-
-@media (max-width: 900px) {
-  .offers { grid-template-columns: 1fr 1fr; }
-  .split { grid-template-columns: 1fr; gap: var(--lattice-space-8); }
-  .split-head h2 { max-width: 20ch; }
-}
-
-@media (max-width: 820px) {
-  .who .grid { grid-template-columns: 1fr; }
-  .who .portrait { max-width: 340px; }
-}
-
-@media (max-width: 720px) {
-  /* The nav wraps to three lines on a phone. Sticky would eat a third of
-     the viewport, so let the header scroll away instead. */
-  .site-header { position: static; }
-  .nav {
-    justify-content: center;
-    text-align: center;
-    min-height: 0;
-    gap: var(--lattice-space-3);
-  }
-  .nav-links { gap: var(--lattice-space-3) var(--lattice-space-5); justify-content: center; }
-  .nav-links a { font-size: 0.875rem; }
-  .pillars { grid-template-columns: 1fr; }
-  .offers { grid-template-columns: 1fr; }
-  .hero h1 { max-width: none; }
-
-  /* The dates wrap on a phone. The dot is a ::before on the second date,
-     so it wraps with it rather than dangling — no need to hide it. */
+  .header-inner { min-height: 0; padding-block: 0.75rem; }
+  .nav-links { gap: 0.9rem 1.1rem; }
+  .footer-inner { flex-direction: column; }
 }

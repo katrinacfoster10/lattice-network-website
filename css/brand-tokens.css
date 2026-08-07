@@ -1,12 +1,18 @@
 /* ============================================================
-   THE LATTICE — BRAND TOKENS
-   Source of truth: "The Lattice - Brand Bible.dc.html"
-   Copied from the design handoff bundle. Do not edit values here
-   without a corresponding change to the brand bible.
+   THE LATTICE — BRAND TOKENS (v3)
+
+   The brand as CSS custom properties. Source of truth:
+   ~/Documents/The Lattice/Website/design_handoff_lattice_v3/
+   (README.md and "The Lattice - Brand Bible.dc.html").
+
+   Change a colour, a font or a spacing step HERE. css/styles.css
+   holds no raw hex — every value in it points back to this file.
    ============================================================ */
 
 :root {
-  /* ---- Colour ------------------------------------------------------ */
+
+  /* ---- Colour -------------------------------------------------- */
+
   /* PRIMARY · 45-55% of a page */
   --lattice-ink-navy:        #0B1B3A;
 
@@ -14,17 +20,20 @@
   --lattice-mist-grey:       #F3F4F6;
   --lattice-cool-white:      #FFFFFF;
 
-  /* SECONDARY · 8-12% — CTAs, links, active states */
+  /* SECONDARY · 8-12% — light-ground CTAs, links, eyebrows, active states */
   --lattice-cobalt:          #2147E7;
-  --lattice-cobalt-hover:    #1A39BC;
+  --lattice-cobalt-hover:    #1A38BE;
 
-  /* SUPPORTING · 3-5% — highlights, section markers */
+  /* SUPPORTING · 3-5% — section markers, on-navy eyebrows, diagram nodes */
   --lattice-iris:            #7A6CFF;
-  --lattice-iris-tint:       rgba(122, 108, 255, 0.14);
-  --lattice-iris-text:       #4A3FB0;
 
-  /* ACCENT · 1-2% — SIGNAL ONLY. Never a button, never a fill. */
+  /* ACTION · 2-4% — CTA fill on NAVY grounds only, with navy text.
+     Never on a light ground (1.5:1 vs white fails WCAG 1.4.11 for the
+     button's own edge). No decorative use: no dots, underlines, markers.
+     Citron appears exactly three times on this page — the header button,
+     the hero button, the form submit. A fourth is a brand decision. */
   --lattice-citron:          #C7D84A;
+  --lattice-citron-hover:    #D3E35C;
 
   /* Text */
   --lattice-text-body:       #3C4658;
@@ -32,33 +41,46 @@
   --lattice-text-on-navy:    #FFFFFF;
   --lattice-text-on-navy-2:  #A9B2C6;
 
-  /* Lines */
-  --lattice-border:          rgba(11, 27, 58, 0.12);
-  --lattice-border-strong:   rgba(11, 27, 58, 0.24);
-  --lattice-border-on-navy:  rgba(255, 255, 255, 0.15);
+  /* Lines. Sections are separated by a 2px navy rule under the heading
+     row; columns are divided by 1px hairlines — never by card borders. */
+  --lattice-border:          rgba(11, 27, 58, 0.15);
+  --lattice-border-strong:   rgba(11, 27, 58, 0.18);
+  --lattice-border-on-navy:  rgba(255, 255, 255, 0.18);
 
-  /* Status */
+  /* Status. The navy variant is required: #B3261E on navy is unreadable. */
   --lattice-error:           #B3261E;
+  --lattice-error-on-navy:   #F3B0AB;
 
-  /* ---- Type -------------------------------------------------------- */
+  /* ---- Type ---------------------------------------------------- */
+  /* Two families only. DM Sans was a third in the previous build.
+     It is gone — do not reintroduce it. */
   --lattice-font-display:    'Newsreader', Georgia, serif;   /* 500, 600 */
   --lattice-font-ui:         'Inter', system-ui, sans-serif; /* 400, 500, 600 */
 
-  --lattice-size-hero:       clamp(2.6rem, 6vw, 4.6rem);
-  --lattice-size-section:    clamp(1.75rem, 3.2vw, 2.5rem);
-  --lattice-size-pull:       1.5rem;
-  --lattice-size-body:       1.0625rem;
-  --lattice-size-ui:         0.9375rem;
-  --lattice-size-label:      0.65rem;
+  --lattice-size-hero:       clamp(2.6rem, 5.4vw, 4.1rem);
+  --lattice-size-section:    clamp(1.9rem, 3.6vw, 2.85rem);
+  --lattice-size-statement:  clamp(2rem, 3.9vw, 3rem);   /* navy sections */
+  --lattice-size-pull:       clamp(1.6rem, 3.2vw, 2.3rem);
+  --lattice-size-column:     1.5rem;
+  --lattice-size-body:       1.02rem;
+  --lattice-size-body-lg:    1.1rem;
+  --lattice-size-ui:         0.9rem;
+  --lattice-size-label:      0.72rem;
 
-  --lattice-lh-hero:         1.06;
-  --lattice-lh-section:      1.15;
+  --lattice-lh-hero:         1.04;
+  --lattice-lh-section:      1.14;
+  --lattice-lh-statement:    1.12;
   --lattice-lh-body:         1.6;
+  --lattice-lh-body-loose:   1.65;
 
-  --lattice-track-label:     0.14em;
+  --lattice-track-hero:      -0.022em;
+  --lattice-track-section:   -0.015em;
+  --lattice-track-statement: -0.018em;
+  --lattice-track-label:     0.16em;
+  --lattice-track-numeral:   0.18em;
   --lattice-track-wordmark:  0.12em;
 
-  /* ---- Space, radius, motion --------------------------------------- */
+  /* ---- Space, radius, motion ----------------------------------- */
   --lattice-space-1:  4px;   --lattice-space-2:  8px;
   --lattice-space-3:  12px;  --lattice-space-4:  16px;
   --lattice-space-5:  20px;  --lattice-space-6:  24px;
@@ -66,65 +88,25 @@
   --lattice-space-14: 56px;  --lattice-space-18: 72px;
   --lattice-space-24: 96px;
 
-  --lattice-section-pad:     clamp(4rem, 8vw, 7rem);
+  --lattice-section-pad:     clamp(3.5rem, 7vw, 5.5rem);
   --lattice-gutter:          clamp(1.25rem, 5vw, 3rem);
-  --lattice-content-max:     1120px;
+  --lattice-content-max:     1180px;
 
+  /* 5px on controls. Panels and section blocks are square — no radius.
+     Cards were removed from this direction deliberately. */
   --lattice-radius-control:  5px;
-  --lattice-radius-small:    6px;
-  --lattice-radius-card:     8px;
-  --lattice-radius-pill:     999px;
 
-  --lattice-motion-fast:     150ms ease-out;
-  --lattice-motion-base:     200ms ease-out;
+  --lattice-motion-fast:     0.15s ease;   /* the 1px CTA lift */
+  --lattice-motion-base:     0.2s ease;    /* colour */
+
+  /* Sticky header clearance for anchored sections */
+  --lattice-header-offset:   96px;
 }
-
-/* Baseline ------------------------------------------------------------ */
-body {
-  background: var(--lattice-mist-grey);
-  color: var(--lattice-text-body);
-  font-family: var(--lattice-font-ui);
-  font-size: var(--lattice-size-body);
-  line-height: var(--lattice-lh-body);
-}
-
-h1, h2, h3 {
-  font-family: var(--lattice-font-display);
-  color: var(--lattice-ink-navy);
-  font-weight: 600;
-}
-h1 { font-weight: 500; font-size: var(--lattice-size-hero); line-height: var(--lattice-lh-hero); }
-h2 { font-size: var(--lattice-size-section); line-height: var(--lattice-lh-section); }
-
-a { color: var(--lattice-cobalt); text-decoration: none; }
-a:hover { text-decoration: underline; }
-
-:focus-visible { outline: 2px solid var(--lattice-cobalt); outline-offset: 2px; }
-
-.lattice-label {
-  font-family: var(--lattice-font-ui);
-  font-size: var(--lattice-size-label);
-  font-weight: 600;
-  letter-spacing: var(--lattice-track-label);
-  text-transform: uppercase;
-}
-
-.lattice-wordmark {
-  font-family: var(--lattice-font-ui);
-  font-weight: 600;
-  letter-spacing: var(--lattice-track-wordmark);
-  text-transform: uppercase;
-  color: var(--lattice-ink-navy);
-}
-
-/* Citron: signal only. These are the ONLY sanctioned forms. */
-.lattice-signal-dot {
-  width: 7px; height: 7px; border-radius: 50%;
-  background: var(--lattice-citron);
-  display: inline-block; flex: none;
-}
-.lattice-signal-underline { border-bottom: 2px solid var(--lattice-citron); }
 
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { animation: none !important; transition: none !important; }
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
 }
