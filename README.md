@@ -81,10 +81,10 @@ Forms only works on the deployed site.
 Keep this list current — tick things off here as they land, so the README stays
 the single place anyone can look to see what is unfinished.
 
-1. **Netlify form detection is OFF.** Submissions are not being captured. Fix:
-   Netlify → Forms → *Enable form detection*, then **trigger a redeploy** —
-   Netlify only parses forms at build time, so the redeploy must come after.
-   Confirm a test submission arrives before sharing the site widely.
+1. **Form notifications.** The form itself works — detection is on and
+   submissions reach Netlify → Forms → `early-access` (verified end-to-end
+   4 Aug 2026). But nothing emails you when one arrives, so they sit unread.
+   Set an email notification under Forms → *Form notifications*.
 2. **GA4 measurement ID** in `js/analytics.js` is still the `G-XXXXXXXXXX`
    placeholder, so Accept stores the choice but loads nothing.
 3. **No privacy policy.** The cookie banner asks for consent but links to
@@ -154,5 +154,11 @@ honeypot on `bot-field`). `js/main.js` posts it over `fetch` so the visitor stay
 on the page and the panel swaps to a confirmation; if the fetch fails it hands
 the submission back to the browser rather than losing it.
 
-Submissions appear in the Netlify dashboard under **Forms** and can be set to
-email you. Form detection must be enabled under Site configuration → Forms.
+Submissions appear in the Netlify dashboard under **Forms** → `early-access`.
+
+**Form detection is enabled and verified working** (4 Aug 2026). If forms ever
+stop being captured after a change to the markup, the cause is almost always
+that Netlify **parses forms only at deploy time** — enabling detection, or
+changing the form, does nothing until the next deploy. Trigger one from
+Deploys → *Trigger deploy* → *Deploy project without cache*, then POST a test
+submission and confirm it appears.
