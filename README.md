@@ -6,6 +6,45 @@ Built to the **v3 design direction** (August 2026).
 Static HTML/CSS/JS. No build step, no dependencies. Pushing to `main` on GitHub
 auto-deploys to Netlify.
 
+## Infrastructure
+
+None of this lives in the repo — it is account configuration in three services.
+Recorded here so it is not tribal knowledge.
+
+| Thing | Where it lives | Details |
+|---|---|---|
+| **Domain** | Webnames.ca | `thelattice.ca` — registered 23 Mar 2026, expires 23 Mar 2027, **auto-renew on**. Registered in Katrina's partner's account, not hers. |
+| **DNS** | **Netlify** (not Webnames) | Delegated 4 Aug 2026. Nameservers at Webnames point to `dns1–dns4.p05.nsone.net`. All records — A, CNAME, and any future MX — are managed in Netlify → Domain management, **not** at the registrar. |
+| **Hosting** | Netlify | Project `lattice-network-website`, on Katrina's personal account (displayed as team "Generous AI Society"). |
+| **Source** | GitHub | `katrinacfoster10/lattice-network-website`, branch `main`. Every push auto-deploys. |
+| **SSL** | Netlify → Let's Encrypt | Issued 4 Aug 2026 for `thelattice.ca` + `*.thelattice.ca`. Auto-renews; nothing to do. |
+
+**Live URLs**
+
+- `https://thelattice.ca` — primary
+- `https://www.thelattice.ca` — 301 redirects to the primary
+- `https://lattice-network-website.netlify.app` — still live, useful for testing
+
+### ⚠️ Do not enable Webnames add-ons on this domain
+
+Turning on a Webnames service — **email, hosting, forwarding, or Domain
+Parking** — can silently reset the nameservers back to Webnames and take the
+site offline. Webnames has a "keep these name servers even when Webnames
+services are enabled" checkbox for exactly this, and it requires contacting
+their support to switch on.
+
+If email is ever wanted on `hello@thelattice.ca`, set it up with an external
+provider (e.g. Google Workspace) and add the **MX records in Netlify DNS**.
+Note there is currently a `v=spf1 -all` TXT record inherited from parking,
+which declares "this domain sends no mail" — it must be replaced or mail will
+fail SPF.
+
+### Recovering access
+
+If the Netlify or Webnames login is ever lost, the repo alone is enough to
+rebuild: create a new Netlify site from the GitHub repo, then re-point the
+domain. Nothing in the site depends on state stored outside git.
+
 ## Where to change what
 
 | I want to change… | Open this file |
@@ -37,14 +76,25 @@ cd ~/Documents/"The Lattice"/lattice-network-website && python3 -m http.server 8
 Then open http://127.0.0.1:8899. The form will not submit locally — Netlify
 Forms only works on the deployed site.
 
-## Still outstanding before launch
+## Still outstanding
 
-1. **GA4 measurement ID** in `js/analytics.js` (currently a placeholder, so
-   Accept stores the choice but loads nothing).
-2. **Social share image.** There is a favicon and Open Graph title/description,
-   but no `og:image`.
-3. Confirm `hello@thelattice.ca` is monitored, and that Netlify → Forms is
-   receiving `early-access` submissions.
+Keep this list current — tick things off here as they land, so the README stays
+the single place anyone can look to see what is unfinished.
+
+1. **Netlify form detection is OFF.** Submissions are not being captured. Fix:
+   Netlify → Forms → *Enable form detection*, then **trigger a redeploy** —
+   Netlify only parses forms at build time, so the redeploy must come after.
+   Confirm a test submission arrives before sharing the site widely.
+2. **GA4 measurement ID** in `js/analytics.js` is still the `G-XXXXXXXXXX`
+   placeholder, so Accept stores the choice but loads nothing.
+3. **No privacy policy.** The cookie banner asks for consent but links to
+   nothing to read.
+4. **`hello@thelattice.ca` has no mailbox** — the domain has no MX records, so
+   the Contact link goes nowhere. See the Infrastructure warning above before
+   setting email up.
+5. **Social share image.** There is a favicon and Open Graph title/description,
+   but no `og:image`, so links posted to LinkedIn/Slack preview without an image.
+6. **LinkedIn URLs** for the three founders are still `#` placeholders.
 
 ## Brand rules this build holds to
 
