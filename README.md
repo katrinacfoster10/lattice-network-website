@@ -81,20 +81,24 @@ Forms only works on the deployed site.
 Keep this list current — tick things off here as they land, so the README stays
 the single place anyone can look to see what is unfinished.
 
-1. **Form notifications.** The form itself works — detection is on and
-   submissions reach Netlify → Forms → `early-access` (verified end-to-end
-   4 Aug 2026). But nothing emails you when one arrives, so they sit unread.
-   Set an email notification under Forms → *Form notifications*.
-2. **GA4 measurement ID** in `js/analytics.js` is still the `G-XXXXXXXXXX`
+1. **GA4 measurement ID** in `js/analytics.js` is still the `G-XXXXXXXXXX`
    placeholder, so Accept stores the choice but loads nothing.
-3. **No privacy policy.** The cookie banner asks for consent but links to
+2. **No privacy policy.** The cookie banner asks for consent but links to
    nothing to read.
-4. **`hello@thelattice.ca` has no mailbox** — the domain has no MX records, so
+3. **`hello@thelattice.ca` has no mailbox** — the domain has no MX records, so
    the Contact link goes nowhere. See the Infrastructure warning above before
    setting email up.
-5. **Social share image.** There is a favicon and Open Graph title/description,
+4. **Social share image.** There is a favicon and Open Graph title/description,
    but no `og:image`, so links posted to LinkedIn/Slack preview without an image.
-6. **LinkedIn URLs** for the three founders are still `#` placeholders.
+
+### Done
+
+- **Live on the custom domain** — `https://thelattice.ca`, SSL issued, `www`
+  and `http` both redirecting to it (4 Aug 2026).
+- **Form capture** — detection on, submissions reaching Netlify → Forms →
+  `early-access`, email notification configured.
+- **Founder LinkedIn URLs** — all three are real and live, with
+  `target="_blank" rel="noreferrer"`.
 
 ## Brand rules this build holds to
 
