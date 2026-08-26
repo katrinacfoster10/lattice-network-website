@@ -51,6 +51,14 @@
   --lattice-error:           #B3261E;
   --lattice-error-on-navy:   #F3B0AB;
 
+  /* Founder portraits. The three headshots come from three photographers,
+     with different lighting and backgrounds. This wash is what makes them
+     read as one set — a light navy veil plus a modest desaturation, applied
+     in CSS so the originals stay untouched and the strength stays tunable.
+     Keep it subtle: past roughly 0.14 the skin tones start to go grey. */
+  --lattice-portrait-wash:   rgba(11, 27, 58, 0.08);
+  --lattice-portrait-filter: saturate(0.68) contrast(1.03);
+
   /* ---- Type ---------------------------------------------------- */
   /* Two families only. DM Sans was a third in the previous build.
      It is gone — do not reintroduce it. */
