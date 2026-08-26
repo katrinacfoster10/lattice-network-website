@@ -11,10 +11,13 @@
 # The publish directory is the repo root, so anything committed is fetchable.
 # tools/ is build tooling, not part of the site — keep it out of the served
 # surface rather than relying on nobody guessing the path.
+# force = true is required: without it Netlify serves a matching static file
+# and never consults the rule, which is exactly the case here.
 [[redirects]]
   from = "/tools/*"
   to = "/"
   status = 404
+  force = true
 
 [[headers]]
   for = "/*"
