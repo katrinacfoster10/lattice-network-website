@@ -557,14 +557,6 @@ a:hover { color: var(--lattice-ink-navy); }
   margin-block: clamp(2.5rem, 5vw, 3.5rem);
 }
 
-/* Unsupplied copy, marked so it cannot reach production unnoticed.
-   Delete this rule and every .todo class together once content lands. */
-.todo {
-  color: var(--lattice-error);
-  outline: 1px dashed currentColor;
-  outline-offset: 3px;
-}
-
 
 /* ---------------- Who It's For ---------------- */
 
