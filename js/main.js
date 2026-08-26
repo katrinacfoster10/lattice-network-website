@@ -18,8 +18,11 @@
   var panel = document.getElementById('form-panel');
 
   /* ---- 1. Pre-select interest from a section CTA ----
-     The three "What We're Starting With" links and the Organizations
-     CTA each scroll to the form AND set the select's value. */
+     The Peer Circle button, the Online Community and Membership links, and
+     the Organizations CTA each scroll to the form AND set the select's
+     value. Matching is by exact option value, so a data-interest string
+     that drifts from its <option> silently stops preselecting — the
+     values in index.html are the contract. */
   if (select) {
     document.querySelectorAll('[data-interest]').forEach(function (el) {
       el.addEventListener('click', function () {
@@ -112,7 +115,7 @@
 
     var body = document.createElement('p');
     body.textContent =
-      'We\'ll be in touch as the founding cohort takes shape. ' +
+      'We\'ll be in touch as the founding community takes shape. ' +
       'Nothing else is needed from you right now.';
 
     done.appendChild(heading);

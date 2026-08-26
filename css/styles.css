@@ -489,6 +489,74 @@ a:hover { color: var(--lattice-ink-navy); }
 }
 .offer .text-link { margin-top: 1.5rem; align-self: flex-start; }
 
+/* The two-column variant, for Online Community + Membership sitting below
+   the Peer Circle feature. The 1fr 1fr 1fr rule above assumes three. */
+.offers-two { grid-template-columns: 1fr 1fr; }
+/* With two children, :nth-child(2) is also :last-child, so it picks up
+   padding-inline from the three-column rule. Only the left side is wanted. */
+.offers-two > :last-child { padding-right: 0; }
+.offer h3 { font-size: clamp(1.15rem, 2vw, 1.35rem); }
+
+
+/* ---------------- Peer Circles (feature) ----------------
+
+   Introduction, three facts, then what a Circle actually does in the
+   page's existing three-column rhythm. */
+
+.circle-lead {
+  font-size: var(--lattice-size-body-lg);
+  line-height: var(--lattice-lh-body-loose);
+  max-width: 68ch;
+  margin-top: 2.25rem;
+}
+
+/* Three facts, not a pricing table. The label sits above the value, both
+   at body weight, so no single figure shouts. */
+.circle-facts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, max-content));
+  gap: 2.5rem clamp(2.5rem, 6vw, 5rem);
+  margin-top: 2rem;
+  padding-block: 1.4rem;
+  border-block: 1px solid var(--lattice-border);
+}
+.circle-facts dt {
+  font-weight: 600;
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--lattice-text-muted);
+}
+.circle-facts dd {
+  font-size: 1.05rem;
+  color: var(--lattice-ink-navy);
+  margin-top: 0.35rem;
+}
+
+/* The practical footnote to the three columns above — quieter than body,
+   louder than fine print. */
+.circle-format {
+  font-size: 0.95rem;
+  color: var(--lattice-text-muted);
+  max-width: 62ch;
+  margin-top: 2.25rem;
+}
+
+.circle-cta { margin-top: 1.75rem; }
+.circle-note {
+  font-size: 0.9rem;
+  color: var(--lattice-text-muted);
+  margin-top: 1rem;
+  max-width: 42ch;
+}
+
+/* A quieter divider than the 2px navy section rule. */
+.rule-soft {
+  border: 0;
+  border-top: 1px solid var(--lattice-border);
+  margin-block: clamp(2.5rem, 5vw, 3.5rem);
+}
+
 
 /* ---------------- Who It's For ---------------- */
 
@@ -577,21 +645,92 @@ a:hover { color: var(--lattice-ink-navy); }
   line-height: 1.25;
 }
 
+/* Explicit three, not auto-fit: with portraits in play, auto-fit kept
+   three columns down to ~600px and squeezed the photos to postage stamps.
+   The breakpoints below step it down deliberately. */
 .founders {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1.25rem 2rem;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2.25rem 2rem;
   margin-top: clamp(2.5rem, 5vw, 3.25rem);
   padding-top: 1.5rem;
   border-top: 1px solid var(--lattice-border);
 }
-.founder { display: flex; flex-direction: column; gap: 0.3rem; align-items: start; }
+.founder { display: flex; flex-direction: column; gap: 0.45rem; align-items: start; }
 .founder-name {
   font-family: var(--lattice-font-display);
   font-weight: 600;
   font-size: clamp(1.2rem, 2vw, 1.4rem);
   color: var(--lattice-ink-navy);
 }
+.founder-bio {
+  font-size: 0.92rem;
+  line-height: var(--lattice-lh-body-loose);
+}
+.founder .text-link-sm { margin-top: 0.35rem; }
+
+/* Square corners, fixed ratio, shared wash — see brand-tokens.css. The
+   aspect-ratio plus width/height on the <img> is what holds the row open
+   before the lazy image arrives, so nothing jumps. */
+.founder-photo {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: var(--lattice-mist-grey);
+  margin-bottom: 0.55rem;
+}
+/* No filter here: the muting, contrast and shadow-cooling are graded into
+   the files themselves, per image. See tools/founders.py. */
+.founder-photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.founder-photo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--lattice-portrait-wash);
+  pointer-events: none;
+}
+
+
+/* ---------------- Advisory ----------------
+
+   Same mist-grey ground as the founders, one hairline and a full spacing
+   step below them. An H2 semantically, but sized well under "The founding
+   team" so the hierarchy reads correctly.
+
+   Currently unused: the Advisory markup is held back for a later release
+   (see the note in index.html). These rules are kept so restoring that
+   section is a markup-only change. */
+
+.rule-soft-wide { margin-block: clamp(3rem, 6vw, 4.5rem); }
+
+.advisory-heading {
+  font-size: clamp(1.15rem, 2vw, 1.45rem);
+  letter-spacing: var(--lattice-track-section);
+}
+.advisors {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem 2rem;
+  margin-top: 1.75rem;
+}
+.advisor { display: flex; flex-direction: column; gap: 0.25rem; align-items: start; }
+.advisor-name {
+  font-family: var(--lattice-font-display);
+  font-weight: 500;
+  font-size: 1.05rem;
+  color: var(--lattice-ink-navy);
+}
+.advisor-role {
+  font-size: 0.88rem;
+  color: var(--lattice-text-muted);
+}
+.advisor .text-link-sm { margin-top: 0.3rem; }
 
 
 /* ---------------- Join ---------------- */
@@ -792,10 +931,32 @@ a:hover { color: var(--lattice-ink-navy); }
 
   .offers > * { padding-top: 0; }
   .pillars > * { padding-block: 0; }
+
+  .founders { grid-template-columns: repeat(2, 1fr); }
+  .advisors { grid-template-columns: repeat(2, 1fr); }
 }
 
 @media (max-width: 600px) {
   .header-inner { min-height: 0; padding-block: 0.75rem; }
   .nav-links { gap: 0.9rem 1.1rem; }
   .footer-inner { flex-direction: column; }
+
+  /* The three facts stop fitting side by side well before this width. */
+  .circle-facts { grid-template-columns: 1fr; gap: 1.1rem; }
+
+  /* Three stacked 4:5 portraits at full width would be a scroll in itself.
+     The photo moves alongside the text instead. */
+  .founders { grid-template-columns: 1fr; gap: 2rem; }
+  .founder {
+    display: grid;
+    grid-template-columns: 104px 1fr;
+    column-gap: 1.1rem;
+    align-items: start;
+  }
+  .founder-photo { grid-column: 1; grid-row: 1 / span 3; margin-bottom: 0; }
+  .founder-name,
+  .founder-bio,
+  .founder .text-link-sm { grid-column: 2; }
+
+  .advisors { grid-template-columns: 1fr; }
 }
