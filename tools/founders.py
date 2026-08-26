@@ -7,8 +7,13 @@ slightly soft treatment with shadows cooled toward ink navy — tuned per
 image, because these three were shot under very different light and
 identical numbers do not produce a matching result.
 
-Originals are never written to. Run:  python3 founders.py <dest-dir>
+Originals are never written to, and are not part of this repository — the
+repo root is published as-is, so no local path belongs in here. Pass the
+folder holding the three source photographs:
+
+    python3 tools/founders.py <source-dir> <dest-dir>
 """
+import os
 import sys
 from PIL import Image, ImageEnhance, ImageChops
 
@@ -29,15 +34,15 @@ NAVY = (11, 27, 58)              # --lattice-ink-navy
 #              so desaturation does not turn complexions grey.
 JOBS = [
     dict(name="jill-earthy.webp",
-         src="/Users/katrinacarroll-foster/Documents/The Lattice/Brand/Photos/Jill-Earthy-Speaker-Headshot-2024.jpg",
+         file="Jill-Earthy-Speaker-Headshot-2024.jpg",
          eye_y=0.235, eye_l=0.320, eye_r=0.470,
          sat=0.66, contrast=0.97, shadow_k=0.16, skin_keep=0.55, brightness=1.00),
     dict(name="katrina-c-foster.webp",
-         src="/Users/katrinacarroll-foster/Documents/Katrina - Professional/Headshots/New HeadShot.png",
+         file="Katrina-C-Foster-Headshot.png",
          eye_y=0.324, eye_l=0.457, eye_r=0.593,
          sat=0.62, contrast=0.97, shadow_k=0.14, skin_keep=0.58, brightness=1.00),
     dict(name="suzanne-gill.webp",
-         src="/Users/katrinacarroll-foster/Documents/The Lattice/Brand/Photos/Suzanne Gill.jpeg",
+         file="Suzanne Gill.jpeg",
          eye_y=0.390, eye_l=0.440, eye_r=0.600,
          sat=0.74, contrast=0.95, shadow_k=0.22, skin_keep=0.60, brightness=0.93),
 ]
@@ -85,9 +90,9 @@ def cool_shadows(im, k):
     return Image.composite(Image.new("RGB", im.size, NAVY), im, mask)
 
 
-dest = sys.argv[1]
+src_dir, dest = sys.argv[1], sys.argv[2]
 for j in JOBS:
-    im = Image.open(j["src"]).convert("RGB")
+    im = Image.open(os.path.join(src_dir, j["file"])).convert("RGB")
     W, H = im.size
     left, top, cw, ch = crop_box(W, H, j["eye_y"], j["eye_l"], j["eye_r"])
     im = im.crop((left, top, left + cw, top + ch))
