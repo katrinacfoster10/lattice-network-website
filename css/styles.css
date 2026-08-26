@@ -692,12 +692,13 @@ a:hover { color: var(--lattice-ink-navy); }
   background: var(--lattice-mist-grey);
   margin-bottom: 0.55rem;
 }
+/* No filter here: the muting, contrast and shadow-cooling are graded into
+   the files themselves, per image. See tools/founders.py. */
 .founder-photo img {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: var(--lattice-portrait-filter);
 }
 .founder-photo::after {
   content: "";
