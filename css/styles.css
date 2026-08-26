@@ -709,7 +709,11 @@ a:hover { color: var(--lattice-ink-navy); }
 
    Same mist-grey ground as the founders, one hairline and a full spacing
    step below them. An H2 semantically, but sized well under "The founding
-   team" so the hierarchy reads correctly. */
+   team" so the hierarchy reads correctly.
+
+   Currently unused: the Advisory markup is held back for a later release
+   (see the note in index.html). These rules are kept so restoring that
+   section is a markup-only change. */
 
 .rule-soft-wide { margin-block: clamp(3rem, 6vw, 4.5rem); }
 
@@ -723,13 +727,18 @@ a:hover { color: var(--lattice-ink-navy); }
   gap: 1.25rem 2rem;
   margin-top: 1.75rem;
 }
-.advisor { display: flex; flex-direction: column; gap: 0.3rem; align-items: start; }
+.advisor { display: flex; flex-direction: column; gap: 0.25rem; align-items: start; }
 .advisor-name {
   font-family: var(--lattice-font-display);
   font-weight: 500;
   font-size: 1.05rem;
   color: var(--lattice-ink-navy);
 }
+.advisor-role {
+  font-size: 0.88rem;
+  color: var(--lattice-text-muted);
+}
+.advisor .text-link-sm { margin-top: 0.3rem; }
 
 
 /* ---------------- Join ---------------- */
