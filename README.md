@@ -14,10 +14,11 @@ Recorded here so it is not tribal knowledge.
 | Thing | Where it lives | Details |
 |---|---|---|
 | **Domain** | Webnames.ca | `thelattice.ca` — registered 23 Mar 2026, expires 23 Mar 2027, **auto-renew on**. Registered in Katrina's partner's account, not hers. |
-| **DNS** | **Netlify** (not Webnames) | Delegated 4 Aug 2026. Nameservers at Webnames point to `dns1–dns4.p05.nsone.net`. All records — A, CNAME, and any future MX — are managed in Netlify → Domain management, **not** at the registrar. |
+| **DNS** | **Webnames** (moved 28 Aug 2026 — see below) | Nameservers are `ns1–ns3.webnames.ca`. **Every record — A, CNAME, MX, TXT — is managed in the Webnames DNS Hosting tab, not at Netlify.** Netlify's old zone still exists and still answers, but nothing delegates to it; ignore it. |
 | **Hosting** | Netlify | Project `lattice-network-website`, on Katrina's personal account (displayed as team "Generous AI Society"). |
 | **Source** | GitHub | `katrinacfoster10/lattice-network-website`, branch `main`. Every push auto-deploys. |
-| **SSL** | Netlify → Let's Encrypt | Issued 4 Aug 2026 for `thelattice.ca` + `*.thelattice.ca`. Auto-renews; nothing to do. |
+| **SSL** | Netlify → Let's Encrypt | Auto-renews via HTTP validation, so it depends on DNS resolving correctly. Nothing to do while the records below are in place. |
+| **Mail** | Google Workspace | Set up 28 Aug 2026 on `thelattice.ca`. MX, SPF and `google-site-verification` records live at Webnames. |
 
 **Live URLs**
 
@@ -25,25 +26,55 @@ Recorded here so it is not tribal knowledge.
 - `https://www.thelattice.ca` — 301 redirects to the primary
 - `https://lattice-network-website.netlify.app` — still live, useful for testing
 
-### ⚠️ Do not enable Webnames add-ons on this domain
+### ⚠️ The DNS records that keep this site online
 
-Turning on a Webnames service — **email, hosting, forwarding, or Domain
-Parking** — can silently reset the nameservers back to Webnames and take the
-site offline. Webnames has a "keep these name servers even when Webnames
-services are enabled" checkbox for exactly this, and it requires contacting
-their support to switch on.
+DNS moved to Webnames on 28 Aug 2026. **These two records are the only thing
+pointing the domain at this site.** If the site is unreachable but
+`lattice-network-website.netlify.app` still works, one of them is missing:
 
-If email is ever wanted on `hello@thelattice.ca`, set it up with an external
-provider (e.g. Google Workspace) and add the **MX records in Netlify DNS**.
-Note there is currently a `v=spf1 -all` TXT record inherited from parking,
-which declares "this domain sends no mail" — it must be replaced or mail will
-fail SPF.
+| Type | Hostname | Value |
+|---|---|---|
+| A | *(blank — this is the root domain)* | `75.2.60.5` |
+| CNAME | `www` | `lattice-network-website.netlify.app` |
+
+Set them in Webnames → the domain → **DNS Hosting** tab. The blank hostname is
+the part people get wrong; it looks like a mistake and is correct. Webnames does
+not appear to offer ALIAS/ANAME records, so the apex uses Netlify's documented
+A-record fallback rather than `apex-loadbalancer.netlify.com`.
+
+Do **not** copy the IP addresses that Netlify's own nameservers hand out for
+this domain. Those rotate between queries — they are a load-balancer pool
+intended for Netlify DNS, not for an external zone. `75.2.60.5` is the address
+Netlify publishes for external DNS.
+
+**How this broke once already.** Until 28 Aug 2026 DNS was delegated to Netlify
+and this file said to manage all records there. Enabling Webnames DNS Hosting —
+which Google Workspace setup made necessary, since the MX records had to go
+somewhere — created a brand-new empty zone at Webnames *and* moved authority to
+it. The Google mail records were added correctly into that new zone. The
+website's A and CNAME records were not, because they only ever existed in
+Netlify's copy and nothing prompts you to bring them across. Result: mail
+worked, the site went dark for several hours. Anything that moves DNS authority
+again will do the same thing unless both records above move with it.
+
+### Mail
+
+`hello@thelattice.ca` runs on Google Workspace. The MX, SPF
+(`v=spf1 include:_spf.google.com ~all`) and verification records are in the
+Webnames zone. The old `v=spf1 -all` record inherited from domain parking is
+gone — it declared "this domain sends no mail" and would have failed all
+outbound SPF.
 
 ### Recovering access
 
 If the Netlify or Webnames login is ever lost, the repo alone is enough to
 rebuild: create a new Netlify site from the GitHub repo, then re-point the
-domain. Nothing in the site depends on state stored outside git.
+domain using the two records above. Nothing in the site depends on state stored
+outside git.
+
+Note that the domain is registered in Katrina's partner's Webnames account
+rather than hers, and DNS, mail and member data now depend on it. Worth
+consolidating into a Lattice-owned account.
 
 ## Where to change what
 
