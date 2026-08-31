@@ -2,7 +2,7 @@
    THE LATTICE — site behaviour
 
    1. Section CTAs pre-select the matching interest in the form
-   2. Inline validation (required name, valid email, required interest)
+   2. Inline validation (required names, valid email, required interest)
    3. Submit over fetch, so success replaces the form inside the same
       panel rather than navigating away
 
@@ -43,7 +43,8 @@
   /* ---- 2. Inline validation ---- */
 
   var MESSAGES = {
-    name: 'Please enter your name.',
+    'first-name': 'Please enter your first name.',
+    'last-name': 'Please enter your last name.',
     email: 'Please enter a valid email address.',
     interest: 'Please choose what you\'re most interested in.'
   };

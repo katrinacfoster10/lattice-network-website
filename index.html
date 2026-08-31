@@ -363,9 +363,15 @@
             <p class="hp"><label>Don't fill this out: <input name="bot-field" tabindex="-1" autocomplete="off" /></label></p>
 
             <div class="field">
-              <input type="text" id="name" name="name" placeholder="Your name" aria-label="Your name"
-                     autocomplete="name" required aria-describedby="name-error" />
-              <p class="error-text" id="name-error" role="alert"></p>
+              <input type="text" id="first-name" name="first-name" placeholder="First name" aria-label="First name"
+                     autocomplete="given-name" required aria-describedby="first-name-error" />
+              <p class="error-text" id="first-name-error" role="alert"></p>
+            </div>
+
+            <div class="field">
+              <input type="text" id="last-name" name="last-name" placeholder="Last name" aria-label="Last name"
+                     autocomplete="family-name" required aria-describedby="last-name-error" />
+              <p class="error-text" id="last-name-error" role="alert"></p>
             </div>
 
             <div class="field">
