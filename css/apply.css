@@ -33,6 +33,22 @@
   max-width: 58ch;
   margin-top: 1.1rem;
 }
+.apply-back {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--lattice-text-on-navy-2);
+  max-width: 58ch;
+  margin-top: 0.9rem;
+}
+.apply-back a {
+  color: var(--lattice-text-on-navy);
+  text-decoration: underline;
+  text-decoration-color: var(--lattice-iris);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+.apply-back a:hover { text-decoration-color: var(--lattice-text-on-navy); }
+
 .apply-note {
   font-size: 0.92rem;
   line-height: 1.6;
