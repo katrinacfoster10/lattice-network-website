@@ -810,6 +810,106 @@ a:hover { color: var(--lattice-ink-navy); }
 }
 .signup [aria-invalid="true"] { border-color: var(--lattice-error-on-navy); }
 
+/* Collapsible question groups on navy. Both behave identically: closed by
+   default, with the summary carrying the options until something is ticked.
+   The checkbox reset is required — .signup input above sets width:100% and
+   control padding, which would blow a checkbox up to full width. */
+.signup .field-group {
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: var(--lattice-radius-control);
+  background: rgba(11, 27, 58, 0.35);
+}
+.signup .field-group > summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 0.8rem 0.95rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+.signup .field-group > summary::-webkit-details-marker { display: none; }
+.signup .field-group > summary:focus-visible {
+  outline: 2px solid var(--lattice-citron);
+  outline-offset: 1px;
+}
+.signup .field-group[open] > summary { border-bottom: 1px solid rgba(255, 255, 255, 0.3); }
+
+.fg-text { display: flex; flex-direction: column; gap: 0.15rem; min-width: 0; }
+.fg-title {
+  font-family: var(--lattice-font-ui);
+  font-size: 0.76rem;
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--lattice-text-on-navy-2);
+}
+.fg-state {
+  font-size: 0.9rem;
+  color: var(--lattice-text-on-navy);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.fg-state.is-empty { color: var(--lattice-text-on-navy-2); }
+
+.fg-chev {
+  flex: none;
+  width: 0.65rem;
+  height: 0.65rem;
+  border-right: 2px solid var(--lattice-text-on-navy-2);
+  border-bottom: 2px solid var(--lattice-text-on-navy-2);
+  transform: rotate(45deg);
+  margin-bottom: 0.2rem;
+  transition: transform var(--lattice-motion-base);
+}
+.field-group[open] .fg-chev { transform: rotate(-135deg); margin-bottom: -0.15rem; }
+
+.fg-body { padding: 0.55rem 0.5rem 0.7rem; }
+.fg-hint {
+  font-size: 0.82rem;
+  color: var(--lattice-text-on-navy-2);
+  margin: 0 0 0.35rem 0.5rem;
+}
+
+.signup .check {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  padding: 0.42rem 0.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.94rem;
+  color: var(--lattice-text-on-navy);
+  transition: background var(--lattice-motion-base);
+}
+.signup .check:hover { background: rgba(255, 255, 255, 0.08); }
+.signup .check input[type="checkbox"] {
+  width: 1.05rem;
+  height: 1.05rem;
+  flex: none;
+  margin: 0.2rem 0 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  accent-color: var(--lattice-iris);
+}
+.signup .check input[type="checkbox"]:focus-visible {
+  outline: 2px solid var(--lattice-citron);
+  outline-offset: 2px;
+}
+.signup .check span { line-height: 1.4; }
+.check-when {
+  display: block;
+  color: var(--lattice-text-on-navy-2);
+  font-size: 0.82rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .field-group .fg-chev { transition: none; }
+}
+
 /* #B3261E is unreadable on navy; this is the on-navy equivalent. */
 .error-text {
   font-size: 0.82rem;
