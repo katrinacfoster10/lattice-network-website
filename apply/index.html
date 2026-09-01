@@ -79,14 +79,13 @@
           where the people in the room are genuinely useful to each other.
         </p>
         <ul class="apply-facts">
-          <li><span class="fact-k">How long</span><span class="fact-v">About 8 minutes</span></li>
-          <li><span class="fact-k">Review</span><span class="fact-v">By hand, by the three founders</span></li>
+          <li><span class="fact-k">How long</span><span class="fact-v">8 minutes</span></li>
           <li><span class="fact-k">You'll hear back</span><span class="fact-v">Within 48 hours</span></li>
         </ul>
         <p class="apply-note">
-          Applying doesn't commit you to anything and there's no payment at this
-          stage. If we can offer you a seat, enrolment and payment details come
-          in a separate note.
+          A seat is $299 a month on a ten-month commitment. Nothing is collected
+          now and applying doesn't commit you to anything &mdash; if we can offer
+          you a seat, enrolment and payment details come in a separate note.
         </p>
       </div>
     </section>
@@ -164,9 +163,19 @@
               </div>
 
               <div class="field">
-                <label class="flabel" for="publishing">Anywhere else you write or publish</label>
-                <p class="fhelp">Substack, Medium, your own site &mdash; one per line. Optional.</p>
-                <textarea id="publishing" name="publishing" rows="3"></textarea>
+                <span class="flabel" id="online-label">Where else are you online</span>
+                <p class="fhelp">Tick anything that applies, then add the links. Optional.</p>
+                <div class="checkgrid" role="group" aria-labelledby="online-label">
+                  <label class="check"><input type="checkbox" name="online" value="Substack" /><span>Substack</span></label>
+                  <label class="check"><input type="checkbox" name="online" value="Medium" /><span>Medium</span></label>
+                  <label class="check"><input type="checkbox" name="online" value="Personal website" /><span>Personal website</span></label>
+                  <label class="check"><input type="checkbox" name="online" value="Podcast" /><span>Podcast</span></label>
+                  <label class="check"><input type="checkbox" name="online" value="YouTube" /><span>YouTube</span></label>
+                  <label class="check"><input type="checkbox" name="online" value="Instagram" /><span>Instagram</span></label>
+                  <label class="check"><input type="checkbox" name="online" value="Somewhere else" /><span>Somewhere else</span></label>
+                </div>
+                <label class="sublabel" for="online-links">Links</label>
+                <textarea id="online-links" name="online-links" rows="3"></textarea>
               </div>
 
               <div class="field">
@@ -176,19 +185,6 @@
                           required aria-describedby="bio-count bio-error"></textarea>
                 <p class="fcount" id="bio-count"><span id="bio-used">0</span> of 400</p>
                 <p class="error-text" id="bio-error" role="alert"></p>
-              </div>
-
-              <div class="field">
-                <label class="flabel" for="heard">How did you hear about us? <span class="req" aria-hidden="true">*</span></label>
-                <select id="heard" name="heard" required aria-describedby="heard-error">
-                  <option value="" disabled selected>Select&hellip;</option>
-                  <option value="Referral">Referral</option>
-                  <option value="Event">Event</option>
-                  <option value="LinkedIn">LinkedIn</option>
-                  <option value="Website">Website</option>
-                  <option value="Other">Other</option>
-                </select>
-                <p class="error-text" id="heard-error" role="alert"></p>
               </div>
             </fieldset>
 
@@ -223,6 +219,10 @@
                   <label class="check"><input type="checkbox" name="sector" value="Professional Services" /><span>Professional Services</span></label>
                   <label class="check"><input type="checkbox" name="sector" value="Real Estate &amp; Construction" /><span>Real Estate &amp; Construction</span></label>
                   <label class="check"><input type="checkbox" name="sector" value="Media &amp; Communications" /><span>Media &amp; Communications</span></label>
+                  <label class="check"><input type="checkbox" name="sector" value="Manufacturing &amp; Industrial" /><span>Manufacturing &amp; Industrial</span></label>
+                  <label class="check"><input type="checkbox" name="sector" value="Transportation &amp; Logistics" /><span>Transportation &amp; Logistics</span></label>
+                  <label class="check"><input type="checkbox" name="sector" value="Agriculture &amp; Food" /><span>Agriculture &amp; Food</span></label>
+                  <label class="check"><input type="checkbox" name="sector" value="Hospitality &amp; Tourism" /><span>Hospitality &amp; Tourism</span></label>
                 </div>
                 <p class="error-text" id="sector-error" role="alert"></p>
                 <label class="sublabel" for="sector-other">Something not listed</label>
@@ -262,11 +262,12 @@
               </div>
 
               <div class="field" data-group="engagement">
-                <span class="flabel" id="engagement-label">Engagement types you'd take on <span class="req" aria-hidden="true">*</span></span>
+                <span class="flabel" id="engagement-label">Engagement types you're interested in <span class="req" aria-hidden="true">*</span></span>
                 <div class="checkgrid" role="group" aria-labelledby="engagement-label" aria-describedby="engagement-error">
                   <label class="check"><input type="checkbox" name="engagement" value="Board seat" /><span>Board seat</span></label>
                   <label class="check"><input type="checkbox" name="engagement" value="Advisory" /><span>Advisory</span></label>
                   <label class="check"><input type="checkbox" name="engagement" value="Fractional" /><span>Fractional</span></label>
+                  <label class="check"><input type="checkbox" name="engagement" value="Project work" /><span>Project work</span></label>
                   <label class="check"><input type="checkbox" name="engagement" value="Speaking" /><span>Speaking</span></label>
                   <label class="check"><input type="checkbox" name="engagement" value="Mentoring" /><span>Mentoring</span></label>
                 </div>
@@ -281,10 +282,10 @@
               <div class="field" data-group="seeking">
                 <span class="flabel" id="seeking-label">What are you currently looking for? <span class="req" aria-hidden="true">*</span></span>
                 <div class="checkgrid" role="group" aria-labelledby="seeking-label" aria-describedby="seeking-error">
-                  <label class="check"><input type="checkbox" name="seeking" value="A board seat" /><span>A board seat</span></label>
-                  <label class="check"><input type="checkbox" name="seeking" value="A next role" /><span>A next role</span></label>
                   <label class="check"><input type="checkbox" name="seeking" value="Peers at my level" /><span>Peers at my level</span></label>
+                  <label class="check"><input type="checkbox" name="seeking" value="A next engagement" /><span>A next engagement</span></label>
                   <label class="check"><input type="checkbox" name="seeking" value="A sounding board" /><span>A sounding board</span></label>
+                  <label class="check"><input type="checkbox" name="seeking" value="Expertise and resources" /><span>Expertise and resources</span></label>
                   <label class="check"><input type="checkbox" name="seeking" value="Still working it out" /><span>Still working it out</span></label>
                 </div>
                 <p class="error-text" id="seeking-error" role="alert"></p>
@@ -310,9 +311,9 @@
                 <label class="flabel" for="format">Format preference <span class="req" aria-hidden="true">*</span></label>
                 <select id="format" name="format" required aria-describedby="format-error">
                   <option value="" disabled selected>Select&hellip;</option>
-                  <option value="Vancouver">Vancouver</option>
-                  <option value="Victoria">Victoria</option>
-                  <option value="Virtual only">Virtual only</option>
+                  <option value="In person">In person</option>
+                  <option value="Hybrid">Hybrid</option>
+                  <option value="Virtual">Virtual</option>
                   <option value="No preference">No preference</option>
                 </select>
                 <p class="error-text" id="format-error" role="alert"></p>
@@ -332,6 +333,23 @@
               </div>
             </fieldset>
 
+            <!-- ============== LAST QUESTION, OPTIONAL ============== -->
+            <fieldset class="apply-group">
+              <legend class="apply-legend">One last thing</legend>
+              <div class="field">
+                <label class="flabel" for="heard">How did you hear about us?</label>
+                <p class="fhelp">Optional.</p>
+                <select id="heard" name="heard">
+                  <option value="" selected>Select&hellip;</option>
+                  <option value="Referral">Referral</option>
+                  <option value="Event">Event</option>
+                  <option value="LinkedIn">LinkedIn</option>
+                  <option value="Website">Website</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+            </fieldset>
+
             <!-- ===================== CONSENT ===================== -->
             <fieldset class="apply-group">
               <legend class="apply-legend">Consent</legend>
@@ -346,7 +364,7 @@
             </fieldset>
 
             <button class="btn btn-cobalt btn-block" type="submit">Submit application <span aria-hidden="true">&rarr;</span></button>
-            <p class="fineprint-dark">Reviewed by hand. You'll hear back within 48 hours.</p>
+            <p class="fineprint-dark">$299 a month, ten-month commitment. You'll hear back within 48 hours.</p>
           </form>
         </div>
 

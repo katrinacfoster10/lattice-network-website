@@ -44,14 +44,16 @@
 /* Three facts, not a numbered sequence — applying is one step. */
 .apply-facts {
   list-style: none;
-  margin: 1.6rem 0 0;
-  padding: 1.25rem 0 0;
+  margin: 1.35rem 0 0;
+  padding: 1rem 0 0;
   border-top: 1px solid var(--lattice-border-on-navy);
   display: grid;
   gap: 1rem;
 }
 @media (min-width: 40rem) {
-  .apply-facts { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.5rem; }
+  /* Two facts, sized to their content rather than stretched across the
+     band — a half-empty three-column grid read as a missing item. */
+  .apply-facts { grid-auto-flow: column; justify-content: start; gap: 3rem; }
 }
 .apply-facts li { display: flex; flex-direction: column; gap: 0.2rem; }
 .fact-k {

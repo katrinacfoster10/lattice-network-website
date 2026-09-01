@@ -29,7 +29,6 @@
     city: 'Please enter your city or town.',
     province: 'Please choose your province or territory.',
     bio: 'Please tell us a little about yourself.',
-    heard: 'Please tell us how you heard about us.',
     stage: 'Please choose your career stage.',
     years: 'Please choose your years at senior level.',
     format: 'Please choose a format preference.',
