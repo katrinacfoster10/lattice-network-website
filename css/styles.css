@@ -542,13 +542,9 @@ a:hover { color: var(--lattice-ink-navy); }
   margin-top: 2.25rem;
 }
 
-.circle-cta { margin-top: 1.75rem; }
-.circle-note {
-  font-size: 0.9rem;
-  color: var(--lattice-text-muted);
-  margin-top: 1rem;
-  max-width: 42ch;
-}
+/* The button is the last thing in this block, so it carries the bottom
+   space itself rather than leaning on a following paragraph's margin. */
+.circle-cta { margin-top: 1.75rem; margin-bottom: 0; }
 
 /* A quieter divider than the 2px navy section rule. */
 .rule-soft {
