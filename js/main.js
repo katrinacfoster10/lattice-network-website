@@ -1,8 +1,8 @@
 /* ============================================================
    THE LATTICE — site behaviour
 
-   1. Section CTAs pre-select the matching interest in the form
-   2. Inline validation (required names, valid email, required interest)
+   1. Section CTAs tick the matching interest checkbox in the form
+   2. Inline validation (required names, valid email, city and province)
    3. Submit over fetch, so success replaces the form inside the same
       panel rather than navigating away
 
@@ -13,32 +13,54 @@
 (function () {
   'use strict';
 
-  var select = document.getElementById('interest');
   var form = document.querySelector('form.signup');
   var panel = document.getElementById('form-panel');
 
-  /* ---- 1. Pre-select interest from a section CTA ----
-     The Peer Circle button, the Online Community and Membership links, and
-     the Organizations CTA each scroll to the form AND set the select's
-     value. Matching is by exact option value, so a data-interest string
-     that drifts from its <option> silently stops preselecting — the
-     values in index.html are the contract. */
-  if (select) {
-    document.querySelectorAll('[data-interest]').forEach(function (el) {
-      el.addEventListener('click', function () {
-        var value = el.getAttribute('data-interest');
-        var match = Array.prototype.filter.call(select.options, function (o) {
-          return o.value === value;
-        })[0];
-        if (match) {
-          select.value = value;
-          clearError(select);
-        }
-      });
-    });
+  if (!form) return;
+
+  /* ---- Group summaries ----
+     Each collapsible group shows its options while empty and the actual
+     selections once there are any, so a closed group never hides what it
+     is asking. */
+  var PLACEHOLDER = {
+    interest: 'Peer Circles, workshops, events\u2026',
+    session: 'Two dates in September'
+  };
+
+  function paintSummary(name) {
+    var node = document.getElementById(name + '-summary');
+    if (!node) return;
+    var picked = Array.prototype.map.call(
+      form.querySelectorAll('input[name="' + name + '"]:checked'),
+      function (el) { return el.value; }
+    );
+    node.textContent = picked.length ? picked.join(', ') : PLACEHOLDER[name];
+    node.classList.toggle('is-empty', picked.length === 0);
   }
 
-  if (!form) return;
+  /* ---- 1. Tick the matching interest from a section CTA ----
+     A CTA scrolls to the form AND ticks its checkbox, opening the group so
+     the visitor sees it happen. Matching is by exact value, so a
+     data-interest string that drifts from its checkbox silently stops
+     working — the values in index.html are the contract. A CTA with no
+     matching option carries no data-interest and simply scrolls. */
+  document.querySelectorAll('[data-interest]').forEach(function (el) {
+    el.addEventListener('click', function () {
+      var box = form.querySelector(
+        'input[name="interest"][value="' + el.getAttribute('data-interest') + '"]'
+      );
+      if (!box) return;
+      box.checked = true;
+      var group = box.closest('details');
+      if (group) group.open = true;
+      paintSummary('interest');
+    });
+  });
+
+  form.addEventListener('change', function () {
+    paintSummary('interest');
+    paintSummary('session');
+  });
 
   /* ---- 2. Inline validation ---- */
 
@@ -46,7 +68,8 @@
     'first-name': 'Please enter your first name.',
     'last-name': 'Please enter your last name.',
     email: 'Please enter a valid email address.',
-    interest: 'Please choose what you\'re most interested in.'
+    city: 'Please enter your city or town.',
+    province: 'Please choose your province or territory.'
   };
 
   function errorNodeFor(field) {

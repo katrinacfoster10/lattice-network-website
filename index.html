@@ -157,9 +157,13 @@
          position because they are the immediate launch; the other two sit
          below a rule, still findable, deliberately lighter.
 
-         Every CTA scrolls to the form AND preselects the matching option in
-         the interest dropdown — see data-interest and js/main.js. The values
-         must match the <option> values in the form exactly. -->
+         A CTA scrolls to the form AND ticks the matching interest checkbox
+         — see data-interest and js/main.js. The values must match the
+         checkbox values in the form exactly.
+
+         Online Community and Lattice Membership carry no data-interest: the
+         interest list has no option for either, so they scroll only. Give
+         them one and the attribute comes back. -->
     <section class="starting ground-white" id="peer-circles">
       <div class="wrap">
         <div class="section-head">
@@ -200,7 +204,7 @@
 
         <p class="circle-cta">
           <!-- Cobalt, not citron: this is a light ground. -->
-          <a class="btn btn-cobalt" href="#join" data-interest="An inaugural Peer Circle">Express interest in a Peer Circle <span aria-hidden="true">&rarr;</span></a>
+          <a class="btn btn-cobalt" href="#join" data-interest="Peer Circles">Express interest in a Peer Circle <span aria-hidden="true">&rarr;</span></a>
         </p>
         <p class="circle-note">Tell us you're interested and we'll follow up with details and next steps.</p>
 
@@ -213,13 +217,13 @@
             <h3>Online Community</h3>
             <p class="timing">Ongoing</p>
             <p class="offer-body">Online peer community with monthly expert conversations. Your whole self welcomed &mdash; honest, unfiltered, and real.</p>
-            <a class="text-link" href="#join" data-interest="Online Community">Get on the list <span aria-hidden="true">&rarr;</span></a>
+            <a class="text-link" href="#join">Get on the list <span aria-hidden="true">&rarr;</span></a>
           </div>
           <div class="offer">
             <h3>Lattice Membership</h3>
             <p class="timing">Opens January 2027</p>
             <p class="offer-body">A vetted network for what comes next. Peer connection that generates referrals. Visibility that matters. Access to the relationships that open doors.</p>
-            <a class="text-link" href="#join" data-interest="January 2027 Membership">Get early access <span aria-hidden="true">&rarr;</span></a>
+            <a class="text-link" href="#join">Get early access <span aria-hidden="true">&rarr;</span></a>
           </div>
         </div>
       </div>
@@ -263,7 +267,7 @@
             <p class="org-body">A network of accomplished Canadian women &mdash; vetted, active, and directly available for board, advisory, and strategic roles.</p>
           </div>
           <p class="org-cta">
-            <a class="btn btn-cobalt" href="#join" data-interest="Partnering as an organization">Learn more <span aria-hidden="true">&rarr;</span></a>
+            <a class="btn btn-cobalt" href="#join" data-interest="Partner as an organization">Learn more <span aria-hidden="true">&rarr;</span></a>
           </p>
         </div>
       </div>
@@ -381,19 +385,76 @@
             </div>
 
             <div class="field">
-              <select id="interest" name="interest" aria-label="What are you most interested in?"
-                      required aria-describedby="interest-error">
-                <option value="" disabled selected>What are you most interested in?</option>
-                <!-- These values are the contract with data-interest attributes
-                     on every section CTA. Change one, change both. -->
-                <option value="An inaugural Peer Circle">An inaugural Peer Circle</option>
-                <option value="Online Community">Online Community</option>
-                <option value="January 2027 Membership">January 2027 Membership</option>
-                <option value="Partnering as an organization">Partnering as an organization</option>
-                <option value="Not sure yet — keep me posted">Not sure yet — keep me posted</option>
-              </select>
-              <p class="error-text" id="interest-error" role="alert"></p>
+              <input type="text" id="city" name="city" placeholder="City or town" aria-label="City or town"
+                     autocomplete="address-level2" required aria-describedby="city-error" />
+              <p class="error-text" id="city-error" role="alert"></p>
             </div>
+
+            <div class="field">
+              <select id="province" name="province" aria-label="Province or territory"
+                      required aria-describedby="province-error">
+                <option value="" disabled selected>Province or territory</option>
+                <option value="Alberta">Alberta</option>
+                <option value="British Columbia">British Columbia</option>
+                <option value="Manitoba">Manitoba</option>
+                <option value="New Brunswick">New Brunswick</option>
+                <option value="Newfoundland and Labrador">Newfoundland and Labrador</option>
+                <option value="Northwest Territories">Northwest Territories</option>
+                <option value="Nova Scotia">Nova Scotia</option>
+                <option value="Nunavut">Nunavut</option>
+                <option value="Ontario">Ontario</option>
+                <option value="Prince Edward Island">Prince Edward Island</option>
+                <option value="Quebec">Quebec</option>
+                <option value="Saskatchewan">Saskatchewan</option>
+                <option value="Yukon">Yukon</option>
+              </select>
+              <p class="error-text" id="province-error" role="alert"></p>
+            </div>
+
+            <div class="field">
+              <input type="url" id="linkedin" name="linkedin" placeholder="LinkedIn profile (optional)"
+                     aria-label="LinkedIn profile, optional" autocomplete="url" />
+            </div>
+
+            <!-- Both groups start closed. The summary line carries the options
+                 when nothing is ticked and the selections once they are, so the
+                 form reads short without hiding what it asks. -->
+            <details class="field-group" id="group-interest">
+              <summary>
+                <span class="fg-text">
+                  <span class="fg-title">Send me information about</span>
+                  <span class="fg-state is-empty" id="interest-summary">Peer Circles, workshops, events&hellip;</span>
+                </span>
+                <span class="fg-chev" aria-hidden="true"></span>
+              </summary>
+              <div class="fg-body">
+                <!-- These values are the contract with data-interest attributes
+                     on the section CTAs. Change one, change both. -->
+                <label class="check"><input type="checkbox" name="interest" value="Peer Circles" /><span>Peer Circles</span></label>
+                <label class="check"><input type="checkbox" name="interest" value="Online workshops" /><span>Online workshops</span></label>
+                <label class="check"><input type="checkbox" name="interest" value="In-person events" /><span>In-person events</span></label>
+                <label class="check"><input type="checkbox" name="interest" value="General resources" /><span>General resources</span></label>
+                <label class="check"><input type="checkbox" name="interest" value="Partner as an organization" /><span>Partner as an organization</span></label>
+              </div>
+            </details>
+
+            <!-- Session dates are hardcoded by request. Changing them is an edit
+                 to these four lines and the summary placeholder above. -->
+            <details class="field-group" id="group-session">
+              <summary>
+                <span class="fg-text">
+                  <span class="fg-title">Information sessions</span>
+                  <span class="fg-state is-empty" id="session-summary">Two dates in September</span>
+                </span>
+                <span class="fg-chev" aria-hidden="true"></span>
+              </summary>
+              <div class="fg-body">
+                <p class="fg-hint">Free, 30 minutes. Tick any you could make.</p>
+                <label class="check"><input type="checkbox" name="session" value="Thu 3 Sept, 10:30 PT" /><span>Thursday, September 3<span class="check-when">10:30&ndash;11:00am PT</span></span></label>
+                <label class="check"><input type="checkbox" name="session" value="Wed 9 Sept, 10:30 PT" /><span>Wednesday, September 9<span class="check-when">10:30&ndash;11:00am PT</span></span></label>
+                <label class="check"><input type="checkbox" name="session" value="None of these — keep me posted" /><span>Neither of these works<span class="check-when">Keep me posted about future dates</span></span></label>
+              </div>
+            </details>
 
             <button class="btn btn-citron btn-block" type="submit">Express Interest <span aria-hidden="true">&rarr;</span></button>
             <p class="fineprint">No spam. Occasional updates as the founding community takes shape.</p>
