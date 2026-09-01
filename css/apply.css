@@ -1,0 +1,266 @@
+/* ============================================================
+   THE LATTICE — application page (/apply)
+
+   The homepage form lives on navy, where .signup styles it. A
+   nineteen-field application on navy would be a wall, so this page
+   puts the form on a light ground in a white card and styles the
+   controls for that ground. Nothing here touches .signup.
+
+   Grouping is visible fieldsets rather than collapsible sections:
+   a long form should never hide a required field behind a
+   disclosure the applicant might not open.
+   ============================================================ */
+
+/* ---- Intro band ------------------------------------------------ */
+
+.apply-intro {
+  padding-block: clamp(2.75rem, 6vw, 4.5rem);
+}
+.apply-intro h1 {
+  font-family: var(--lattice-font-display);
+  font-size: var(--lattice-size-section);
+  font-weight: 600;
+  line-height: 1.12;
+  color: var(--lattice-text-on-navy);
+  margin: 0.4rem 0 0;
+  text-wrap: balance;
+}
+.apply-lede {
+  font-family: var(--lattice-font-ui);
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: var(--lattice-text-on-navy);
+  max-width: 58ch;
+  margin-top: 1.1rem;
+}
+.apply-note {
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: var(--lattice-text-on-navy-2);
+  max-width: 58ch;
+  margin-top: 1.25rem;
+}
+
+/* Three facts, not a numbered sequence — applying is one step. */
+.apply-facts {
+  list-style: none;
+  margin: 1.6rem 0 0;
+  padding: 1.25rem 0 0;
+  border-top: 1px solid var(--lattice-border-on-navy);
+  display: grid;
+  gap: 1rem;
+}
+@media (min-width: 40rem) {
+  .apply-facts { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.5rem; }
+}
+.apply-facts li { display: flex; flex-direction: column; gap: 0.2rem; }
+.fact-k {
+  font-family: var(--lattice-font-ui);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--lattice-iris);
+}
+.fact-v {
+  font-size: 0.98rem;
+  color: var(--lattice-text-on-navy);
+}
+
+/* ---- Body ------------------------------------------------------ */
+
+.apply-body { padding-block: clamp(2.25rem, 5vw, 3.5rem); }
+.apply-wrap { display: flex; justify-content: center; }
+
+.form-card {
+  width: 100%;
+  max-width: 44rem;
+  background: var(--lattice-cool-white);
+  border: 1px solid var(--lattice-border);
+  border-radius: 10px;
+  padding: clamp(1.25rem, 4vw, 2.5rem);
+}
+
+.application { display: flex; flex-direction: column; gap: 2.25rem; }
+
+.apply-group {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.35rem;
+}
+.apply-legend {
+  font-family: var(--lattice-font-display);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--lattice-ink-navy);
+  padding: 0 0 0.7rem;
+  margin-bottom: 0.15rem;
+  width: 100%;
+  border-bottom: 2px solid var(--lattice-ink-navy);
+}
+
+.field { display: flex; flex-direction: column; }
+
+/* Two-up only where the pairing is genuine and the fields are short.
+   Everything else stays single column, including on desktop — a long
+   form is easier to complete down one axis. */
+.pair { display: grid; grid-template-columns: 1fr; gap: 1.35rem; }
+@media (min-width: 34rem) {
+  .pair { grid-template-columns: 1fr 1fr; gap: 1rem; }
+}
+
+.flabel {
+  font-family: var(--lattice-font-ui);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--lattice-ink-navy);
+  margin-bottom: 0.35rem;
+}
+.req { color: var(--lattice-cobalt); }
+
+.fhelp {
+  font-size: 0.85rem;
+  color: var(--lattice-text-muted);
+  margin: 0 0 0.55rem;
+}
+.sublabel {
+  font-family: var(--lattice-font-ui);
+  font-size: 0.85rem;
+  color: var(--lattice-text-muted);
+  margin: 0.85rem 0 0.35rem;
+}
+
+/* ---- Controls on a light ground -------------------------------- */
+
+.application input[type="text"],
+.application input[type="email"],
+.application input[type="url"],
+.application select,
+.application textarea {
+  width: 100%;
+  font-family: var(--lattice-font-ui);
+  font-size: 1rem;
+  line-height: 1.45;
+  color: var(--lattice-ink-navy);
+  background: var(--lattice-cool-white);
+  border: 1px solid var(--lattice-border-strong);
+  border-radius: var(--lattice-radius-control);
+  /* 0.85rem vertical keeps the tap target above 44px on mobile. */
+  padding: 0.85rem 0.95rem;
+}
+.application textarea { resize: vertical; min-height: 5.5rem; }
+.application ::placeholder { color: var(--lattice-text-muted); opacity: 1; }
+
+.application input:focus-visible,
+.application select:focus-visible,
+.application textarea:focus-visible {
+  outline: 2px solid var(--lattice-cobalt);
+  outline-offset: 1px;
+  border-color: var(--lattice-cobalt);
+}
+.application [aria-invalid="true"] { border-color: var(--lattice-error); }
+
+.fcount {
+  font-size: 0.78rem;
+  color: var(--lattice-text-muted);
+  margin: 0.35rem 0 0;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.fcount.is-near { color: var(--lattice-error); }
+
+.error-text {
+  font-size: 0.83rem;
+  color: var(--lattice-error);
+  margin-top: 0.4rem;
+}
+.error-text:empty { display: none; }
+
+/* ---- Checkbox groups ------------------------------------------- */
+
+.checkgrid { display: grid; grid-template-columns: 1fr; gap: 0.1rem; }
+@media (min-width: 34rem) {
+  .checkgrid { grid-template-columns: 1fr 1fr; gap: 0.1rem 1rem; }
+}
+.checkgrid[aria-invalid="true"] {
+  outline: 1px solid var(--lattice-error);
+  outline-offset: 6px;
+  border-radius: 4px;
+}
+
+.application .check {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  /* Generous block padding so the whole row is a comfortable target. */
+  padding: 0.55rem 0.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  color: var(--lattice-text-body);
+  transition: background var(--lattice-motion-base);
+}
+.application .check:hover { background: var(--lattice-mist-grey); }
+.application .check input[type="checkbox"] {
+  width: 1.1rem;
+  height: 1.1rem;
+  flex: none;
+  margin: 0.15rem 0 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  accent-color: var(--lattice-cobalt);
+}
+.application .check input[type="checkbox"]:focus-visible {
+  outline: 2px solid var(--lattice-cobalt);
+  outline-offset: 2px;
+}
+.application .check span { line-height: 1.45; }
+
+.check-consent {
+  align-items: flex-start;
+  padding: 0.75rem;
+  background: var(--lattice-mist-grey);
+  border-radius: var(--lattice-radius-control);
+}
+.check-consent:hover { background: var(--lattice-mist-grey); }
+
+.fineprint-dark {
+  font-size: 0.84rem;
+  color: var(--lattice-text-muted);
+  text-align: center;
+  margin: 0.6rem 0 0;
+}
+
+/* ---- Success, replacing the form in place ---------------------- */
+
+.apply-done {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  align-items: flex-start;
+  padding: clamp(0.5rem, 2vw, 1.5rem) 0;
+}
+.apply-done h2 {
+  font-family: var(--lattice-font-display);
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: var(--lattice-ink-navy);
+  margin: 0;
+}
+.apply-done p {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--lattice-text-body);
+  max-width: 52ch;
+  margin: 0;
+}
+.apply-done .btn { margin-top: 0.6rem; }
+
+@media (prefers-reduced-motion: reduce) {
+  .application .check { transition: none; }
+}
