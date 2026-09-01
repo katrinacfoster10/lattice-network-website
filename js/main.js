@@ -18,6 +18,11 @@
 
   if (!form) return;
 
+  /* Custom messages replace the browser's own, so novalidate goes on here
+     rather than in the markup. If this script never runs, the browser keeps
+     enforcing required and an empty submission cannot get through. */
+  form.setAttribute('novalidate', '');
+
   /* ---- Group summaries ----
      Each collapsible group shows its options while empty and the actual
      selections once there are any, so a closed group never hides what it

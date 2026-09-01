@@ -19,6 +19,11 @@
   var card = document.getElementById('application-card');
   if (!form) return;
 
+  /* Custom messages replace the browser's own, so novalidate goes on here
+     rather than in the markup. If this script never runs, the browser keeps
+     enforcing required and an empty application cannot get through. */
+  form.setAttribute('novalidate', '');
+
   /* ---- 1. Validation ---- */
 
   var MESSAGES = {
@@ -148,45 +153,10 @@
   }
 
   /* ---- 3. Submit ----
-     Netlify captures the submission from the POST body; the form-name
-     hidden field routes it to the "peer-circle-application" form.
-     Posting over fetch keeps the applicant on the page. If the fetch
-     fails, hand the submission back to the browser rather than
-     swallowing eight minutes of someone's work. */
-
-  function showSuccess() {
-    if (!card) return;
-
-    var done = document.createElement('div');
-    done.className = 'apply-done';
-    done.setAttribute('role', 'status');
-    done.setAttribute('tabindex', '-1');
-
-    var h = document.createElement('h2');
-    h.textContent = 'Thank you for your interest.';
-
-    var p1 = document.createElement('p');
-    p1.textContent = 'Your application has been received. We will reply within 48 hours.';
-
-    var p2 = document.createElement('p');
-    p2.textContent = 'If we can offer you a seat, enrolment and payment details '
-      + 'will come in a separate note.';
-
-    var back = document.createElement('a');
-    back.className = 'btn btn-cobalt';
-    back.href = '/';
-    back.textContent = 'Back to The Lattice';
-
-    done.appendChild(h);
-    done.appendChild(p1);
-    done.appendChild(p2);
-    done.appendChild(back);
-    card.replaceChildren(done);
-    done.focus();
-    card.scrollIntoView({ block: 'center' });
-  }
-
-  var submitting = false;
+     Netlify captures the submission from the POST body, routed by the
+     form-name hidden field, then redirects to the action path. The
+     confirmation is a real page at /application-received rather than a
+     message swapped in here, so it has its own URL and survives a refresh. */
 
   form.addEventListener('submit', function (event) {
     var firstInvalid = null;
@@ -208,29 +178,14 @@
       return;
     }
 
-    if (submitting) return;      // second pass: let the native submit run
-
-    event.preventDefault();
-    submitting = true;
-
+    /* Deferred, because disabling a submit button inside its own submit
+       handler cancels the submission in some browsers. */
     var button = form.querySelector('button[type="submit"]');
     if (button) {
-      button.disabled = true;
-      button.textContent = 'Sending…';
+      window.setTimeout(function () {
+        button.disabled = true;
+        button.textContent = 'Sending…';
+      }, 0);
     }
-
-    window.fetch('/apply/', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: new URLSearchParams(new FormData(form)).toString()
-    })
-      .then(function (response) {
-        if (!response.ok) throw new Error('Netlify returned ' + response.status);
-        showSuccess();
-      })
-      .catch(function () {
-        submitting = true;
-        form.submit();
-      });
   });
 })();

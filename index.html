@@ -367,7 +367,10 @@
         <!-- Netlify Forms: submissions land in Netlify → Forms.
              The honeypot field is hidden in CSS (.hp), not with [hidden]. -->
         <div class="form-panel" id="form-panel">
-          <form class="signup" name="early-access" method="POST" data-netlify="true" netlify-honeypot="bot-field" novalidate>
+          <!-- novalidate is added by js/main.js at runtime, not here. In the markup it
+               disabled the browser's own required-field check for anyone whose JS did
+               not run, which is how 23 submissions arrived with an email and no name. -->
+          <form class="signup" name="early-access" method="POST" data-netlify="true" netlify-honeypot="bot-field">
             <input type="hidden" name="form-name" value="early-access" />
             <p class="hp"><label>Don't fill this out: <input name="bot-field" tabindex="-1" autocomplete="off" /></label></p>
 

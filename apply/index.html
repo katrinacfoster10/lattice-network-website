@@ -95,8 +95,13 @@
       <div class="wrap apply-wrap">
 
         <div class="form-card" id="application-card">
+          <!-- novalidate is added by js/apply.js at runtime, not here. Shipping
+               it in the markup would disable the browser's own required-field
+               enforcement for anyone whose JS does not run, and let an empty
+               application through. -->
           <form class="application" name="peer-circle-application" method="POST"
-                data-netlify="true" netlify-honeypot="bot-field" novalidate>
+                action="/application-received"
+                data-netlify="true" netlify-honeypot="bot-field">
             <input type="hidden" name="form-name" value="peer-circle-application" />
             <p class="hp"><label>Don't fill this out: <input name="bot-field" tabindex="-1" autocomplete="off" /></label></p>
 
