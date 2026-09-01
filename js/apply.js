@@ -169,8 +169,8 @@
     p1.textContent = 'Your application has been received. We will reply within 48 hours.';
 
     var p2 = document.createElement('p');
-    p2.textContent = 'Every application is read by hand by the three of us. '
-      + 'If we can offer you a seat, enrolment and payment details will come in a separate note.';
+    p2.textContent = 'If we can offer you a seat, enrolment and payment details '
+      + 'will come in a separate note.';
 
     var back = document.createElement('a');
     back.className = 'btn btn-cobalt';
