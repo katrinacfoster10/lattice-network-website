@@ -18,6 +18,11 @@
 
   if (!form) return;
 
+  /* Custom messages replace the browser's own, so novalidate goes on here
+     rather than in the markup. If this script never runs, the browser keeps
+     enforcing required and an empty submission cannot get through. */
+  form.setAttribute('novalidate', '');
+
   /* ---- Group summaries ----
      Each collapsible group shows its options while empty and the actual
      selections once there are any, so a closed group never hides what it
@@ -135,12 +140,10 @@
     done.setAttribute('tabindex', '-1');
 
     var heading = document.createElement('h3');
-    heading.textContent = 'Thank you — you\'re on the list.';
+    heading.textContent = 'You\'re on the list.';
 
     var body = document.createElement('p');
-    body.textContent =
-      'We\'ll be in touch as the founding community takes shape. ' +
-      'Nothing else is needed from you right now.';
+    body.textContent = 'We\'ll keep in touch as we build our community.';
 
     done.appendChild(heading);
     done.appendChild(body);

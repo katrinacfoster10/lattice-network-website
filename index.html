@@ -76,7 +76,7 @@
           <p class="hero-cta">
             <!-- Leads to the Peer Circle detail, not the form: the visitor should
                  read what a Circle involves before being asked to commit. -->
-            <a class="btn btn-citron" href="#peer-circles">Explore Peer Circles <span aria-hidden="true">&rarr;</span></a>
+            <a class="btn btn-citron" href="/apply">Apply for Peer Circles <span aria-hidden="true">&rarr;</span></a>
           </p>
           <p class="hero-dates">Inaugural Peer Circles begin fall 2026.</p>
         </div>
@@ -157,9 +157,12 @@
          position because they are the immediate launch; the other two sit
          below a rule, still findable, deliberately lighter.
 
-         A CTA scrolls to the form AND ticks the matching interest checkbox
-         — see data-interest and js/main.js. The values must match the
-         checkbox values in the form exactly.
+         Peer Circles now go to /apply, not to this form — that is a separate
+         application, not an expression of interest.
+
+         One CTA still carries data-interest: For Organizations. It scrolls to
+         the form AND ticks the matching checkbox — see js/main.js. The value
+         must match the checkbox value exactly.
 
          Online Community carries no data-interest: the interest list has no
          option for it, so the link scrolls to the form without ticking
@@ -207,9 +210,8 @@
 
         <p class="circle-cta">
           <!-- Cobalt, not citron: this is a light ground. -->
-          <a class="btn btn-cobalt" href="#join" data-interest="Peer Circles">Express interest in a Peer Circle <span aria-hidden="true">&rarr;</span></a>
+          <a class="btn btn-cobalt" href="/apply">Apply for Peer Circles <span aria-hidden="true">&rarr;</span></a>
         </p>
-        <p class="circle-note">Tell us you're interested and we'll follow up with details and next steps.</p>
 
         <hr class="rule-soft" />
 
@@ -364,7 +366,10 @@
         <!-- Netlify Forms: submissions land in Netlify → Forms.
              The honeypot field is hidden in CSS (.hp), not with [hidden]. -->
         <div class="form-panel" id="form-panel">
-          <form class="signup" name="early-access" method="POST" data-netlify="true" netlify-honeypot="bot-field" novalidate>
+          <!-- novalidate is added by js/main.js at runtime, not here. In the markup it
+               disabled the browser's own required-field check for anyone whose JS did
+               not run, which is how 23 submissions arrived with an email and no name. -->
+          <form class="signup" name="early-access" method="POST" data-netlify="true" netlify-honeypot="bot-field">
             <input type="hidden" name="form-name" value="early-access" />
             <p class="hp"><label>Don't fill this out: <input name="bot-field" tabindex="-1" autocomplete="off" /></label></p>
 
