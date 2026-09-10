@@ -509,6 +509,9 @@ a:hover { color: var(--lattice-ink-navy); }
   max-width: 68ch;
   margin-top: 2.25rem;
 }
+/* Consecutive lead paragraphs are one thought, not two blocks — the full
+   step between them reads as a section break. */
+.circle-lead + .circle-lead { margin-top: 1.1rem; }
 
 /* Three facts, not a pricing table. The label sits above the value, both
    at body weight, so no single figure shouts. */
