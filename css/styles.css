@@ -905,6 +905,34 @@ a:hover { color: var(--lattice-ink-navy); }
   font-size: 0.82rem;
 }
 
+/* The join link, sitting under the date it belongs to. On navy, so it takes
+   the white-underlined treatment — cobalt is a light-ground colour and only
+   manages 2.5:1 here. */
+.check-join {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.2rem 0.6rem;
+  margin: 0.15rem 0 0.35rem;
+  padding-left: 2.1rem;
+}
+.check-join a {
+  font-weight: 500;
+  font-size: 0.88rem;
+  color: var(--lattice-text-on-navy);
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
+  text-decoration-color: var(--lattice-border-on-navy);
+}
+.check-join a:hover {
+  color: var(--lattice-citron);
+  text-decoration-color: var(--lattice-citron);
+}
+.check-join-note {
+  font-size: 0.78rem;
+  color: var(--lattice-text-on-navy-2);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .field-group .fg-chev { transition: none; }
 }
