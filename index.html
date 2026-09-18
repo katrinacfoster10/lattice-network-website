@@ -452,23 +452,23 @@
             </details>
 
             <!-- Session dates are hardcoded by request. Changing them is an edit
-                 to these three lines and the summary placeholder above. Drop a
-                 date once it has passed, and keep the placeholder's count
-                 ("Two dates in September") and "Neither of these works" in step
-                 with how many remain. -->
+                 to the date lines below, the summary placeholder above, and the
+                 matching placeholder in js/main.js. Drop a date once it has
+                 passed. Keep the wording in step with how many remain: the
+                 title ("Information session"), the hint, and the last option
+                 ("This date doesn't work") all read singular right now. -->
             <details class="field-group" id="group-session">
               <summary>
                 <span class="fg-text">
-                  <span class="fg-title">Information sessions</span>
-                  <span class="fg-state is-empty" id="session-summary">Two dates in September</span>
+                  <span class="fg-title">Information session</span>
+                  <span class="fg-state is-empty" id="session-summary">Monday, September 21</span>
                 </span>
                 <span class="fg-chev" aria-hidden="true"></span>
               </summary>
               <div class="fg-body">
-                <p class="fg-hint">Free, 30 minutes. Tick any you could make.</p>
-                <label class="check"><input type="checkbox" name="session" value="Wed 9 Sept, 10:30 PT" /><span>Wednesday, September 9<span class="check-when">10:30&ndash;11:00am PT</span></span></label>
-                <label class="check"><input type="checkbox" name="session" value="Wed 16 Sept, 9:30 PT" /><span>Wednesday, September 16<span class="check-when">9:30&ndash;10:00am PT</span></span></label>
-                <label class="check"><input type="checkbox" name="session" value="None of these — keep me posted" /><span>Neither of these works<span class="check-when">Keep me posted about future dates</span></span></label>
+                <p class="fg-hint">Free, 30 minutes. Tick the box if you can make it.</p>
+                <label class="check"><input type="checkbox" name="session" value="Mon 21 Sept, 10:00 PT" /><span>Monday, September 21<span class="check-when">10:00&ndash;10:30am PT</span></span></label>
+                <label class="check"><input type="checkbox" name="session" value="Can't make it — keep me posted" /><span>This date doesn't work<span class="check-when">Keep me posted about future dates</span></span></label>
               </div>
             </details>
 

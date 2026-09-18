@@ -940,6 +940,48 @@ a:hover { color: var(--lattice-ink-navy); }
 }
 .form-done p { color: var(--lattice-text-on-navy-2); margin-top: 0; }
 
+/* Join details, shown only to someone who ticked the session date. Set off
+   by a hairline rather than a panel — this sits on navy, inside a panel
+   already, and a box inside a box reads as clutter. */
+.form-done-join {
+  margin-top: 0.4rem;
+  padding-top: 1.1rem;
+  border-top: 1px solid var(--lattice-border-on-navy);
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 0.3rem;
+}
+/* Two-class selectors throughout: `.form-done p` already sets a colour, and
+   a single class loses to it. */
+.form-done .form-done-label {
+  font-weight: 600;
+  font-size: var(--lattice-size-label);
+  letter-spacing: var(--lattice-track-label);
+  text-transform: uppercase;
+  /* Matches the on-navy eyebrows elsewhere on the page. */
+  color: var(--lattice-iris);
+}
+.form-done .form-done-when { color: var(--lattice-text-on-navy); }
+
+/* .text-link is cobalt, which is a light-ground colour — 2.5:1 on ink navy.
+   This link sits on navy, so it takes the on-navy treatment instead. */
+.form-done-join .text-link {
+  margin-top: 0.45rem;
+  color: var(--lattice-text-on-navy);
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
+  text-decoration-color: var(--lattice-border-on-navy);
+}
+.form-done-join .text-link:hover {
+  color: var(--lattice-citron);
+  text-decoration-color: var(--lattice-citron);
+}
+.form-done .form-done-note {
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+}
+
 
 /* ---------------- Footer ---------------- */
 
