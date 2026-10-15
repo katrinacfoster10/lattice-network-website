@@ -1,0 +1,164 @@
+/* ============================================================
+   THE LATTICE — Lexicon page (/lexicon)
+
+   A reference glossary, not a marketing page: short intro band on
+   navy (matching /apply's pattern), then a single-column reading
+   body on a light ground. Terms are rows separated by hairlines —
+   no cards — consistent with the "no card borders" rule in
+   brand-tokens.css. Callouts reuse the blue-rule panel from the
+   source PDF rather than inventing a new treatment.
+   ============================================================ */
+
+/* ---- Intro band (navy) ------------------------------------------ */
+
+.lex-intro { padding-block: clamp(2.5rem, 6vw, 4rem); }
+.lex-intro h1 {
+  font-family: var(--lattice-font-display);
+  font-size: var(--lattice-size-section);
+  font-weight: 600;
+  line-height: 1.12;
+  color: var(--lattice-text-on-navy);
+  margin: 0.4rem 0 0;
+  text-wrap: balance;
+}
+.lex-deck {
+  font-family: var(--lattice-font-ui);
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: var(--lattice-text-on-navy);
+  max-width: 58ch;
+  margin-top: 1.1rem;
+}
+.lex-back {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--lattice-text-on-navy-2);
+  max-width: 58ch;
+  margin-top: 0.9rem;
+}
+.lex-back a {
+  color: var(--lattice-text-on-navy);
+  text-decoration: underline;
+  text-decoration-color: var(--lattice-iris);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+.lex-back a:hover { text-decoration-color: var(--lattice-text-on-navy); }
+
+.lex-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+  margin-top: 1.75rem;
+}
+
+/* ---- Body (light ground) ----------------------------------------- */
+
+.lex-body { padding-block: clamp(2.5rem, 6vw, 4rem); }
+.lex-wrap { max-width: 46rem; margin: 0 auto; }
+
+.lex-lede { display: flex; flex-direction: column; gap: 1.1rem; margin-bottom: clamp(2.5rem, 5vw, 3.5rem); }
+.lex-lede h2 {
+  font-family: var(--lattice-font-display);
+  font-size: var(--lattice-size-pull);
+  font-weight: 600;
+  color: var(--lattice-ink-navy);
+  margin: 0;
+}
+.lex-lede p {
+  font-size: var(--lattice-size-body-lg);
+  line-height: var(--lattice-lh-body-loose);
+  color: var(--lattice-text-body);
+  margin: 0;
+}
+
+.lex-section { margin-bottom: clamp(2.5rem, 5vw, 3.5rem); }
+.lex-section h2 {
+  font-family: var(--lattice-font-display);
+  font-size: clamp(1.4rem, 2.6vw, 1.75rem);
+  font-weight: 600;
+  color: var(--lattice-ink-navy);
+  padding-bottom: 0.75rem;
+  margin: 0 0 0.25rem;
+  border-bottom: 2px solid var(--lattice-ink-navy);
+}
+
+.lex-term {
+  padding: 1.5rem 0;
+  border-bottom: 1px solid var(--lattice-border);
+}
+.lex-section .lex-term:last-child { border-bottom: 0; }
+.lex-term h3 {
+  font-family: var(--lattice-font-display);
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--lattice-ink-navy);
+  margin: 0 0 0.55rem;
+}
+.lex-term p {
+  font-size: var(--lattice-size-body);
+  line-height: var(--lattice-lh-body);
+  color: var(--lattice-text-body);
+  margin: 0;
+}
+.lex-cite {
+  font-size: 0.78rem;
+  color: var(--lattice-text-muted);
+  white-space: nowrap;
+}
+
+.lex-callout {
+  margin: 1.75rem 0;
+  padding: 1.25rem 1.5rem;
+  background: var(--lattice-mist-grey);
+  border-left: 3px solid var(--lattice-cobalt);
+}
+.lex-callout-label {
+  display: block;
+  font-family: var(--lattice-font-ui);
+  font-size: var(--lattice-size-label);
+  font-weight: 600;
+  letter-spacing: var(--lattice-track-label);
+  text-transform: uppercase;
+  color: var(--lattice-cobalt);
+  margin-bottom: 0.55rem;
+}
+.lex-callout p {
+  font-family: var(--lattice-font-display);
+  font-size: 1.05rem;
+  line-height: 1.5;
+  color: var(--lattice-ink-navy);
+  margin: 0;
+}
+
+/* ---- Sources (trimmed) -------------------------------------------- */
+
+.lex-sources { margin-bottom: 0; }
+.lex-sources-note {
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: var(--lattice-text-muted);
+  margin: 0 0 1.25rem;
+  max-width: 60ch;
+}
+.lex-source-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+.lex-source-list li {
+  display: flex;
+  gap: 0.6rem;
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: var(--lattice-text-muted);
+}
+.lex-source-num {
+  flex: none;
+  color: var(--lattice-text-muted);
+  font-variant-numeric: tabular-nums;
+}
+.lex-source-list strong { color: var(--lattice-text-body); font-weight: 600; }
