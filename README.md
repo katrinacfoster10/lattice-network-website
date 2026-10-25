@@ -96,7 +96,7 @@ the single place anyone can look to see what is unfinished.
 - **Live on the custom domain** — `https://thelattice.ca`, SSL issued, `www`
   and `http` both redirecting to it (4 Aug 2026).
 - **Form capture** — detection on, submissions reaching Netlify → Forms →
-  `early-access`, email notification configured.
+  `general-interest`, email notification configured.
 - **Founder LinkedIn URLs** — all three are real and live, with
   `target="_blank" rel="noreferrer"`.
 
@@ -153,12 +153,15 @@ Two deliberate departures, both carried over from the live site:
 
 ## Forms
 
-The email capture uses Netlify Forms (`data-netlify="true"`, `name="early-access"`,
+The email capture uses Netlify Forms (`data-netlify="true"`, `name="general-interest"`,
 honeypot on `bot-field`). `js/main.js` posts it over `fetch` so the visitor stays
 on the page and the panel swaps to a confirmation; if the fetch fails it hands
 the submission back to the browser rather than losing it.
 
-Submissions appear in the Netlify dashboard under **Forms** → `early-access`.
+Submissions appear in the Netlify dashboard under **Forms** → `general-interest`.
+(Renamed from `early-access` on 2026-10-25 — submissions before that date stay
+under the old `early-access` form entry in the Netlify dashboard; Netlify does
+not merge history across a form rename.)
 
 **Form detection is enabled and verified working** (4 Aug 2026). If forms ever
 stop being captured after a change to the markup, the cause is almost always

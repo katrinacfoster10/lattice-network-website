@@ -127,7 +127,7 @@
 
   /* ---- 3. Submit ----
      Netlify captures the submission from the POST body; the form-name
-     hidden field is what routes it to the "early-access" form. Posting
+     hidden field is what routes it to the "general-interest" form. Posting
      over fetch keeps the visitor on the page. If the fetch fails (the
      page opened from disk, or the network dropped) the form falls back
      to a normal browser submit rather than swallowing the entry. */
