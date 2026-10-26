@@ -29,8 +29,18 @@
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
+/* Was scroll-behavior: smooth. Confirmed by direct A/B test: with smooth
+   set, loading a URL with a hash (e.g. /#who, or any nav link from
+   another page) left the page at scrollY 0 — the browser never
+   completed the animated jump to the anchor, so the section just
+   stayed off-screen below the fold. Switching to auto, same test,
+   same URL: lands correctly at 96px under the header (the
+   scroll-margin-top below) every time. No JS on the page touches
+   scroll position — this was the sole cause of anchors appearing to
+   silently fail on fresh navigation, including every /#who, /#join,
+   /#organizations link in the nav/footer on every other page. */
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
   -webkit-text-size-adjust: 100%;
 }
 
@@ -56,6 +66,11 @@ img, svg { display: block; max-width: 100%; }
 }
 
 section { padding-block: var(--lattice-section-pad); }
+
+/* Short informational sections (a couple of paragraphs, a handful of
+   list items) don't need the full 88px block padding built for sections
+   carrying more hierarchy. 48-64px responsive. */
+.section-compact { padding-block: clamp(3rem, 6vw, 4rem); }
 
 /* The sticky header would otherwise sit on top of an anchored heading. */
 [id] { scroll-margin-top: var(--lattice-header-offset); }
@@ -220,10 +235,18 @@ a:hover { color: var(--lattice-ink-navy); }
   color: var(--lattice-cool-white);
 }
 
+/* Outlined secondary, for a navy ground CTA sitting beside a citron
+   primary. Matches .btn-citron's padding and font-size exactly so the
+   pair reads as one button group at one height — this class previously
+   carried no padding of its own and relied on always being paired with
+   .btn-sm (its only prior use: the cookie banner's Decline), which left
+   it rendering with zero padding anywhere else it was used. */
 .btn-ghost {
   background: transparent;
   color: var(--lattice-text-on-navy);
   font-weight: 500;
+  font-size: 0.95rem;
+  padding: 0.9rem 1.6rem;
   border: 1px solid var(--lattice-border-on-navy);
 }
 .btn-ghost:hover {
@@ -315,52 +338,62 @@ a:hover { color: var(--lattice-ink-navy); }
 .nav-links a.btn-citron:hover { color: var(--lattice-ink-navy); }
 
 
-/* ---------------- Hero ---------------- */
+/* ---------------- Hero ----------------
 
-.hero {
-  padding-block: 0;
-  overflow: hidden;
-}
-.hero-grid {
-  display: grid;
-  grid-template-columns: 1.42fr 0.58fr;
-  align-items: stretch;
-}
-.hero-copy {
-  padding: clamp(3.5rem, 7vw, 6rem) clamp(1.5rem, 4vw, 3.5rem) clamp(3.5rem, 6vw, 5.5rem) 0;
-}
-.hero-copy h1 {
-  color: var(--lattice-text-on-navy);
-  margin-top: 1.6rem;
-}
-.hero-deck {
-  font-size: clamp(1.05rem, 1.6vw, 1.25rem);
-  color: var(--lattice-text-on-navy-2);
-  line-height: 1.55;
-  max-width: 42ch;
-  margin-top: 1.7rem;
-}
-.hero-cta { margin-top: 2.5rem; }
-.hero-dates {
-  font-size: 1rem;
-  font-weight: 500;
-  letter-spacing: 0.005em;
-  color: var(--lattice-text-on-navy);
-  margin-top: 2.5rem;
-}
+   Second attempt: the two-column grid with the decorative diagram and
+   its own reserved column is gone entirely — no graphic, no divider, no
+   second track to strand when it stacks. One left-aligned stack: eyebrow,
+   headline, body, CTA group, availability note, all sharing the same
+   left edge. Flat navy ground, the section's own standard block padding
+   (no bespoke clamp tied to the old grid). */
 
-/* The 1px rule between the columns. It disappears when they stack. */
-.hero-figure {
-  border-left: 1px solid rgba(255, 255, 255, 0.16);
-  padding: clamp(3rem, 6vw, 6rem) 0 clamp(3rem, 6vw, 5.5rem) clamp(1.5rem, 4vw, 3rem);
+/* No max-width here. It previously sat on the same element as .wrap's
+   own margin-inline:auto, so constraining it didn't just narrow the
+   reading column — it shrank and re-centered the ENTIRE hero block
+   within the viewport, pulling every line of content well inside the
+   left edge every other section's .wrap sits at. Width now gets
+   constrained per-element below (.hero-deck), leaving .hero-copy at
+   the same full .wrap width as the rest of the page. */
+
+.hero h1 {
+  color: var(--lattice-text-on-navy);
+  margin-top: 1.4rem;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
 }
-.hero-diagram { width: 100%; max-width: 320px; height: auto; }
-.diagram-links { stroke: var(--lattice-cobalt); }
-.node-iris   { fill: var(--lattice-iris); }
-.node-cobalt { fill: var(--lattice-cobalt); }
+/* "Built with intention." sits directly beneath "Your next chapter." —
+   both spans share the H1's own left edge; line-height alone sets the
+   gap between them, no added margin, indent or offset. */
+.hero-line2 {
+  font-style: italic;
+  font-weight: 400;
+}
+
+.hero-deck {
+  font-size: clamp(1.05rem, 1.6vw, 1.2rem);
+  color: var(--lattice-text-on-navy-2);
+  line-height: 1.55;
+  /* ~55-65 characters per line, not stretched across the hero's width. */
+  max-width: 58ch;
+}
+.hero h1 + .hero-deck { margin-top: 1.5rem; }
+.hero-deck + .hero-deck { margin-top: 0.9rem; }
+
+.hero-cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+/* Muted and close to the buttons — a status line, not a fourth
+   headline-weight statement. */
+.hero-dates {
+  font-size: 0.9rem;
+  font-weight: 500;
+  letter-spacing: 0.005em;
+  color: var(--lattice-text-on-navy-2);
+  margin-top: 1.1rem;
+}
 
 
 /* ---------------- Section heading rows ---------------- */
@@ -404,12 +437,16 @@ a:hover { color: var(--lattice-ink-navy); }
   display: grid;
   grid-template-columns: 1fr 1fr;
 }
+/* Tighter than the old clamp(1.5rem, 3vw, 3rem) — up to 6rem/96px of
+   combined gap read as two separate sections rather than two halves of
+   one explanation ("built around two things"). A shared hairline still
+   marks the seam. */
 .pillars > :first-child {
-  padding: 2.5rem clamp(1.5rem, 3vw, 3rem) 3rem 0;
+  padding: 2.5rem clamp(1.25rem, 2vw, 2rem) 3rem 0;
   border-right: 1px solid var(--lattice-border);
 }
 .pillars > :last-child {
-  padding: 2.5rem 0 3rem clamp(1.5rem, 3vw, 3rem);
+  padding: 2.5rem 0 3rem clamp(1.25rem, 2vw, 2rem);
 }
 
 /* Numeral and heading share a baseline. */
@@ -421,6 +458,7 @@ a:hover { color: var(--lattice-ink-navy); }
 .pillar h3 { font-size: clamp(1.4rem, 2.4vw, 1.75rem); }
 .pillar p { margin-top: 1.1rem; line-height: var(--lattice-lh-body-loose); }
 .lead-line { font-weight: 600; color: var(--lattice-ink-navy); }
+.pillar .text-link { margin-top: 1.1rem; }
 
 /* Full-bleed navy band carrying the pull quote. */
 .pull-band { padding: clamp(3rem, 6vw, 4.5rem) var(--lattice-gutter); }
@@ -458,49 +496,216 @@ a:hover { color: var(--lattice-ink-navy); }
 }
 
 
-/* ---------------- What We're Starting With ---------------- */
+/* ---------------- What We're Starting With ----------------
+
+   Three columns, subgrid rows (heading, body) — so when one heading
+   wraps to two lines and its neighbours don't, all three descriptions
+   still start at the same Y instead of each sitting flush under its
+   own heading's different height. */
 
 .offers {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: auto 1fr;
 }
 .offer {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-rows: subgrid;
+  grid-row: span 2;
   padding-top: 2rem;
 }
+.offer h3 { align-self: start; }
 .offers > :not(:last-child) { border-right: 1px solid var(--lattice-border); }
 .offers > :first-child  { padding-right: clamp(1.25rem, 2.4vw, 2rem); }
 .offers > :nth-child(2) { padding-inline: clamp(1.25rem, 2.4vw, 2rem); }
 .offers > :last-child   { padding-left: clamp(1.25rem, 2.4vw, 2rem); }
 
-.timing {
+.offer-body {
+  align-self: start;
+  font-size: 0.98rem;
+  margin-top: 0.9rem;
+}
+.offer .text-link { margin-top: 1.5rem; align-self: flex-start; }
+
+@media (max-width: 900px) {
+  .offers { grid-template-rows: none; }
+  .offer { grid-template-rows: none; grid-row: auto; }
+}
+
+/* ---------------- Two Ways to Join (open editorial) ----------------
+
+   Rebuilt to match .pillars — same hairline column divider, same plain
+   heading/paragraph rhythm, no background, no border, no card padding.
+   The distinction between the two offers comes from their content, not
+   a box around them.
+
+   Third attempt. .ways-grid is a 4-row subgrid — heading, description,
+   pricing/terms, CTA — each its own shared row, so corresponding areas
+   land at the same Y in both columns regardless of how long either
+   offer's description runs. The earlier 3-row version folded the CTA
+   in as an implicit 4th grid item that belonged to none of the defined
+   subgrid rows; left without its own align-self/justify-self, CSS
+   Grid's default stretch blew it up to fill the leftover row height —
+   rendered as a ~124px-tall button overlapping the price block. Every
+   row item below sets both align-self and justify-self to start so
+   nothing stretches to fill its row or column again. */
+
+.ways-intro {
+  max-width: 62ch;
+  margin-top: 1.5rem;
+}
+.ways-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto 1fr auto auto;
+  column-gap: clamp(1.5rem, 3vw, 3rem);
+  margin-top: clamp(2.5rem, 5vw, 3.5rem);
+}
+.ways-offer {
+  display: grid;
+  grid-template-rows: subgrid;
+  grid-row: span 4;
+}
+.ways-offer > * { justify-self: start; }
+.ways-offer:first-child {
+  padding-right: clamp(1.25rem, 2.4vw, 2rem);
+  border-right: 1px solid var(--lattice-border);
+}
+.ways-offer:last-child { padding-left: clamp(1.25rem, 2.4vw, 2rem); }
+.ways-offer h3 { align-self: start; font-size: clamp(1.3rem, 2.2vw, 1.6rem); }
+
+/* Short parallel facts read as a list, not stacked paragraphs. A small
+   square mark, not a round bullet — square panels, no radius. Close to
+   its heading (1rem), not the generous gap a lead paragraph would get. */
+.ways-list {
+  list-style: none;
+  margin-top: 1rem;
+  align-self: start;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+.ways-list li {
+  position: relative;
+  padding-left: 1.15rem;
+  font-size: 0.98rem;
+  line-height: var(--lattice-lh-body-loose);
+}
+.ways-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 5px;
+  height: 5px;
+  background: var(--lattice-cobalt);
+}
+
+/* Label-over-value, like .circle-facts, so the price reads as a fact,
+   not a sentence buried in body copy. Its own row in the subgrid — a
+   fixed, guaranteed gap above the divider in both columns, not
+   contingent on how much free space is left over.
+
+   justify-self: stretch, overriding the .ways-offer > * { start } rule
+   below it — without this, the price block (a column flex container)
+   shrink-wraps to its own widest child, so a short note ("Billed
+   monthly.") and a long one ("Plus applicable taxes. Initial
+   commitment...") produced two different box widths — and since the
+   divider is this box's own border-top, two different divider widths.
+   Stretching the box to the full column width makes both dividers the
+   column width, full stop; the text inside still reads left-aligned,
+   unaffected. */
+.ways-price {
+  align-self: start;
+  justify-self: stretch;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--lattice-border);
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+.ways-price-label {
   font-weight: 600;
   font-size: 0.7rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--lattice-text-muted);
-  margin-top: 0.9rem;
 }
-.offer-body {
-  font-size: 0.98rem;
-  margin-top: 0.9rem;
-  flex: 1;
+.ways-price-value {
+  font-family: var(--lattice-font-display);
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--lattice-ink-navy);
 }
-.offer .text-link { margin-top: 1.5rem; align-self: flex-start; }
+.ways-price-note {
+  font-size: 0.85rem;
+  color: var(--lattice-text-muted);
+  margin-top: 0.15rem;
+}
+/* Its own row — content-width, left-aligned, never stretched. */
+.ways-cta { align-self: start; margin-top: 1.25rem; }
 
-/* The two-column variant, for Online Community + Membership sitting below
-   the Peer Circle feature. The 1fr 1fr 1fr rule above assumes three. */
-.offers-two { grid-template-columns: 1fr 1fr; }
-/* With two children, :nth-child(2) is also :last-child, so it picks up
-   padding-inline from the three-column rule. Only the left side is wanted. */
-.offers-two > :last-child { padding-right: 0; }
-.offer h3 { font-size: clamp(1.15rem, 2vw, 1.35rem); }
+@media (max-width: 900px) {
+  .ways-grid { grid-template-columns: 1fr; grid-template-rows: none; row-gap: 2.5rem; }
+  .ways-offer { grid-template-rows: none; grid-row: auto; }
+  .ways-offer:first-child {
+    padding-right: 0;
+    border-right: 0;
+    padding-bottom: 2.5rem;
+    border-bottom: 1px solid var(--lattice-border);
+  }
+  .ways-offer:last-child { padding-left: 0; }
+}
+
+
+/* ---------------- Detail page intro band (navy) ----------------
+
+   Shared by /community and /peer-circles: eyebrow, H1, one or two deck
+   paragraphs, an optional price line, a CTA — and now the facts list
+   below, when the page has one. */
+
+.com-intro { padding-block: clamp(2.75rem, 6vw, 4.5rem); }
+.com-intro h1 {
+  font-family: var(--lattice-font-display);
+  font-size: var(--lattice-size-section);
+  font-weight: 600;
+  line-height: 1.12;
+  color: var(--lattice-text-on-navy);
+  margin: 0.4rem 0 0;
+  /* Was 20ch — on the Community page's longer headline that forced a
+     cramped three-line break with excess empty space beside it. 900px
+     gives a balanced two-line composition there; shorter headlines
+     (e.g. Peer Circles') still render on one line regardless. Wider
+     than the .com-deck body below it, which keeps its own, narrower
+     measure. */
+  max-width: 900px;
+  text-wrap: balance;
+}
+.com-deck {
+  font-family: var(--lattice-font-ui);
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: var(--lattice-text-on-navy);
+  /* Was 58ch (~536px at this size) — narrower than intended. 680px
+     sits in the requested 650-720px range, independent of the wider
+     headline above it. */
+  max-width: 680px;
+  margin-top: 1.1rem;
+}
+.com-deck + .com-deck { margin-top: 0.85rem; }
+.com-price {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--lattice-text-on-navy-2);
+  margin-top: 1.5rem;
+}
+.com-intro-cta { margin-top: 1.5rem; }
 
 
 /* ---------------- Peer Circles (feature) ----------------
 
-   Introduction, three facts, then what a Circle actually does in the
+   Introduction, the facts grid, then what a Circle actually does in the
    page's existing three-column rhythm. */
 
 .circle-lead {
@@ -513,15 +718,21 @@ a:hover { color: var(--lattice-ink-navy); }
    step between them reads as a section break. */
 .circle-lead + .circle-lead { margin-top: 1.1rem; }
 
-/* Three facts, not a pricing table. The label sits above the value, both
-   at body weight, so no single figure shouts. */
+/* Four facts (Circle size, Sessions, Fee, Initial commitment) in
+   explicit column counts per breakpoint, not auto-fit — four balanced
+   columns on desktop, two on tablet, one on mobile — rather than
+   letting the track count fall out of container width. */
 .circle-facts {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, max-content));
-  gap: 2.5rem clamp(2.5rem, 6vw, 5rem);
+  grid-template-columns: repeat(4, 1fr);
+  row-gap: 1.75rem;
+  column-gap: clamp(1.5rem, 4vw, 3rem);
   margin-top: 2rem;
   padding-block: 1.4rem;
   border-block: 1px solid var(--lattice-border);
+}
+@media (max-width: 900px) {
+  .circle-facts { grid-template-columns: repeat(2, 1fr); }
 }
 .circle-facts dt {
   font-weight: 600;
@@ -536,6 +747,14 @@ a:hover { color: var(--lattice-ink-navy); }
   margin-top: 0.35rem;
 }
 
+/* On the navy intro band (/peer-circles), the light-ground label/value
+   colours above are unreadable — on-navy equivalents, border included. */
+.circle-facts-navy {
+  border-block: 1px solid var(--lattice-border-on-navy);
+}
+.circle-facts-navy dt { color: var(--lattice-text-on-navy-2); }
+.circle-facts-navy dd { color: var(--lattice-text-on-navy); }
+
 /* The practical footnote to the three columns above — quieter than body,
    louder than fine print. */
 .circle-format {
@@ -545,9 +764,41 @@ a:hover { color: var(--lattice-ink-navy); }
   margin-top: 2.25rem;
 }
 
+/* Three related facts (inclusion, withdrawal terms, next cohort) grouped
+   as one unit: the group gets the normal 2.25rem step away from the
+   differentiator paragraph above it, but the facts inside it sit 14px
+   apart — not the repeated 2.25rem/36px .circle-format margin each
+   would otherwise carry on its own. */
+.circle-notes {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 2.25rem;
+}
+.circle-notes .circle-format { margin-top: 0; }
+
 /* The button is the last thing in this block, so it carries the bottom
    space itself rather than leaning on a following paragraph's margin. */
 .circle-cta { margin-top: 1.75rem; margin-bottom: 0; }
+
+/* Tightened transition from "How Peer Circles work" into "Membership
+   and terms" — both sections otherwise carry the shared, full
+   --lattice-section-pad (88px desktop) on the touching edges, which
+   combined into a gap much larger than the content on either side
+   needed. Neither section has a paragraph margin on its touching edge
+   (circle-lead's margin is margin-top only; .section-head is each
+   section's first child), so section padding is the whole gap — 40px
+   plus 48px nets an intentionally tighter ~88px total. Desktop only;
+   mobile keeps the default section rhythm. */
+@media (min-width: 901px) {
+  .circle-work-section { padding-bottom: 40px; }
+  .circle-terms-section { padding-top: 48px; }
+}
+
+/* The closing differentiator line on /peer-circles — scoped to this
+   section only, not .circle-lead generally, which is also the
+   (non-italic) "Who it is for" copy on /community. */
+.circle-work-section .circle-lead { font-style: italic; }
 
 /* A quieter divider than the 2px navy section rule. */
 .rule-soft {
@@ -606,20 +857,34 @@ a:hover { color: var(--lattice-ink-navy); }
 }
 
 
-/* ---------------- For Organizations ---------------- */
+/* ---------------- For Organizations ----------------
 
-/* Deliberately smaller in footprint than the sections around it. */
+   Used for three things now: the homepage's For Organizations block,
+   and the cross-link panels closing /community and /peer-circles. All
+   three previously sat in a bordered, backgrounded box — a distinct
+   "promotional panel" component unlike anything else on the page.
+   Removed: no border, no background, no card padding. It's an open
+   two-column row like .org-panel's neighbours, not a box. */
+
 .orgs { padding-block: clamp(2.5rem, 5vw, 3.75rem); }
 .org-panel {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: clamp(1.25rem, 3vw, 2.5rem);
   align-items: center;
-  background: var(--lattice-cool-white);
-  border: 1px solid var(--lattice-border-strong);
-  border-top: 2px solid var(--lattice-ink-navy);
-  padding: clamp(1.5rem, 2.6vw, 2rem);
 }
+
+/* Homepage "For Organizations" only: one continuous text block rather
+   than the two-column split .org-panel uses for the shorter /community
+   and /peer-circles cross-link panels. Three paragraphs of prose read
+   as a single readable column, with the CTA directly beneath the last
+   paragraph instead of stranded in a separate column. */
+.org-panel-stack {
+  display: block;
+  max-width: 800px;
+}
+.org-panel-stack .org-body { max-width: none; }
+.org-panel-stack .org-cta { margin-top: 1.5rem; }
 .orgs .eyebrow { margin-bottom: 0.8rem; }
 .org-heading {
   font-size: clamp(1.15rem, 1.9vw, 1.4rem);
@@ -767,6 +1032,27 @@ a:hover { color: var(--lattice-ink-navy); }
   margin-top: 2rem;
   padding-top: 1.75rem;
   border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+.join-ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+/* Heading inside the form panel, above the fields. */
+.form-heading {
+  font-family: var(--lattice-font-display);
+  font-weight: 600;
+  font-size: 1.3rem;
+  color: var(--lattice-text-on-navy);
+  margin-bottom: 0.6rem;
+}
+.form-subhead {
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: var(--lattice-text-on-navy-2);
+  margin-bottom: 1.5rem;
 }
 
 
@@ -1049,10 +1335,10 @@ a:hover { color: var(--lattice-ink-navy); }
 
 /* ---------------- Responsive ---------------- */
 
-/* One breakpoint. The three grids with hairline dividers — the hero, the
-   two pillars and the three offer columns — carry [data-stack].
-   This rule matters: without it the vertical dividers survive the stack
-   and draw rules that point at nothing. */
+/* One breakpoint. The two remaining grids with hairline dividers — the
+   pillars and the three offer columns — carry [data-stack]. This rule
+   matters: without it the vertical dividers survive the stack and draw
+   rules that point at nothing. */
 @media (max-width: 900px) {
   [data-stack] {
     grid-template-columns: 1fr;
@@ -1066,12 +1352,12 @@ a:hover { color: var(--lattice-ink-navy); }
     padding-inline: 0 !important;
   }
 
-  .hero-copy { padding-bottom: 0; }
-  .hero-figure { padding-top: 0; padding-bottom: clamp(3rem, 8vw, 4rem); }
-  .hero-diagram { max-width: 260px; }
-
   .offers > * { padding-top: 0; }
   .pillars > * { padding-block: 0; }
+  /* An explicit, tighter stacked gap — the two pillars are one paired
+     explanation, not two unrelated sections, so they get less air
+     between them than the generic 2.75rem [data-stack] default. */
+  .pillars { row-gap: 2rem; }
 
   .founders { grid-template-columns: repeat(2, 1fr); }
   .advisors { grid-template-columns: repeat(2, 1fr); }

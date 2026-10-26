@@ -1,0 +1,120 @@
+/* ============================================================
+   THE LATTICE — Online Community page (/community)
+
+   The navy intro band (.com-intro, .com-deck, .com-price, .com-intro-cta)
+   moved to styles.css — /peer-circles uses the identical pattern, so it's
+   shared rather than duplicated per page. What's left here is genuinely
+   specific to this page: the two-up "what's included" grid, the numbered
+   join steps and the FAQ accordion. Everything else reuses shared
+   components from styles.css (.circle-lead, .circle-format, .circle-cta,
+   .offers, .org-panel).
+   ============================================================ */
+
+/* ---- What membership includes (2-up grid) ------------------------ */
+
+.com-includes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: clamp(1.5rem, 3vw, 3rem);
+  row-gap: 2.5rem;
+  /* Was 0 — the rule above (.section-head's border-bottom) sat almost
+     flush against the first row of headings. 28px lands in the
+     requested 24-32px range. */
+  margin-top: 1.75rem;
+}
+.com-includes > :nth-child(odd) {
+  border-right: 1px solid var(--lattice-border);
+  padding-right: clamp(1.5rem, 3vw, 2.5rem);
+}
+.com-includes > :nth-child(even) { padding-left: clamp(1.5rem, 3vw, 2.5rem); }
+.com-includes h3 { font-size: clamp(1.1rem, 1.8vw, 1.3rem); }
+.com-includes p { margin-top: 0.75rem; line-height: var(--lattice-lh-body-loose); }
+
+/* ---- Who it is for: a restrained accent instead of the shared
+   .section-head's full-width 2px navy rule, which competed with the
+   divider used everywhere else on this short, mist-ground section. --- */
+
+.who-head { margin-bottom: 2rem; }
+.who-accent {
+  display: block;
+  width: 48px;
+  height: 3px;
+  background: var(--lattice-cobalt);
+  margin-bottom: 1rem;
+}
+
+/* ---- How to join: numbered steps, light ground -------------------- */
+
+.com-steps {
+  list-style: none;
+  counter-reset: step;
+  border-top: 1px solid var(--lattice-border);
+  margin-top: 2rem;
+  max-width: 68ch;
+}
+.com-steps li {
+  counter-increment: step;
+  display: grid;
+  grid-template-columns: 46px 1fr;
+  gap: 0.75rem;
+  align-items: start;
+  padding-block: 1.1rem;
+  border-bottom: 1px solid var(--lattice-border);
+  font-size: 1.02rem;
+  line-height: 1.55;
+}
+.com-steps li::before {
+  content: counter(step, decimal-leading-zero);
+  font-family: var(--lattice-font-ui);
+  font-size: var(--lattice-size-label);
+  font-weight: 600;
+  letter-spacing: var(--lattice-track-numeral);
+  color: var(--lattice-cobalt);
+  padding-top: 0.3rem;
+}
+
+/* ---- FAQ accordion, light ground ----------------------------------- */
+
+/* No border-top here — .section-head directly above already closes
+   with a 2px navy rule. A second hairline right under it doubled the
+   divider between the FAQ heading and the first question. */
+.com-faq { margin-top: 2rem; }
+.com-faq-item { border-bottom: 1px solid var(--lattice-border); }
+.com-faq-item > summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 1.1rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  font-family: var(--lattice-font-display);
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: var(--lattice-ink-navy);
+}
+.com-faq-item > summary::-webkit-details-marker { display: none; }
+.com-faq-item > summary:focus-visible {
+  outline: 2px solid var(--lattice-cobalt);
+  outline-offset: 2px;
+}
+.com-faq-chev {
+  flex: none;
+  width: 0.6rem;
+  height: 0.6rem;
+  border-right: 2px solid var(--lattice-cobalt);
+  border-bottom: 2px solid var(--lattice-cobalt);
+  transform: rotate(45deg);
+  margin-bottom: 0.15rem;
+  transition: transform var(--lattice-motion-base);
+}
+.com-faq-item[open] .com-faq-chev { transform: rotate(-135deg); margin-bottom: -0.1rem; }
+.com-faq-item p {
+  padding: 0 0 1.25rem;
+  max-width: 68ch;
+  line-height: var(--lattice-lh-body-loose);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .com-faq-chev { transition: none; }
+}
