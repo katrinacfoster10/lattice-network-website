@@ -28,8 +28,7 @@
      selections once there are any, so a closed group never hides what it
      is asking. */
   var PLACEHOLDER = {
-    interest: 'Peer Circles, workshops, events\u2026',
-    session: 'Monday, September 21'
+    interest: 'Peer Circles, workshops, events\u2026'
   };
 
   function paintSummary(name) {
@@ -64,7 +63,6 @@
 
   form.addEventListener('change', function () {
     paintSummary('interest');
-    paintSummary('session');
   });
 
   /* ---- 2. Inline validation ---- */
@@ -132,27 +130,8 @@
      page opened from disk, or the network dropped) the form falls back
      to a normal browser submit rather than swallowing the entry. */
 
-  /* ---- Information session join details ----
-     Shown in the confirmation to anyone who ticks the session date, so the
-     join link does not have to be sent out by hand. Update these three
-     values together with the checkbox in index.html.
-
-     Note this is convenience, not access control: the URL ships inside this
-     file, so anyone who views source can read it. Use a Zoom registration
-     link here if the room needs to be controlled. */
-  var SESSION = {
-    value: 'Mon 21 Sept, 10:00 PT',
-    when: 'Monday, September 21, 10:00–10:30am PT',
-    url: 'https://us05web.zoom.us/j/85641131889?pwd=nX5bm4O37zJbYJlMCd4OPQKbhlEWB9.1&jst=3'
-  };
-
   function showSuccess() {
     if (!panel) return;
-
-    // Read this before the form is replaced below.
-    var joining = !!form.querySelector(
-      'input[name="session"][value="' + SESSION.value + '"]:checked'
-    );
 
     var done = document.createElement('div');
     done.className = 'form-done';
@@ -167,36 +146,6 @@
 
     done.appendChild(heading);
     done.appendChild(body);
-
-    if (joining) {
-      var join = document.createElement('div');
-      join.className = 'form-done-join';
-
-      var label = document.createElement('p');
-      label.className = 'form-done-label';
-      label.textContent = 'Information session';
-
-      var when = document.createElement('p');
-      when.className = 'form-done-when';
-      when.textContent = SESSION.when;
-
-      var link = document.createElement('a');
-      link.className = 'text-link';
-      link.href = SESSION.url;
-      link.target = '_blank';
-      link.rel = 'noopener noreferrer';
-      link.textContent = 'Join on Zoom →';
-
-      var note = document.createElement('p');
-      note.className = 'form-done-note';
-      note.textContent = 'Save this link — we\'ll send a reminder closer to the date.';
-
-      join.appendChild(label);
-      join.appendChild(when);
-      join.appendChild(link);
-      join.appendChild(note);
-      done.appendChild(join);
-    }
 
     panel.replaceChildren(done);
     done.focus();
