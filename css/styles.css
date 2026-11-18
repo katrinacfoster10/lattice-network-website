@@ -857,6 +857,34 @@ a:hover { color: var(--lattice-ink-navy); }
 }
 
 
+/* ---------------- Information Session ----------------
+
+   Sits between Who It's For and For Organizations. Shares .org-heading
+   and .org-body (below) rather than its own type rules. */
+
+.info-session { padding-block: clamp(2.5rem, 5vw, 3.75rem); }
+.info-session-panel { max-width: 800px; }
+.info-session .eyebrow { margin-bottom: 0.8rem; }
+.info-session-next {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem 1.25rem;
+  margin-top: 1.5rem;
+}
+.info-session-date {
+  font-family: var(--lattice-font-ui);
+  font-weight: 600;
+  font-size: 0.98rem;
+  color: var(--lattice-ink-navy);
+}
+.info-session-note {
+  font-family: var(--lattice-font-ui);
+  font-size: 0.82rem;
+  color: var(--lattice-text-muted);
+}
+
+
 /* ---------------- For Organizations ----------------
 
    Used for three things now: the homepage's For Organizations block,
