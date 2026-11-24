@@ -205,24 +205,35 @@
     </section>
 
     <!-- ===================== INFORMATION SESSION =====================
-         Evergreen slot: the eyebrow/heading/body never change. Monthly
-         upkeep is the single <p class="info-session-next"> line below —
-         swap the date/time text and the Meet href. Reuses .org-heading
-         and .org-body from the For Organizations panel just below, so
-         it reads as the same system rather than a one-off box.
-         The link is open on purpose, per the Zoom precedent this
-         replaces: RSVPing was never the price of joining. -->
+         Evergreen slot: eyebrow/heading/body never change. Monthly upkeep
+         is the date line below the heading, plus the matching date, Meet
+         link and calendar link in js/info-session.js's SESSION object.
+         The form gates the Meet link on purpose — Katrina and Jill need
+         to know who's coming to follow up afterward; the earlier open
+         link gave them no way to do that. Submissions land in Netlify →
+         Forms under "information-session", kept separate from
+         general-interest so it stays its own exportable list. -->
     <section class="info-session ground-mist" id="info-session">
       <div class="wrap">
         <div class="info-session-panel">
           <span class="eyebrow">Information Session</span>
           <h2 class="org-heading">See how The Lattice works before you join.</h2>
           <p class="org-body">A free 30-minute walkthrough of the Online Community and Peer Circles, with time for questions. No pitch, no obligation.</p>
-          <p class="info-session-next">
-            <span class="info-session-date">Monday, November 23 &middot; 1:30&ndash;2:00pm PT / 4:30&ndash;5:00pm ET</span>
-            <a class="btn btn-cobalt" href="https://meet.google.com/rqj-fspi-wbs" target="_blank" rel="noopener noreferrer">Join on Google Meet <span aria-hidden="true">&rarr;</span></a>
-            <span class="info-session-note">No sign-up needed</span>
-          </p>
+          <p class="info-session-date">Monday, November 30 &middot; 11:30am&ndash;12:00pm PT / 2:30&ndash;3:00pm ET</p>
+
+          <div id="info-session-slot">
+            <form class="info-session-form" name="information-session" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+              <input type="hidden" name="form-name" value="information-session" />
+              <p class="hp"><label>Don't fill this out: <input name="bot-field" tabindex="-1" autocomplete="off" /></label></p>
+
+              <input type="text" name="first-name" placeholder="First name" aria-label="First name" autocomplete="given-name" required />
+              <input type="text" name="last-name" placeholder="Last name" aria-label="Last name" autocomplete="family-name" required />
+              <input type="email" name="email" placeholder="you@email.com" aria-label="Email address" autocomplete="email" required />
+              <input type="text" name="organization" placeholder="Organization (optional)" aria-label="Organization, optional" autocomplete="organization" />
+
+              <button class="btn btn-cobalt" type="submit">Reserve your spot <span aria-hidden="true">&rarr;</span></button>
+            </form>
+          </div>
         </div>
       </div>
     </section>
@@ -483,5 +494,6 @@
 
   <script src="js/analytics.js"></script>
   <script src="js/main.js"></script>
+  <script src="js/info-session.js"></script>
 </body>
 </html>
