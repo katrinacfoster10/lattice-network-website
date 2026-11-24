@@ -860,28 +860,60 @@ a:hover { color: var(--lattice-ink-navy); }
 /* ---------------- Information Session ----------------
 
    Sits between Who It's For and For Organizations. Shares .org-heading
-   and .org-body (below) rather than its own type rules. */
+   and .org-body (below) rather than its own type rules. Light ground
+   throughout, so this gets its own field/button styling rather than
+   reusing .signup, which is hard-coded for the navy "join" form. */
 
 .info-session { padding-block: clamp(2.5rem, 5vw, 3.75rem); }
-.info-session-panel { max-width: 800px; }
+.info-session-panel { max-width: 640px; }
 .info-session .eyebrow { margin-bottom: 0.8rem; }
-.info-session-next {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.6rem 1.25rem;
-  margin-top: 1.5rem;
-}
 .info-session-date {
   font-family: var(--lattice-font-ui);
   font-weight: 600;
   font-size: 0.98rem;
   color: var(--lattice-ink-navy);
+  margin-top: 1.5rem;
 }
-.info-session-note {
+
+.info-session-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  margin-top: 0.9rem;
+  max-width: 420px;
+}
+.info-session-form input {
+  width: 100%;
   font-family: var(--lattice-font-ui);
-  font-size: 0.82rem;
-  color: var(--lattice-text-muted);
+  font-size: 1rem;
+  color: var(--lattice-ink-navy);
+  background: var(--lattice-cool-white);
+  border: 1px solid var(--lattice-border);
+  border-radius: var(--lattice-radius-control);
+  padding: 0.8rem 0.95rem;
+}
+.info-session-form input::placeholder { color: var(--lattice-text-muted); opacity: 1; }
+.info-session-form input:focus {
+  outline: 2px solid var(--lattice-cobalt);
+  outline-offset: 1px;
+}
+.info-session-form input[aria-invalid="true"] { border-color: var(--lattice-error); }
+.info-session-form .btn { margin-top: 0.3rem; align-self: flex-start; }
+
+.info-session-done { margin-top: 1.5rem; max-width: 480px; }
+.info-session-done h3 {
+  font-family: var(--lattice-font-display);
+  font-weight: 500;
+  font-size: 1.3rem;
+  color: var(--lattice-ink-navy);
+}
+.info-session-done p { margin-top: 0.4rem; color: var(--lattice-text-body); }
+.info-session-done-ctas {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem 1.4rem;
+  margin-top: 1rem;
 }
 
 
