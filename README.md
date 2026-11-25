@@ -15,7 +15,7 @@ Recorded here so it is not tribal knowledge.
 |---|---|---|
 | **Domain** | Webnames.ca | `thelattice.ca` — registered 23 Mar 2026, expires 23 Mar 2027, **auto-renew on**. Registered in Katrina's partner's account, not hers. |
 | **DNS** | **Netlify** (not Webnames) | Delegated 4 Aug 2026. Nameservers at Webnames point to `dns1–dns4.p05.nsone.net`. All records — A, CNAME, and any future MX — are managed in Netlify → Domain management, **not** at the registrar. |
-| **Hosting** | Netlify | Project `lattice-network-website`, on Katrina's personal account (displayed as team "Generous AI Society"). |
+| **Hosting** | Netlify | Project `lattice-network-website` in the URL, but displays in the Netlify dashboard as **thelattice.ca**. Not under the Generous AI Society team, despite what this line used to say. |
 | **Source** | GitHub | `katrinacfoster10/lattice-network-website`, branch `main`. Every push auto-deploys. |
 | **SSL** | Netlify → Let's Encrypt | Issued 4 Aug 2026 for `thelattice.ca` + `*.thelattice.ca`. Auto-renews; nothing to do. |
 
